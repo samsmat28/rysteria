@@ -83,6 +83,10 @@ struct rr_petal_base_stat_scale const defensive[rr_rarity_id_max] = {
     {rr_petal_id_wax,       rr_rarity_id_unusual,   offensive, 10.0f,  10.0f,  10.0f,  38,  0, {2,2,2,2,2,2,2,2,3,3}},
     {rr_petal_id_sand,      rr_rarity_id_common,    offensive, 15.0f,  10.0f,  10.0f,  37,  0, {4,4,4,4,4,4,4,4,5,6}},
     {rr_petal_id_mint,      rr_rarity_id_unusual,   offensive,  5.0f,  10.0f,  10.0f,  50, 25, {1,1,1,1,1,1,1,1,1,1}},
+        {rr_petal_id_triangle,  rr_rarity_id_unusual,   offensive, 35.0f,  12.0f,   0.0f,  75,  0, {1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_dust,      rr_rarity_id_common,    offensive, 14.0f,   8.0f,   8.0f,  25,  0, {1,1,2,2,3,3,4,4,5,5}},
+    {rr_petal_id_void,      rr_rarity_id_mythic,    offensive, 95.0f,  45.0f,   0.0f, 110,  0, {1,1,1,1,1,1,1,2,2,3}},
+
 };
 
 
@@ -92,6 +96,7 @@ char const *RR_PETAL_NAMES[rr_petal_id_max] = {
     "Bone",     "Web",       "Seed",      "Gravel", "Club",     "Crest",   "Droplet",
     "Beak",     "Lightning", "Third Eye", "Nest",   "Fireball", "Meat",    "Bubble",
     "Meteor",   "Mandible",  "Wax",       "Sand",   "Mint",
+    "Triangle", "Dust",      "Void",
 };
     
 char const *RR_PETAL_DESCRIPTIONS[rr_petal_id_max] = {
@@ -127,7 +132,10 @@ char const *RR_PETAL_DESCRIPTIONS[rr_petal_id_max] = {
     "Does more damage if target hp is below 50%",
     "Made by the bees",
     "Very fine",
-    "Remember to feed your pets"
+    "Remember to feed your pets",
+    "Deals massive damage when stacked with other triangles",
+    "Sharp ancient dust particles that shred enemies",
+    "A dark petal forged from pure emptiness"
 };
 
 struct rr_mob_data RR_MOB_DATA[rr_mob_id_max] = {

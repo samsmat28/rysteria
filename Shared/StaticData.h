@@ -146,6 +146,9 @@ enum rr_petal_id
     rr_petal_id_wax,       // 30
     rr_petal_id_sand,      // 31
     rr_petal_id_mint,      // 32
+     rr_petal_id_triangle, // 33
+    rr_petal_id_dust,     // 34
+    rr_petal_id_void,     // 35
 
     rr_petal_id_max,       // 33
 };
