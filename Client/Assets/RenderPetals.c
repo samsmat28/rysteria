@@ -2173,7 +2173,41 @@ void rr_renderer_draw_petal(struct rr_renderer *renderer, uint8_t id,
             rr_renderer_scale(renderer, 1 / 0.2f);
             break;
         default:
-            break;
+            case rr_petal_id_triangle:
+        rr_renderer_set_fill(renderer, 0xff4050e0);
+        rr_renderer_set_stroke(renderer, 0xff303cb0);
+        rr_renderer_set_line_width(renderer, 3.0f);
+        rr_renderer_begin_path(renderer);
+        rr_renderer_move_to(renderer, 0.0f, -12.0f);
+        rr_renderer_line_to(renderer, 11.0f, 9.0f);
+        rr_renderer_line_to(renderer, -11.0f, 9.0f);
+        rr_renderer_close_path(renderer);
+        rr_renderer_fill(renderer);
+        rr_renderer_stroke(renderer);
+        break;
+    case rr_petal_id_dust:
+        rr_renderer_set_fill(renderer, 0xffa8b8c0);
+        rr_renderer_set_stroke(renderer, 0xff788890);
+        rr_renderer_set_line_width(renderer, 2.5f);
+        rr_renderer_begin_path(renderer);
+        rr_renderer_arc(renderer, 0.0f, 0.0f, 8.5f, 0.0f, M_PI * 2.0f);
+        rr_renderer_fill(renderer);
+        rr_renderer_stroke(renderer);
+        break;
+    case rr_petal_id_void:
+        rr_renderer_set_fill(renderer, 0xff2b0a3d);
+        rr_renderer_set_stroke(renderer, 0xff9b30ff);
+        rr_renderer_set_line_width(renderer, 3.5f);
+        rr_renderer_begin_path(renderer);
+        rr_renderer_arc(renderer, 0.0f, 0.0f, 11.0f, 0.0f, M_PI * 2.0f);
+        rr_renderer_fill(renderer);
+        rr_renderer_stroke(renderer);
+               break;
+    default:
+        break;
+
+
+            
         }
     }
 }
