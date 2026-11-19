@@ -1,0 +1,109 @@
+# Query: rr_rarity_id_max
+# ContextLines: 1
+
+54 results - 2 files
+
+Shared/StaticData.c:
+   24  // clang-format off
+   25: struct rr_petal_base_stat_scale const offensive[rr_rarity_id_max] = {
+   26      {1.0, 1.0},
+
+   37  
+   38: struct rr_petal_base_stat_scale const defensive[rr_rarity_id_max] = {
+   39      {1.0, 1.0},
+
+  133  //   id                                     min_rarity  max_rarity              hp dmg    rad  ai_passive_rarity    ai_neutral_rarity    ai_aggro_rarity       loot
+  134:     {rr_mob_id_triceratops,        rr_rarity_id_common, rr_rarity_id_ultimate,  45, 15, 30.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max,     {{rr_petal_id_leaf,    0.15},{rr_petal_id_fossil,    0.05}}},
+  135      {rr_mob_id_trex,               rr_rarity_id_common, rr_rarity_id_ultimate,  40, 25, 32.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_unusual, {{rr_petal_id_stinger, 0.03},{rr_petal_id_egg,       0.05},{rr_petal_id_meat,      0.01}}},
+  136:     {rr_mob_id_fern,               rr_rarity_id_common, rr_rarity_id_ultimate,  10,  5, 24.0f, rr_rarity_id_max,    rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_leaf,     0.1},{rr_petal_id_azalea,    0.25}}},
+  137:     {rr_mob_id_tree,               rr_rarity_id_common, rr_rarity_id_ultimate, 100,  5, 64.0f, rr_rarity_id_max,    rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_leaf,     2.5},{rr_petal_id_peas,       2.5},{rr_petal_id_seed,      0.05}}},
+  138      {rr_mob_id_pteranodon,         rr_rarity_id_common, rr_rarity_id_ultimate,  40, 15, 20.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_rare,    {{rr_petal_id_shell,   0.05},{rr_petal_id_beak,      0.15},{rr_petal_id_nest,      0.01}}},
+
+  140      {rr_mob_id_pachycephalosaurus, rr_rarity_id_common, rr_rarity_id_ultimate,  35, 20, 20.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_common,  {{rr_petal_id_fossil,   0.1},{rr_petal_id_berry,      0.1},{rr_petal_id_web,       0.05}}},
+  141:     {rr_mob_id_ornithomimus,       rr_rarity_id_common, rr_rarity_id_ultimate,  25, 10, 20.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max,     {{rr_petal_id_feather,  0.1},{rr_petal_id_droplet,   0.05},{rr_petal_id_pellet,     0.1}}},
+  142:     {rr_mob_id_ankylosaurus,       rr_rarity_id_common, rr_rarity_id_ultimate,  50, 10, 30.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max,     {{rr_petal_id_club,    0.15},{rr_petal_id_gravel,    0.05},{rr_petal_id_bubble,     0.1}}},
+  143:     {rr_mob_id_meteor,             rr_rarity_id_common, rr_rarity_id_ultimate, 100, 10, 32.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_magnet,   0.5},{rr_petal_id_uranium,   0.05},{rr_petal_id_fireball,   1.0},{rr_petal_id_meteor, 2.0}}},
+  144      {rr_mob_id_quetzalcoatlus,     rr_rarity_id_common, rr_rarity_id_ultimate,  65, 20, 28.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_common,  {{rr_petal_id_beak,    0.05},{rr_petal_id_fossil,     0.1},{rr_petal_id_lightning, 0.01}}},
+  145:     {rr_mob_id_edmontosaurus,      rr_rarity_id_common, rr_rarity_id_ultimate,  50, 15, 30.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max,     {{rr_petal_id_bone,    0.01},{rr_petal_id_fossil,     0.1},{rr_petal_id_third_eye, 0.05}}},
+  146:     {rr_mob_id_ant,                rr_rarity_id_common, rr_rarity_id_ultimate,  10, 10, 20.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_pellet,   0.1},{rr_petal_id_leaf,       0.1},{rr_petal_id_mandible,  0.05}}},
+  147:     {rr_mob_id_hornet,             rr_rarity_id_common, rr_rarity_id_ultimate,  28, 25, 25.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_stinger,  0.1},{rr_petal_id_crest,     0.05}}},
+  148:     {rr_mob_id_dragonfly,          rr_rarity_id_common, rr_rarity_id_ultimate,  20, 10, 25.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_pellet,   0.1},{rr_petal_id_magnet,    0.05}}},
+  149:     {rr_mob_id_honeybee,           rr_rarity_id_common, rr_rarity_id_ultimate,  12, 25, 22.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_wax,     0.05},{rr_petal_id_stinger,   0.05}}},
+  150:     {rr_mob_id_beehive,            rr_rarity_id_common, rr_rarity_id_ultimate,   0,  0, 45.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_wax,     0.05},{rr_petal_id_azalea,    0.05}}},
+  151:     {rr_mob_id_spider,             rr_rarity_id_common, rr_rarity_id_ultimate,  20, 25, 25.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_web,      0.1},{rr_petal_id_third_eye, 0.01}}},
+  152:     {rr_mob_id_house_centipede,    rr_rarity_id_common, rr_rarity_id_ultimate,  25, 10, 23.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_peas,     0.1},{rr_petal_id_sand,      0.05}}},
+  153:     {rr_mob_id_lanternfly,         rr_rarity_id_common, rr_rarity_id_ultimate,  20, 10, 25.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_mint,     0.1},{rr_petal_id_sand,      0.05}}},
+  154  };
+
+  194  
+  195: struct rr_petal_rarity_scale RR_PETAL_RARITY_SCALE[rr_rarity_id_max] = {
+  196      {1,    240, 45 },
+
+  205  
+  206: struct rr_mob_rarity_scale RR_MOB_RARITY_SCALING[rr_rarity_id_max] = {
+  207      {1,      1,    1  },
+
+  217  
+  218: uint32_t RR_RARITY_COLORS[rr_rarity_id_max] = {
+  219      0xff7eef6d, 0xffffe65d, 0xff4d52e3, 0xff861fde,
+
+  221  
+  222: char const *RR_RARITY_NAMES[rr_rarity_id_max] = {
+  223      "Common",    "Unusual", "Rare",   "Epic",
+
+  226  #ifdef PVP
+  227: uint64_t RR_PVP_POINTS_PER_RARITY[rr_rarity_id_max] = {
+  228      20, 100, 1000, 10000, 150000, 2250000, 45000000, 900000000};
+
+  230  
+  231: double RR_MOB_WAVE_RARITY_COEFFICIENTS[rr_rarity_id_max + 1] = {
+  232      0, 1, 6, 10, 15, 25, 160, 1200, 250};
+  233  
+  234: double RR_DROP_RARITY_COEFFICIENTS[rr_rarity_id_max] = {
+  235      0, 1, 8, 15, 40, 150, 500, 2500};
+  236: double RR_MOB_LOOT_RARITY_COEFFICIENTS[rr_rarity_id_max] = {2.5, 4,  6,   15,
+  237                                                              35,  50, 125, 150};
+
+  242      double sum2 = 1;
+  243:     for (uint64_t a = 1; a < rr_rarity_id_max; ++a)
+  244          RR_MOB_LOOT_RARITY_COEFFICIENTS[a] *=
+
+  407  
+  408: double RR_BASE_CRAFT_CHANCES[rr_rarity_id_max - 1] = {0.5,  0.3,  0.15, 0.05,
+  409                                                        0.03, 0.02, 0.015};
+  410: double RR_CRAFT_CHANCES[rr_rarity_id_max - 1];
+  411  
+
+  458  {
+  459:     for (uint32_t r = 0; r < rr_rarity_id_max - 1; ++r)
+  460          RR_CRAFT_CHANCES[r] = get_prd_base(RR_BASE_CRAFT_CHANCES[r]);
+
+Shared/StaticData.h:
+  109      rr_rarity_id_divine,
+  110:     rr_rarity_id_max
+  111  };
+
+  215      uint32_t secondary_cooldown; // for stuff like projectiles
+  216:     uint8_t count[rr_rarity_id_max];
+  217  };
+
+  237  extern char const *RR_MOB_NAMES[rr_mob_id_max];
+  238: extern struct rr_mob_rarity_scale RR_MOB_RARITY_SCALING[rr_rarity_id_max];
+  239: extern struct rr_petal_rarity_scale RR_PETAL_RARITY_SCALE[rr_rarity_id_max];
+  240: extern double RR_MOB_LOOT_RARITY_COEFFICIENTS[rr_rarity_id_max];
+  241: extern double RR_DROP_RARITY_COEFFICIENTS[rr_rarity_id_max];
+  242: extern double RR_MOB_WAVE_RARITY_COEFFICIENTS[rr_rarity_id_max + 1];
+  243  
+
+  247  
+  248: extern uint32_t RR_RARITY_COLORS[rr_rarity_id_max];
+  249: extern char const *RR_RARITY_NAMES[rr_rarity_id_max];
+  250  
+  251  #ifdef PVP
+  252: extern uint64_t RR_PVP_POINTS_PER_RARITY[rr_rarity_id_max];
+  253  #endif
+
+  319  
+  320: extern double RR_BASE_CRAFT_CHANCES[rr_rarity_id_max - 1];
+  321: extern double RR_CRAFT_CHANCES[rr_rarity_id_max - 1];
+  322  
