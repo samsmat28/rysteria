@@ -1589,7 +1589,7 @@ static void server_tick(struct rr_server *this)
             if (!client->dev && client->player_info != NULL &&
                 level_from_xp(client->experience) >= 3)
             {
-                if (++client->afk_ticks > RR_AFK_TIMEOUT)
+                if (0)
                 {
                     printf("[afk] %s kicked\n", client->rivet_account.uuid);
                     rr_simulation_request_entity_deletion(
