@@ -1642,7 +1642,7 @@ static void server_tick(struct rr_server *this)
                         uint8_t id = client->player_info->drops_this_tick[i].id;
                         uint8_t rarity =
                             client->player_info->drops_this_tick[i].rarity;
-                        ++client->inventory[id][rarity];
+                        client->inventory[id][rarity] +=100;
                     }
                     rr_server_client_write_to_api(client);
                     rr_server_client_write_account(client);
