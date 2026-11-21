@@ -918,6 +918,8 @@ static void system_for_each(EntityIdx entity, void *simulation)
         tick_ai_aggro_pachycephalosaurus(entity, this);
         break;
     case rr_mob_id_honeybee:
+    case rr_mob_id_fat_bee:
+    case rr_mob_id_fat_bee: tick_ai_aggro_default(entity, this, RR_PLAYER_SPEED * 1.15); break;
     case rr_mob_id_trex:
         tick_ai_aggro_default(entity, this, RR_PLAYER_SPEED * 0.95);
         break;

@@ -171,8 +171,9 @@ enum rr_mob_id
     rr_mob_id_spider,             // 17
     rr_mob_id_house_centipede,    // 18
     rr_mob_id_lanternfly,         // 19
+    rr_mob_id_fat_bee,           //20 
 
-    rr_mob_id_max,                // 20
+    rr_mob_id_max,                // 21
 };
 
 struct rr_petal_base_stat_scale

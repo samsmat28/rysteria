@@ -266,6 +266,27 @@ void rr_renderer_draw_mob(struct rr_renderer *renderer, uint8_t id,
         rr_renderer_translate(renderer, 80, 0);
         render_sprite(renderer, id, 0, flags);
         break;
+           case rr_mob_id_fat_bee:
+        rr_renderer_scale(renderer, 0.24f);
+        rr_renderer_scale2(renderer, 1.05f, 1.85f);
+        rr_renderer_translate(renderer, -85, 0);
+        render_sprite(renderer, rr_mob_id_honeybee, 2, flags);
+        rr_renderer_translate(renderer, 85, 0);
+        render_sprite(renderer, rr_mob_id_honeybee, 1, flags);
+        rr_renderer_context_state_init(renderer, &state);
+        rr_renderer_rotate(renderer, animation_tick * 0.25f + 2 * M_PI / 3);
+        rr_renderer_translate(renderer, 100, 0);
+        render_sprite(renderer, rr_mob_id_honeybee, 4, flags);
+        rr_renderer_context_state_free(renderer, &state);
+        rr_renderer_context_state_init(renderer, &state);
+        rr_renderer_rotate(renderer, animation_tick * -0.25f - 2 * M_PI / 3);
+        rr_renderer_translate(renderer, 100, 0);
+        render_sprite(renderer, rr_mob_id_honeybee, 4, flags);
+        rr_renderer_context_state_free(renderer, &state);
+        rr_renderer_translate(renderer, 75, 0);
+        render_sprite(renderer, rr_mob_id_honeybee, 0, flags);
+        break;
+ 
     case rr_mob_id_dragonfly:
         rr_renderer_scale(renderer, 0.2);
         rr_renderer_translate(renderer, -90, 0);
