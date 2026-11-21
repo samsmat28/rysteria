@@ -144,8 +144,10 @@ enum rr_petal_id
     rr_petal_id_wax,       // 30
     rr_petal_id_sand,      // 31
     rr_petal_id_mint,      // 32
+       rr_petal_id_rose,   // 33
+    rr_petal_id_rock,      // 34
 
-    rr_petal_id_max,       // 33
+    rr_petal_id_max,       // 35
 };
 
 enum rr_mob_id
@@ -172,8 +174,10 @@ enum rr_mob_id
     rr_mob_id_house_centipede,    // 18
     rr_mob_id_lanternfly,         // 19
     rr_mob_id_fat_bee,           //20 
+     rr_mob_id_ladybug,           // 21
+    rr_mob_id_rock,              // 22
 
-    rr_mob_id_max,                // 21
+    rr_mob_id_max,                // 23
 };
 
 struct rr_petal_base_stat_scale

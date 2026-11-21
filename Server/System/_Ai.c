@@ -906,6 +906,7 @@ static void system_for_each(EntityIdx entity, void *simulation)
     {
     case rr_mob_id_fern:
     case rr_mob_id_tree:
+    case rr_mob_id_rock:
         break;
     case rr_mob_id_ant:
     case rr_mob_id_ornithomimus:
@@ -920,6 +921,8 @@ static void system_for_each(EntityIdx entity, void *simulation)
     case rr_mob_id_honeybee:
     case rr_mob_id_fat_bee:
     case rr_mob_id_fat_bee: tick_ai_aggro_default(entity, this, RR_PLAYER_SPEED * 1.15); break;
+    case rr_mob_id_ladybug: tick_ai_aggro_default(entity, this, RR_PLAYER_SPEED * 1.10); break;
+    case rr_mob_id_rock: tick_ai_aggro_default(entity, this, RR_PLAYER_SPEED * 1.05); break;
     case rr_mob_id_trex:
         tick_ai_aggro_default(entity, this, RR_PLAYER_SPEED * 0.95);
         break;

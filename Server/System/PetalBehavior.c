@@ -302,11 +302,13 @@ static void system_flower_petal_movement_logic(
             break;
         }
         case rr_petal_id_azalea:
+        case rr_petal_id_rose:
         {
-            struct rr_component_health *flower_health =
+           struct rr_component_health *flower_health =
                 rr_simulation_get_health(simulation, player_info->flower_id);
-            float heal = 9 * RR_PETAL_RARITY_SCALE[petal->rarity].heal /
-                             petal_data->count[petal->rarity];
+            float mult = (petal->id == rr_petal_id_rose) ? 15.0f : 9.0f;
+            float heal = mult * RR_PETAL_RARITY_SCALE[petal->rarity].heal /
+                petal_data->count[petal->rarity];
             if (flower_health->health < flower_health->max_health)
             {
                 struct rr_vector delta = {
