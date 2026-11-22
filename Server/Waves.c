@@ -43,19 +43,40 @@ uint8_t get_spawn_id(uint8_t biome, struct rr_maze_grid *zone)
 {
     if (biome == rr_biome_id_pvp)
     {
+        // Вычисляем координаты клетки (0..159, 0..159) в сетке Ant Hell
+        long idx = zone - &RR_MAZE_PVP[0][0];
+        int gx = (idx >= 0 && idx < 160 * 160) ? (int)(idx % 160) : 80;
+        int gy = (idx >= 0 && idx < 160 * 160) ? (int)(idx / 160) : 24;
         double r_ant = rr_frand();
-        if (r_ant < 0.22) return rr_mob_id_worker_ant;
-        if (r_ant < 0.38) return rr_mob_id_soldier_ant;
-        if (r_ant < 0.56) return rr_mob_id_fire_worker_ant;
-        if (r_ant < 0.70) return rr_mob_id_fire_soldier_ant;
-        if (r_ant < 0.56) return rr_mob_id_termite_worker;
-        if (r_ant < 0.66) return rr_mob_id_termite_soldier;
-        if (r_ant < 0.74) return rr_mob_id_worm;
-        if (r_ant < 0.80) return rr_mob_id_ant_egg;
-        if (r_ant < 0.86) return rr_mob_id_fire_ant_egg;
-        if (r_ant < 0.80) return rr_mob_id_termite_egg;
-        if (r_ant < 0.87) return rr_mob_id_queen_ant;
-        if (r_ant < 0.94) return rr_mob_id_queen_fire_ant;
+
+        // Сектор 4 (Нижний глубокий зал): Черви (Worm) и редкая Королева
+        if (gy >= 124)
+        {
+            if (r_ant < 0.94) return rr_mob_id_worm;
+            if (r_ant < 0.96) return rr_mob_id_queen_ant;
+            if (r_ant < 0.98) return rr_mob_id_queen_fire_ant;
+            return rr_mob_id_queen_termite;
+        }
+        // Сектор 1 (Верхний зал входа): ТОЛЬКО обычные муравьи
+        if (gy < 44)
+        {
+            if (r_ant < 0.55) return rr_mob_id_worker_ant;
+            if (r_ant < 0.88) return rr_mob_id_soldier_ant;
+            if (r_ant < 0.98) return rr_mob_id_ant_egg;
+            return rr_mob_id_queen_ant;
+        }
+        // Сектор 2 (Правая половина): ТОЛЬКО огненные муравьи
+        if (gx >= 80)
+        {
+            if (r_ant < 0.55) return rr_mob_id_fire_worker_ant;
+            if (r_ant < 0.88) return rr_mob_id_fire_soldier_ant;
+            if (r_ant < 0.98) return rr_mob_id_fire_ant_egg;
+            return rr_mob_id_queen_fire_ant;
+        }
+        // Сектор 3 (Левая половина): ТОЛЬКО термиты
+        if (r_ant < 0.55) return rr_mob_id_termite_worker;
+        if (r_ant < 0.88) return rr_mob_id_termite_soldier;
+        if (r_ant < 0.98) return rr_mob_id_termite_egg;
         return rr_mob_id_queen_termite;
     }
      double r = rr_frand();

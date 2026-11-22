@@ -703,10 +703,16 @@ void rr_renderer_draw_petal(struct rr_renderer *renderer, uint8_t id,
 
     case rr_petal_id_rice:
         rr_renderer_set_fill(renderer, 0xfff7f5eb);
-        rr_renderer_set_stroke(renderer, 0xffb8b29c);
-        rr_renderer_set_line_width(renderer, 3.5f);
+        rr_renderer_set_stroke(renderer, 0xffcfcbc0);
+        rr_renderer_set_line_width(renderer, 5.0f);
         rr_renderer_begin_path(renderer);
-        rr_renderer_arc(renderer, 0, 0, 9);
+        rr_renderer_move_to(renderer, -8, -6);
+        rr_renderer_line_to(renderer, 0, -2);
+        rr_renderer_line_to(renderer, 8, 6);
+        rr_renderer_line_to(renderer, 3, 10);
+        rr_renderer_line_to(renderer, -4, 3);
+        rr_renderer_line_to(renderer, -11, -1);
+        rr_renderer_line_to(renderer, -8, -6);
         rr_renderer_fill(renderer);
         rr_renderer_stroke(renderer);
         break;

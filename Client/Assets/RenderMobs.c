@@ -317,12 +317,13 @@ void rr_renderer_draw_mob(struct rr_renderer *renderer, uint8_t id,
         break;
 
     case rr_mob_id_worker_ant: case rr_mob_id_soldier_ant: case rr_mob_id_fire_worker_ant: case rr_mob_id_fire_soldier_ant: case rr_mob_id_termite_worker: case rr_mob_id_termite_soldier: case rr_mob_id_worm:
+        rr_renderer_scale(renderer, 1.45f);
         render_sprite(renderer, id, 0, flags);
         break;
     case rr_mob_id_ant_egg:
     case rr_mob_id_fire_ant_egg:
     case rr_mob_id_termite_egg:
-        rr_renderer_scale(renderer, 0.25f);
+        rr_renderer_scale(renderer, 0.36f);
         rr_renderer_set_fill(renderer, id == rr_mob_id_ant_egg ? 0xfff5f0e1 : (id == rr_mob_id_fire_ant_egg ? 0xfff5a895 : 0xffe8d5b5));
         rr_renderer_set_stroke(renderer, id == rr_mob_id_ant_egg ? 0xffb8ae93 : (id == rr_mob_id_fire_ant_egg ? 0xffb84b32 : 0xff8c5828));
         rr_renderer_set_line_width(renderer, 12);

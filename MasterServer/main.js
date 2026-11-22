@@ -26,6 +26,8 @@ const protocol = require("./protocol");
 const GameServer = require("./gameserver");
 const GameClient = require("./client");
 const app = express();
+app.use(express.static(path.join(__dirname, "../Client/public")));
+
 const port = 55554;
 const namespace = "/api";
 
