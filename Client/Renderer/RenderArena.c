@@ -61,10 +61,49 @@ void render_background(struct rr_component_player_info *player_info,
             rr_renderer_scale(renderer, (GRID_SIZE + 2) / 256);
                    if (this->selected_biome == rr_biome_id_pvp)
         {
+            // Базовый светло-коричневый пол Ant Hell
             rr_renderer_set_fill(renderer, 0xff9e744e);
             rr_renderer_begin_path(renderer);
             rr_renderer_rect(renderer, -128, -128, 256, 256);
             rr_renderer_fill(renderer);
+
+            // Псевдослучайные координаты по tile_index для узоров грунта
+            float ox1 = ((tile_index * 73) % 180) - 90.0f;
+            float oy1 = ((tile_index * 41) % 180) - 90.0f;
+            float ox2 = ((tile_index * 113) % 170) - 85.0f;
+            float oy2 = ((tile_index * 89) % 170) - 85.0f;
+
+            // Мягкое тёмно-коричневое пятно земли
+            rr_renderer_set_fill(renderer, 0xff8c633f);
+            rr_renderer_begin_path(renderer);
+            rr_renderer_arc(renderer, ox1, oy1, 18.0f + (tile_index % 12), 0, 6.28318f, 0);
+            rr_renderer_fill(renderer);
+
+            // Подземные камешки (на 2 из 3 тайлов)
+            if (tile_index % 3 != 0)
+            {
+                rr_renderer_set_fill(renderer, 0xff755030);
+                rr_renderer_begin_path(renderer);
+                rr_renderer_arc(renderer, ox2, oy2, 7.0f + (tile_index % 5), 0, 6.28318f, 0);
+                rr_renderer_fill(renderer);
+
+                rr_renderer_set_fill(renderer, 0xff825a37);
+                rr_renderer_begin_path(renderer);
+                rr_renderer_arc(renderer, ox2 + 16.0f, oy2 - 10.0f, 4.5f, 0, 6.28318f, 0);
+                rr_renderer_fill(renderer);
+            }
+
+            // Тонкие трещинки в грунте (на каждом втором тайле)
+            if (tile_index % 2 == 0)
+            {
+                rr_renderer_set_stroke(renderer, 0xff734e2e);
+                rr_renderer_set_line_width(renderer, 2.5f);
+                rr_renderer_begin_path(renderer);
+                rr_renderer_move_to(renderer, -ox1 * 0.6f - 14.0f, -oy2 * 0.6f);
+                rr_renderer_line_to(renderer, -ox1 * 0.6f, -oy2 * 0.6f + 8.0f);
+                rr_renderer_line_to(renderer, -ox1 * 0.6f + 15.0f, -oy2 * 0.6f + 4.0f);
+                rr_renderer_stroke(renderer);
+            }
         }
         else if (this->selected_biome == rr_biome_id_hell_creek)
             rr_renderer_draw_tile_hell_creek(renderer, tile_index);
