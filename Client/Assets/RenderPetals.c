@@ -672,18 +672,18 @@ void rr_renderer_draw_petal(struct rr_renderer *renderer, uint8_t id,
             rr_renderer_stroke(renderer);
             break;
 
-                case rr_petal_id_rose:
+       case rr_petal_id_rose:
         rr_renderer_set_fill(renderer, 0xffff5577);
         rr_renderer_set_stroke(renderer, 0xffcc3355);
         rr_renderer_set_line_width(renderer, 3);
         rr_renderer_begin_path(renderer);
-        rr_renderer_arc(renderer, 0, 0, 12, 0, 2 * M_PI, 0);
+        rr_renderer_arc(renderer, 0, 0, 12);
         rr_renderer_fill(renderer);
         rr_renderer_stroke(renderer);
         rr_renderer_set_stroke(renderer, 0xffff99aa);
         rr_renderer_set_line_width(renderer, 2);
         rr_renderer_begin_path(renderer);
-        rr_renderer_arc(renderer, 0, 0, 6, 0, 1.5f * M_PI, 0);
+        rr_renderer_arc(renderer, 0, 0, 6);
         rr_renderer_stroke(renderer);
         break;
 
@@ -699,7 +699,7 @@ void rr_renderer_draw_petal(struct rr_renderer *renderer, uint8_t id,
         rr_renderer_line_to(renderer, -12, -3);
         rr_renderer_line_to(renderer, -2, -12);
         rr_renderer_line_to(renderer, 10, -8);
-        rr_renderer_close_path(renderer);
+        rr_renderer_line_to(renderer, 13, 0);
         rr_renderer_fill(renderer);
         rr_renderer_stroke(renderer);
         break;

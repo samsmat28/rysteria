@@ -287,14 +287,14 @@ void rr_renderer_draw_mob(struct rr_renderer *renderer, uint8_t id,
         render_sprite(renderer, rr_mob_id_honeybee, 0, flags);
         break;
 
-        case rr_mob_id_ladybug:
+         case rr_mob_id_ladybug:
         rr_renderer_scale(renderer, 0.25f);
         // Голова
         rr_renderer_set_fill(renderer, 0xff222222);
         rr_renderer_set_stroke(renderer, 0xff111111);
         rr_renderer_set_line_width(renderer, 8);
         rr_renderer_begin_path(renderer);
-        rr_renderer_arc(renderer, 65, 0, 45, 0, 2 * M_PI, 0);
+        rr_renderer_arc(renderer, 65, 0, 45);
         rr_renderer_fill(renderer);
         rr_renderer_stroke(renderer);
         // Красное тело
@@ -302,17 +302,17 @@ void rr_renderer_draw_mob(struct rr_renderer *renderer, uint8_t id,
         rr_renderer_set_stroke(renderer, 0xff9e1b1b);
         rr_renderer_set_line_width(renderer, 10);
         rr_renderer_begin_path(renderer);
-        rr_renderer_arc(renderer, -10, 0, 85, 0, 2 * M_PI, 0);
+        rr_renderer_arc(renderer, -10, 0, 85);
         rr_renderer_fill(renderer);
         rr_renderer_stroke(renderer);
         // Черные пятнышки
         rr_renderer_set_fill(renderer, 0xff222222);
         rr_renderer_begin_path(renderer);
-        rr_renderer_arc(renderer, -10, 0, 14, 0, 2 * M_PI, 0);
-        rr_renderer_arc(renderer, -45, -32, 13, 0, 2 * M_PI, 0);
-        rr_renderer_arc(renderer, -45, 32, 13, 0, 2 * M_PI, 0);
-        rr_renderer_arc(renderer, 18, -36, 13, 0, 2 * M_PI, 0);
-        rr_renderer_arc(renderer, 18, 36, 13, 0, 2 * M_PI, 0);
+        rr_renderer_arc(renderer, -10, 0, 14);
+        rr_renderer_arc(renderer, -45, -32, 13);
+        rr_renderer_arc(renderer, -45, 32, 13);
+        rr_renderer_arc(renderer, 18, -36, 13);
+        rr_renderer_arc(renderer, 18, 36, 13);
         rr_renderer_fill(renderer);
         break;
 
@@ -330,7 +330,7 @@ void rr_renderer_draw_mob(struct rr_renderer *renderer, uint8_t id,
         rr_renderer_line_to(renderer, -75, -62);
         rr_renderer_line_to(renderer, 15, -90);
         rr_renderer_line_to(renderer, 78, -55);
-        rr_renderer_close_path(renderer);
+        rr_renderer_line_to(renderer, 95, 0);
         rr_renderer_fill(renderer);
         rr_renderer_stroke(renderer);
         break;

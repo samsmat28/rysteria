@@ -41,8 +41,15 @@ uint32_t get_spawn_rarity(float difficulty)
 
 uint8_t get_spawn_id(uint8_t biome, struct rr_maze_grid *zone)
 {
-    if (rr_frand() < 0.5)
+     double r = rr_frand();
+    if (r < 0.25)
         return rr_mob_id_fat_bee;
+    if (r < 0.50)
+        return rr_mob_id_ladybug;
+    if (r < 0.75)
+        return rr_mob_id_rock;
+    if (r < 0.85)
+        return rr_mob_id_dragonfly;
     double *table =
         biome < rr_biome_id_garden ? RR_HELL_CREEK_MOB_ID_RARITY_COEFFICIENTS
                                    : RR_GARDEN_MOB_ID_RARITY_COEFFICIENTS;

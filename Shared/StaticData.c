@@ -79,6 +79,8 @@ struct rr_petal_data RR_PETAL_DATA[rr_petal_id_max] = {
     {rr_petal_id_wax,       rr_rarity_id_unusual,   offensive, 10.0f,  10.0f,  10.0f,  38,  0, {2,2,2,2,2,2,2,2}},
     {rr_petal_id_sand,      rr_rarity_id_common,    offensive, 15.0f,  10.0f,  10.0f,  37,  0, {4,4,4,4,4,4,4,4}},
     {rr_petal_id_mint,      rr_rarity_id_unusual,   offensive,  5.0f,  10.0f,  10.0f,  50, 25, {1,1,1,1,1,1,1,1}},
+     {rr_petal_id_rose,      rr_rarity_id_common,    defensive,  5.0f,  15.0f,  10.0f,  25, 50, {1,1,1,1,1,1,3,3}},
+    {rr_petal_id_rock,      rr_rarity_id_common,    defensive, 15.0f, 350.0f,   0.0f, 120,  0, {1,1,1,1,1,1,1,1}},
 };    
 
 char const *RR_PETAL_NAMES[rr_petal_id_max] = {
@@ -150,7 +152,7 @@ struct rr_mob_data RR_MOB_DATA[rr_mob_id_max] = {
     {rr_mob_id_house_centipede,    rr_rarity_id_common, rr_rarity_id_ultimate,  25, 10, 23.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_peas,     0.1},{rr_petal_id_sand,      0.05}}},
     {rr_mob_id_lanternfly,         rr_rarity_id_common, rr_rarity_id_ultimate,  20, 10, 25.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_mint,     0.1},{rr_petal_id_sand,      0.05}}},
     {rr_mob_id_fat_bee, rr_rarity_id_common, rr_rarity_id_ultimate, 60, 45, 34.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_stinger, 0.25},{rr_petal_id_wax, 0.20},{rr_petal_id_berry, 0.05}}},
-        {rr_mob_id_ladybug, rr_rarity_id_common, rr_rarity_id_ultimate, 35, 10, 26.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_rose, 0.35},{rr_petal_id_leaf, 0.15}}},
+    {rr_mob_id_ladybug, rr_rarity_id_common, rr_rarity_id_ultimate, 35, 10, 26.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_rose, 0.35},{rr_petal_id_leaf, 0.15}}},
     {rr_mob_id_rock,    rr_rarity_id_common, rr_rarity_id_ultimate, 150, 10, 38.0f, rr_rarity_id_max,    rr_rarity_id_max,    rr_rarity_id_max, {{rr_petal_id_rock, 0.35},{rr_petal_id_magnet, 0.25}}},
 };
 
@@ -158,7 +160,7 @@ char const *RR_MOB_NAMES[rr_mob_id_max] = {
 "Triceratops","T-Rex","Fern","Tree","Pteranodon","Dakotaraptor",
 "Pachycephalosaurus","Ornithomimus","Ankylosaurus","Meteor",
 "Quetzalcoatlus","Edmontosaurus","Ant","Hornet","Dragonfly",
-"Honeybee","Beehive","Spider","House Centipede","Lanternfly"
+"Honeybee","Beehive","Spider","House Centipede","Lanternfly",
 "Fat Bee","Ladybug","Rock",
 };
 
