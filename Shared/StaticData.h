@@ -78,10 +78,10 @@ enum rr_dev_cheat_type
 };
 
 #define RR_MAX_HEALTH_FROM_LEVEL(biome, level)                                 \
-    (200 * pow(biome != rr_biome_id_pvp ? 1.0256 : 1.0335, level - 1))
+    (200 * pow(1.0256, level - 1))
 #define RR_SLOT_COUNT_FROM_LEVEL(level)                                        \
-    (level < (20 * (RR_MAX_SLOT_COUNT - 5))                                    \
-        ? 5 + (level) / 20 : RR_MAX_SLOT_COUNT)
+    (level < (5 * (RR_MAX_SLOT_COUNT - 5))                                    \
+        ? 5 + (level) / 5 : RR_MAX_SLOT_COUNT)
 #define RR_PLAYER_SPEED (4.0f)
 #define RR_AFK_TIMEOUT (30 * 60 * 25)
 #define RR_AFK_WARNING (27 * 60 * 25)

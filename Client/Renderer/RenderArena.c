@@ -139,5 +139,69 @@ void rr_component_arena_render(EntityIdx entity, struct rr_game *this,
     rr_renderer_context_state_init(this->renderer, &state2);
     render_background(player_info, this);
 
+        // Воронка-телепорт между Hell Creek и Ant Hell
+    if (arena != NULL && player_info->flower_id != RR_NULL_ENTITY &&
+        (arena->biome == rr_biome_id_hell_creek || arena->biome == rr_biome_id_pvp))
+    {
+        float portal_x = 27.5f * 2048.0f;
+        float portal_y = 3.5f * 2048.0f;
+        float portal_r = 110.0f;
+
+        struct rr_renderer *renderer = this->renderer;
+        rr_renderer_set_global_alpha(renderer, 1.0f);
+
+        // Внешний обод норы
+        rr_renderer_set_fill(renderer, arena->biome == rr_biome_id_hell_creek ? 0xff4a2e18 : 0xff7eef6d);
+        rr_renderer_set_stroke(renderer, 0xff2b1a0e);
+        rr_renderer_set_line_width(renderer, 10);
+        rr_renderer_begin_path(renderer);
+        rr_renderer_arc(renderer, portal_x, portal_y, portal_r);
+        rr_renderer_fill(renderer);
+        rr_renderer_stroke(renderer);
+
+        // Внутренняя темнота туннеля
+        rr_renderer_set_fill(renderer, arena->biome == rr_biome_id_hell_creek ? 0xff1c1008 : 0xff4eb842);
+        rr_renderer_begin_path(renderer);
+        rr_renderer_arc(renderer, portal_x, portal_y, portal_r * 0.6f);
+        rr_renderer_fill(renderer);
+
+        // Подпись над порталом
+        rr_renderer_set_fill(renderer, 0xffffffff);
+        rr_renderer_set_stroke(renderer, 0xff111111);
+        rr_renderer_set_line_width(renderer, 4);
+        rr_renderer_set_text_size(renderer, 28);
+        rr_renderer_set_text_align(renderer, 1);
+        rr_renderer_set_text_baseline(renderer, 1);
+        char const *label = (arena->biome == rr_biome_id_hell_creek) ? "Ant Hell" : "Hell Creek";
+        rr_renderer_stroke_text(renderer, label, portal_x, portal_y - portal_r - 20);
+        rr_renderer_fill_text(renderer, label, portal_x, portal_y - portal_r - 20);
+
+        // Проверка наезда игрока на воронку
+        static uint32_t portal_cooldown = 0;
+        if (portal_cooldown > 0)
+        {
+            --portal_cooldown;
+        }
+        else
+        {
+            struct rr_component_physical *flower_phys =
+                rr_simulation_get_physical(this->simulation, player_info->flower_id);
+            if (flower_phys != NULL)
+            {
+                float dx = flower_phys->x - portal_x;
+                float dy = flower_phys->y - portal_y;
+                if (dx * dx + dy * dy < (portal_r * 0.75f) * (portal_r * 0.75f))
+                {
+                    portal_cooldown = 180; // ~3 секунды защиты от повторного телепорта
+                    uint8_t target_biome = (arena->biome == rr_biome_id_hell_creek)
+                        ? rr_biome_id_pvp
+                        : rr_biome_id_hell_creek;
+                    rr_game_select_biome(this, target_biome);
+                }
+            }
+        }
+    }
+
+
     rr_renderer_context_state_free(this->renderer, &state2);
 }

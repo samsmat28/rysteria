@@ -344,7 +344,7 @@ static float get_max_points(struct rr_simulation *this,
                             struct rr_maze_grid *grid)
 {
 #ifndef PVP
-    float coeff = 2;
+    float coeff = 8;
 #else
     float coeff = 0.2;
 #endif
@@ -370,7 +370,7 @@ static int tick_grid(struct rr_simulation *this, struct rr_maze_grid *grid,
                                           grid->overload_factor);
     }
     float player_modifier = 1 + grid->player_count * 4.0 / 3;
-    float difficulty_modifier = 150 + 3 * grid->difficulty;
+    float difficulty_modifier = (150 + 3 * grid->difficulty) / 15.0f;
     float overload_modifier =
         powf(1.2, grid->local_difficulty + grid->overload_factor);
     float max_points = get_max_points(this, grid);
