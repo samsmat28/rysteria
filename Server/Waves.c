@@ -41,6 +41,17 @@ uint32_t get_spawn_rarity(float difficulty)
 
 uint8_t get_spawn_id(uint8_t biome, struct rr_maze_grid *zone)
 {
+    if (biome == rr_biome_id_pvp)
+    {
+        double r_ant = rr_frand();
+        if (r_ant < 0.22) return rr_mob_id_worker_ant;
+        if (r_ant < 0.38) return rr_mob_id_soldier_ant;
+        if (r_ant < 0.56) return rr_mob_id_fire_worker_ant;
+        if (r_ant < 0.70) return rr_mob_id_fire_soldier_ant;
+        if (r_ant < 0.84) return rr_mob_id_termite_worker;
+        if (r_ant < 0.94) return rr_mob_id_termite_soldier;
+        return rr_mob_id_worm;
+    }
      double r = rr_frand();
     if (r < 0.25)
         return rr_mob_id_fat_bee;

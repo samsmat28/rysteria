@@ -176,8 +176,15 @@ enum rr_mob_id
     rr_mob_id_fat_bee,           //20 
      rr_mob_id_ladybug,           // 21
     rr_mob_id_rock,              // 22
+    rr_mob_id_worker_ant,            // 23
+    rr_mob_id_soldier_ant,           // 24
+    rr_mob_id_fire_worker_ant,       // 25
+    rr_mob_id_fire_soldier_ant,      // 26
+    rr_mob_id_termite_worker,        // 27
+    rr_mob_id_termite_soldier,       // 28
+    rr_mob_id_worm,                  // 29
 
-    rr_mob_id_max,                // 23
+    rr_mob_id_max,                   // 30
 };
 
 struct rr_petal_base_stat_scale

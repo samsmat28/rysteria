@@ -960,6 +960,41 @@ static void system_for_each(EntityIdx entity, void *simulation)
     ai->ticks_until_next_action--;
 }
 
+static void tick_ai_worm_underground(EntityIdx entity, struct rr_simulation *sim)
+{
+    struct rr_component_ai *ai = rr_simulation_get_ai(sim, entity);
+    struct rr_component_physical *phys = rr_simulation_get_physical(sim, entity);
+    struct rr_component_health *health = rr_simulation_get_health(sim, entity);
+    struct rr_component_centipede *cent = rr_simulation_get_centipede(sim, entity);
+    if (!ai || !phys || !health) return;
+    if (cent && !cent->is_head) {
+        EntityIdx parent = rr_simulation_resolve_entity_hash(sim, cent->parent_node);
+        if (parent != RR_NULL_ENTITY) {
+            struct rr_component_health *ph = rr_simulation_get_health(sim, parent);
+            struct rr_component_physical *pp = rr_simulation_get_physical(sim, parent);
+            if (ph && pp) {
+                health->damage = ph->damage;
+                if (pp->flags & 16) phys->flags |= 16; else phys->flags &= ~16;
+            }
+        }
+        return;
+    }
+    tick_ai_aggro_default(entity, sim, RR_PLAYER_SPEED * 1.15f);
+    float dmg = RR_MOB_DATA[rr_mob_id_worm].damage * RR_MOB_RARITY_SCALING[rr_simulation_get_mob(sim, entity)->rarity].damage;
+    if (phys->flags & 16) {
+        if (ai->ticks_until_next_action > 0) { health->damage = dmg; return; }
+        phys->flags &= ~16; health->damage = 0; ai->ticks_until_next_action = 50; return;
+    }
+    health->damage = 0;
+    if (ai->ticks_until_next_action target);
+        if (t != RR_NULL_ENTITY) {
+            struct rr_component_physical *tp = rr_simulation_get_physical(sim, t);
+            if (tp && (tp->x - phys->x)*(tp->x - phys->x) + (tp->y - phys->y)*(tp->y - phys->y) < 3025.0f) {
+                phys->flags |= 16; health->damage = dmg; ai->ticks_until_next_action = 35;
+            }
+        }
+    }
+}
 void rr_system_ai_tick(struct rr_simulation *simulation)
 {
     rr_simulation_for_each_ai(simulation, simulation, system_for_each);

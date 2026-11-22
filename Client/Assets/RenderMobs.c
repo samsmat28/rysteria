@@ -316,7 +316,8 @@ void rr_renderer_draw_mob(struct rr_renderer *renderer, uint8_t id,
         rr_renderer_fill(renderer);
         break;
 
-    case rr_mob_id_rock:
+    case rr_mob_id_worker_ant: case rr_mob_id_soldier_ant: case rr_mob_id_fire_worker_ant: case rr_mob_id_fire_soldier_ant: case rr_mob_id_termite_worker: case rr_mob_id_termite_soldier: case rr_mob_id_worm: render_sprite(renderer, id, 0, flags); break;
+        case rr_mob_id_rock:
         rr_renderer_scale(renderer, 0.25f);
         rr_renderer_set_fill(renderer, 0xff777777);
         rr_renderer_set_stroke(renderer, 0xff4d4d4d);
@@ -441,6 +442,37 @@ static void friendly_mask(struct rr_renderer *renderer)
     rr_renderer_add_color_filter(renderer, 0xffffff45, 0.3);
 }
 
+
+static void rr_custom_ant_draw(struct rr_renderer *r, uint32_t b, uint32_t h, uint32_t s, int m) {
+    struct rr_renderer_context_state st; rr_renderer_context_state_init(r, &st);
+    rr_renderer_set_line_width(r, 7); rr_renderer_set_stroke(r, s);
+    for (int i = -1; i <= 1; ++i) {
+        rr_renderer_begin_path(r); rr_renderer_move_to(r, i*24.0f, -25.0f); rr_renderer_line_to(r, i*24.0f-14.0f, -68.0f); rr_renderer_stroke(r);
+        rr_renderer_begin_path(r); rr_renderer_move_to(r, i*24.0f, 25.0f); rr_renderer_line_to(r, i*24.0f-14.0f, 68.0f); rr_renderer_stroke(r);
+    }
+    rr_renderer_set_line_width(r, m ? 8 : 5);
+    rr_renderer_begin_path(r); rr_renderer_move_to(r, 68.0f, -14.0f); rr_renderer_line_to(r, 98.0f, m ? -6.0f : -24.0f);
+    rr_renderer_move_to(r, 68.0f, 14.0f); rr_renderer_line_to(r, 98.0f, m ? 6.0f : 24.0f); rr_renderer_stroke(r);
+    rr_renderer_set_fill(r, b); rr_renderer_set_line_width(r, 8);
+    rr_renderer_begin_path(r); rr_renderer_arc(r, -52.0f, 0.0f, 40.0f); rr_renderer_fill(r); rr_renderer_stroke(r);
+    rr_renderer_begin_path(r); rr_renderer_arc(r, 0.0f, 0.0f, 27.0f); rr_renderer_fill(r); rr_renderer_stroke(r);
+    rr_renderer_set_fill(r, h);
+    rr_renderer_begin_path(r); rr_renderer_arc(r, 46.0f, 0.0f, 30.0f); rr_renderer_fill(r); rr_renderer_stroke(r);
+    rr_renderer_context_state_free(r, &st);
+}
+static void rr_wa_d(struct rr_renderer *r){rr_custom_ant_draw(r,0xff454545,0xff383838,0xff1f1f1f,0);}
+static void rr_sa_d(struct rr_renderer *r){rr_custom_ant_draw(r,0xff3d3d3d,0xff2b2b2b,0xff141414,1);}
+static void rr_fwa_d(struct rr_renderer *r){rr_custom_ant_draw(r,0xffd94126,0xffb82c14,0xff6e1607,0);}
+static void rr_fsa_d(struct rr_renderer *r){rr_custom_ant_draw(r,0xffc73218,0xff9e1f09,0xff590f03,1);}
+static void rr_tw_d(struct rr_renderer *r){rr_custom_ant_draw(r,0xffe8d5b5,0xff8c5828,0xff4d2e12,0);}
+static void rr_ts_d(struct rr_renderer *r){rr_custom_ant_draw(r,0xffdec49b,0xff703f15,0xff3d2007,1);}
+static void rr_wm_d(struct rr_renderer *r){
+    struct rr_renderer_context_state st; rr_renderer_context_state_init(r, &st);
+    rr_renderer_set_fill(r, 0xffc98e7b); rr_renderer_set_stroke(r, 0xff7a4d3f); rr_renderer_set_line_width(r, 9);
+    rr_renderer_begin_path(r); rr_renderer_arc(r, 0.0f, 0.0f, 68.0f); rr_renderer_fill(r); rr_renderer_stroke(r);
+    rr_renderer_context_state_free(r, &st);
+}
+
 void rr_renderer_mob_cache_init()
 {
     rr_renderer_spritesheet_init(
@@ -539,4 +571,12 @@ void rr_renderer_mob_cache_init()
                                  rr_house_centipede_head_draw, 240, 240,
                                  rr_house_centipede_body_draw, 240, 240,
                                  rr_house_centipede_leg_draw, 0);
+
+    rr_renderer_spritesheet_init(&mob_sprites[23], NULL, 240, 240, rr_wa_d, 0);
+    rr_renderer_spritesheet_init(&mob_sprites[24], NULL, 240, 240, rr_sa_d, 0);
+    rr_renderer_spritesheet_init(&mob_sprites[25], NULL, 240, 240, rr_fwa_d, 0);
+    rr_renderer_spritesheet_init(&mob_sprites[26], NULL, 240, 240, rr_fsa_d, 0);
+    rr_renderer_spritesheet_init(&mob_sprites[27], NULL, 240, 240, rr_tw_d, 0);
+    rr_renderer_spritesheet_init(&mob_sprites[28], NULL, 240, 240, rr_ts_d, 0);
+    rr_renderer_spritesheet_init(&mob_sprites[29], NULL, 240, 240, rr_wm_d, 0);
 }

@@ -270,7 +270,7 @@ EntityIdx rr_simulation_alloc_mob(struct rr_simulation *this,
         health->damage_paused = 25;
         if (mob_id == rr_mob_id_edmontosaurus)
             health->damage_reduction = 10 * rarity_scale->damage;
-        else if (mob_id == rr_mob_id_house_centipede)
+        else if (mob_id == rr_mob_id_house_centipede || mob_id == rr_mob_id_worm)
         {
             // ai->ai_type = rr_ai_type_neutral;
             EntityIdx prev_node = entity;
