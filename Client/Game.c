@@ -16,6 +16,7 @@
 
 #include <Client/Game.h>
 
+extern uint8_t rr_auto_enter_portal;
 #include <assert.h>
 #include <math.h>
 #include <stdlib.h>
@@ -1810,12 +1811,15 @@ void rr_game_tick(struct rr_game *this, float delta)
             rr_write_dev_cheat_packets(this, 0);
         }
         if ((!this->simulation_ready &&
-             rr_bitset_get_bit(this->input_data->keys_pressed_this_tick, 13)) ||
+             rr_bitset_get_bit(this->input_data->keys_pressed_this_tick, 13) || rr_auto_enter_portal) ||
             (this->simulation_ready && !this->cache.disable_leave_hotkey &&
              rr_bitset_get_bit(this->input_data->keys_pressed_this_tick, 27)))
         {
-            if (!this->simulation_ready)
-                rr_write_dev_cheat_packets(this, 1);
+                if (!this->simulation_ready)
+        {
+            rr_auto_enter_portal = 0;
+            rr_write_dev_cheat_packets(this, 1);
+        }
             struct proto_bug encoder;
             proto_bug_init(&encoder, RR_OUTGOING_PACKET);
             proto_bug_write_uint8(&encoder, this->socket.quick_verification, "qv");

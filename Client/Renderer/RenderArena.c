@@ -59,10 +59,16 @@ void render_background(struct rr_component_player_info *player_info,
             rr_renderer_translate(renderer, newLeftX + GRID_SIZE / 2,
                                   currY + GRID_SIZE / 2);
             rr_renderer_scale(renderer, (GRID_SIZE + 2) / 256);
-            if (this->selected_biome == rr_biome_id_hell_creek ||
-                this->selected_biome == rr_biome_id_pvp)
-                rr_renderer_draw_tile_hell_creek(renderer, tile_index);
-            else
+                   if (this->selected_biome == rr_biome_id_pvp)
+        {
+            rr_renderer_set_fill(renderer, 0xff9e744e);
+            rr_renderer_begin_path(renderer);
+            rr_renderer_rect(renderer, -128, -128, 256, 256);
+            rr_renderer_fill(renderer);
+        }
+        else if (this->selected_biome == rr_biome_id_hell_creek)
+            rr_renderer_draw_tile_hell_creek(renderer, tile_index);
+        else
                 rr_renderer_draw_tile_garden(renderer, tile_index);
             rr_renderer_context_state_free(renderer, &state);
         }
@@ -74,14 +80,15 @@ void render_background(struct rr_component_player_info *player_info,
     float grid_size = RR_MAZES[arena->biome].grid_size;
     uint32_t maze_dim = RR_MAZES[arena->biome].maze_dim;
     struct rr_maze_grid *grid = RR_MAZES[arena->biome].maze;
-    rr_renderer_set_fill(renderer, 0xff000000);
-    rr_renderer_set_global_alpha(renderer, 0.5f);
+       uint32_t wall_color = (arena->biome == rr_biome_id_pvp) ? 0xff1c0e06 : 0xff000000;
+    rr_renderer_set_fill(renderer, wall_color);
+    rr_renderer_set_global_alpha(renderer, (arena->biome == rr_biome_id_pvp) ? 0.88f : 0.5f);
     int32_t nx = floorf(leftX / grid_size);
     int32_t ny = floorf(topY / grid_size);
     for (; nx < rightX / grid_size; ++nx)
         for (int32_t currY = ny; currY < bottomY / grid_size; ++currY)
         {
-            rr_renderer_set_fill(renderer, 0xff000000);
+            rr_renderer_set_fill(renderer, wall_color);
             uint8_t tile =
                 (nx < 0 || currY < 0 || nx >= maze_dim || currY >= maze_dim)
                     ? 0
@@ -128,6 +135,7 @@ void render_background(struct rr_component_player_info *player_info,
         }
 }
 
+uint8_t rr_auto_enter_portal = 0;
 void rr_component_arena_render(EntityIdx entity, struct rr_game *this,
                                struct rr_simulation *simulation)
 {
@@ -143,8 +151,8 @@ void rr_component_arena_render(EntityIdx entity, struct rr_game *this,
     if (arena != NULL && player_info->flower_id != RR_NULL_ENTITY &&
         (arena->biome == rr_biome_id_hell_creek || arena->biome == rr_biome_id_pvp))
     {
-        float portal_x = 53.0f * 2048.0f;
-        float portal_y = 7.0f * 2048.0f;
+        float portal_x = 58.0f * 2048.0f;
+        float portal_y = 5.0f * 2048.0f;
         float portal_r = 140.0f;
 
         struct rr_renderer *renderer = this->renderer;
@@ -210,6 +218,7 @@ void rr_component_arena_render(EntityIdx entity, struct rr_game *this,
                         ? rr_biome_id_pvp
                         : rr_biome_id_hell_creek;
                     rr_game_select_biome(this, target_biome);
+                    rr_auto_enter_portal = 1;
                 }
             }
         }
