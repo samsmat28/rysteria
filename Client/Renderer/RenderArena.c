@@ -76,7 +76,7 @@ void render_background(struct rr_component_player_info *player_info,
             // Мягкое тёмно-коричневое пятно земли
             rr_renderer_set_fill(renderer, 0xff8c633f);
             rr_renderer_begin_path(renderer);
-            rr_renderer_arc(renderer, ox1, oy1, 18.0f + (tile_index % 12), 0, 6.28318f, 0);
+            rr_renderer_arc(renderer, ox1, oy1, 18.0f + (tile_index % 12));
             rr_renderer_fill(renderer);
 
             // Подземные камешки (на 2 из 3 тайлов)
@@ -84,12 +84,12 @@ void render_background(struct rr_component_player_info *player_info,
             {
                 rr_renderer_set_fill(renderer, 0xff755030);
                 rr_renderer_begin_path(renderer);
-                rr_renderer_arc(renderer, ox2, oy2, 7.0f + (tile_index % 5), 0, 6.28318f, 0);
+                rr_renderer_arc(renderer, ox2, oy2, 7.0f + (tile_index % 5));
                 rr_renderer_fill(renderer);
 
                 rr_renderer_set_fill(renderer, 0xff825a37);
                 rr_renderer_begin_path(renderer);
-                rr_renderer_arc(renderer, ox2 + 16.0f, oy2 - 10.0f, 4.5f, 0, 6.28318f, 0);
+                rr_renderer_arc(renderer, ox2 + 16.0f, oy2 - 10.0f, 4.5f);
                 rr_renderer_fill(renderer);
             }
 
