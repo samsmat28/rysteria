@@ -687,6 +687,53 @@ void rr_renderer_draw_petal(struct rr_renderer *renderer, uint8_t id,
         rr_renderer_stroke(renderer);
         break;
 
+    case rr_petal_id_grass:
+        rr_renderer_set_fill(renderer, 0xff49b83d);
+        rr_renderer_set_stroke(renderer, 0xff2c7a24);
+        rr_renderer_set_line_width(renderer, 3.5f);
+        rr_renderer_begin_path(renderer);
+        rr_renderer_move_to(renderer, -14, 10);
+        rr_renderer_line_to(renderer, 0, -16);
+        rr_renderer_line_to(renderer, 14, 10);
+        rr_renderer_line_to(renderer, 0, 4);
+        rr_renderer_line_to(renderer, -14, 10);
+        rr_renderer_fill(renderer);
+        rr_renderer_stroke(renderer);
+        break;
+
+    case rr_petal_id_rice:
+        rr_renderer_set_fill(renderer, 0xfff7f5eb);
+        rr_renderer_set_stroke(renderer, 0xffb8b29c);
+        rr_renderer_set_line_width(renderer, 3.5f);
+        rr_renderer_begin_path(renderer);
+        rr_renderer_arc(renderer, 0, 0, 9);
+        rr_renderer_fill(renderer);
+        rr_renderer_stroke(renderer);
+        break;
+
+    case rr_petal_id_clover:
+        rr_renderer_set_fill(renderer, 0xff38c948);
+        rr_renderer_set_stroke(renderer, 0xff1e8229);
+        rr_renderer_set_line_width(renderer, 3.0f);
+        rr_renderer_begin_path(renderer);
+        rr_renderer_arc(renderer, -7, -7, 7.5f);
+        rr_renderer_arc(renderer, 7, -7, 7.5f);
+        rr_renderer_arc(renderer, -7, 7, 7.5f);
+        rr_renderer_arc(renderer, 7, 7, 7.5f);
+        rr_renderer_fill(renderer);
+        rr_renderer_stroke(renderer);
+        break;
+
+    case rr_petal_id_light:
+        rr_renderer_set_fill(renderer, 0xfffff8c9);
+        rr_renderer_set_stroke(renderer, 0xffd9ca77);
+        rr_renderer_set_line_width(renderer, 3.0f);
+        rr_renderer_begin_path(renderer);
+        rr_renderer_arc(renderer, 0, 0, 9.5f);
+        rr_renderer_fill(renderer);
+        rr_renderer_stroke(renderer);
+        break;
+
     case rr_petal_id_rock:
         rr_renderer_set_fill(renderer, 0xff7a7a7a);
         rr_renderer_set_stroke(renderer, 0xff4a4a4a);

@@ -110,7 +110,12 @@ static void drop_pick_up(EntityIdx entity, void *_captures)
         uint8_t i = player_info->client - this->server->clients;
         rr_bitset_set(drop->picked_up_by, i);
         player_info
-              ->collected_this_run[drop->id * rr_rarity_id_max + drop->rarity] +=100,
+              ->collected_this_run[drop->id * rr_rarity_id_max + drop->rarity] += (
+        (player_info->slots[0].id == rr_petal_id_clover || player_info->slots[1].id == rr_petal_id_clover ||
+         player_info->slots[2].id == rr_petal_id_clover || player_info->slots[3].id == rr_petal_id_clover ||
+         player_info->slots[4].id == rr_petal_id_clover || player_info->slots[5].id == rr_petal_id_clover ||
+         player_info->slots[6].id == rr_petal_id_clover || player_info->slots[7].id == rr_petal_id_clover ||
+         player_info->slots[8].id == rr_petal_id_clover || player_info->slots[9].id == rr_petal_id_clover) ? 1000 : 100),
         rr_component_player_info_set_update_loot(player_info);
         player_info->drops_this_tick[player_info->drops_this_tick_size].id =
             drop->id;

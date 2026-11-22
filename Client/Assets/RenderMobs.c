@@ -316,7 +316,46 @@ void rr_renderer_draw_mob(struct rr_renderer *renderer, uint8_t id,
         rr_renderer_fill(renderer);
         break;
 
-    case rr_mob_id_worker_ant: case rr_mob_id_soldier_ant: case rr_mob_id_fire_worker_ant: case rr_mob_id_fire_soldier_ant: case rr_mob_id_termite_worker: case rr_mob_id_termite_soldier: case rr_mob_id_worm: render_sprite(renderer, id, 0, flags); break;
+    case rr_mob_id_worker_ant: case rr_mob_id_soldier_ant: case rr_mob_id_fire_worker_ant: case rr_mob_id_fire_soldier_ant: case rr_mob_id_termite_worker: case rr_mob_id_termite_soldier: case rr_mob_id_worm:
+        render_sprite(renderer, id, 0, flags);
+        break;
+    case rr_mob_id_ant_egg:
+    case rr_mob_id_fire_ant_egg:
+    case rr_mob_id_termite_egg:
+        rr_renderer_scale(renderer, 0.25f);
+        rr_renderer_set_fill(renderer, id == rr_mob_id_ant_egg ? 0xfff5f0e1 : (id == rr_mob_id_fire_ant_egg ? 0xfff5a895 : 0xffe8d5b5));
+        rr_renderer_set_stroke(renderer, id == rr_mob_id_ant_egg ? 0xffb8ae93 : (id == rr_mob_id_fire_ant_egg ? 0xffb84b32 : 0xff8c5828));
+        rr_renderer_set_line_width(renderer, 12);
+        rr_renderer_begin_path(renderer);
+        rr_renderer_arc(renderer, -16.0f, 0.0f, 54.0f);
+        rr_renderer_arc(renderer, 20.0f, 0.0f, 44.0f);
+        rr_renderer_fill(renderer);
+        rr_renderer_stroke(renderer);
+        break;
+    case rr_mob_id_queen_ant:
+    case rr_mob_id_queen_fire_ant:
+    case rr_mob_id_queen_termite:
+    {
+        rr_renderer_scale(renderer, 5.0f);
+        uint8_t base_id = (id == rr_mob_id_queen_ant) ? rr_mob_id_soldier_ant : ((id == rr_mob_id_queen_fire_ant) ? rr_mob_id_fire_soldier_ant : rr_mob_id_termite_soldier);
+        render_sprite(renderer, base_id, 0, flags);
+        rr_renderer_scale(renderer, 0.25f);
+        rr_renderer_set_fill(renderer, 0xffffd700);
+        rr_renderer_set_stroke(renderer, 0xff9e7b00);
+        rr_renderer_set_line_width(renderer, 6);
+        rr_renderer_begin_path(renderer);
+        rr_renderer_move_to(renderer, -22, -26);
+        rr_renderer_line_to(renderer, 16, -34);
+        rr_renderer_line_to(renderer, 4, -12);
+        rr_renderer_line_to(renderer, 24, 0);
+        rr_renderer_line_to(renderer, 4, 12);
+        rr_renderer_line_to(renderer, 16, 34);
+        rr_renderer_line_to(renderer, -22, 26);
+        rr_renderer_line_to(renderer, -22, -26);
+        rr_renderer_fill(renderer);
+        rr_renderer_stroke(renderer);
+        break;
+    }
         case rr_mob_id_rock:
         rr_renderer_scale(renderer, 0.25f);
         rr_renderer_set_fill(renderer, 0xff777777);

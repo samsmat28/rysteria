@@ -81,6 +81,10 @@ struct rr_petal_data RR_PETAL_DATA[rr_petal_id_max] = {
     {rr_petal_id_mint,      rr_rarity_id_unusual,   offensive,  5.0f,  10.0f,  10.0f,  50, 25, {1,1,1,1,1,1,1,1}},
      {rr_petal_id_rose,      rr_rarity_id_common,    defensive,  5.0f,  15.0f,  10.0f,  25, 50, {1,1,1,1,1,1,3,3}},
     {rr_petal_id_rock,      rr_rarity_id_common,    defensive, 15.0f, 350.0f,   0.0f, 120,  0, {1,1,1,1,1,1,1,1}},
+    {rr_petal_id_grass,              rr_rarity_id_common,    defensive,  5.0f,  15.0f, 10.0f,  50,  0, {1,1,1,1,1,1,1}},
+    {rr_petal_id_rice,               rr_rarity_id_common,    offensive,  6.0f,   5.0f,  0.0f,   5,  0, {1,1,1,1,1,1,1}},
+    {rr_petal_id_clover,             rr_rarity_id_unusual,   defensive,  4.0f,  10.0f,  0.0f,  50,  0, {1,1,1,1,1,1,1}},
+    {rr_petal_id_light,              rr_rarity_id_common,    offensive,  8.0f,   6.0f,  0.0f,  15,  0, {1,2,3,3,5,6,6}},
 };    
 
 char const *RR_PETAL_NAMES[rr_petal_id_max] = {
@@ -88,7 +92,7 @@ char const *RR_PETAL_NAMES[rr_petal_id_max] = {
     "Peas",     "Leaf",      "Egg",       "Magnet", "Uranium",  "Feather", "Azalea",
     "Bone",     "Web",       "Seed",      "Gravel", "Club",     "Crest",   "Droplet",
     "Beak",     "Lightning", "Third Eye", "Nest",   "Fireball", "Meat",    "Bubble",
-    "Meteor",   "Mandible",  "Wax",       "Sand",   "Mint",     "Rose",     "Rock"
+    "Meteor",   "Mandible",  "Wax",       "Sand",   "Mint",     "Rose",     "Rock", "Grass", "Rice", "Clover", "Light"
 };
     
 char const *RR_PETAL_DESCRIPTIONS[rr_petal_id_max] = {
@@ -154,13 +158,19 @@ struct rr_mob_data RR_MOB_DATA[rr_mob_id_max] = {
     {rr_mob_id_fat_bee, rr_rarity_id_common, rr_rarity_id_ultimate, 60, 45, 34.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_stinger, 0.25},{rr_petal_id_wax, 0.20},{rr_petal_id_berry, 0.05}}},
     {rr_mob_id_ladybug, rr_rarity_id_common, rr_rarity_id_ultimate, 35, 10, 26.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_rose, 0.35},{rr_petal_id_leaf, 0.15}}},
     {rr_mob_id_rock,    rr_rarity_id_common, rr_rarity_id_ultimate, 150, 10, 38.0f, rr_rarity_id_max,    rr_rarity_id_max,    rr_rarity_id_max, {{rr_petal_id_rock, 0.35},{rr_petal_id_magnet, 0.25}}},
-    {rr_mob_id_worker_ant,       rr_rarity_id_common, rr_rarity_id_ultimate, 22, 10, 18.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_leaf, 0.20},{rr_petal_id_pellet, 0.15}}},
-    {rr_mob_id_soldier_ant,      rr_rarity_id_common, rr_rarity_id_ultimate, 40, 16, 22.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_mandible, 0.20},{rr_petal_id_leaf, 0.15}}},
+    {rr_mob_id_worker_ant,       rr_rarity_id_common, rr_rarity_id_ultimate, 22, 10, 18.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_leaf, 0.25},{rr_petal_id_grass, 0.25},{rr_petal_id_rice, 0.20},{rr_petal_id_light, 0.20},{rr_petal_id_clover, 0.08}}},
+    {rr_mob_id_soldier_ant,      rr_rarity_id_common, rr_rarity_id_ultimate, 40, 16, 22.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_leaf, 0.25},{rr_petal_id_grass, 0.25},{rr_petal_id_rice, 0.20},{rr_petal_id_light, 0.20},{rr_petal_id_clover, 0.12}}},
     {rr_mob_id_fire_worker_ant,  rr_rarity_id_common, rr_rarity_id_ultimate, 30, 14, 19.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_stinger, 0.20},{rr_petal_id_pellet, 0.15}}},
     {rr_mob_id_fire_soldier_ant, rr_rarity_id_common, rr_rarity_id_ultimate, 55, 22, 23.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_mandible, 0.25},{rr_petal_id_stinger, 0.15}}},
     {rr_mob_id_termite_worker,   rr_rarity_id_common, rr_rarity_id_ultimate, 28, 12, 19.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_sand, 0.20},{rr_petal_id_pellet, 0.15}}},
     {rr_mob_id_termite_soldier,  rr_rarity_id_common, rr_rarity_id_ultimate, 50, 20, 23.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_mandible, 0.25},{rr_petal_id_sand, 0.15}}},
     {rr_mob_id_worm,             rr_rarity_id_common, rr_rarity_id_ultimate, 45, 24, 21.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_sand, 0.25},{rr_petal_id_peas, 0.15}}},
+    {rr_mob_id_ant_egg,          rr_rarity_id_common, rr_rarity_id_ultimate, 18,  0, 16.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_egg, 0.35},{rr_petal_id_leaf, 0.25},{rr_petal_id_clover, 0.10}}},
+    {rr_mob_id_fire_ant_egg,     rr_rarity_id_common, rr_rarity_id_ultimate, 24,  0, 17.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_egg, 0.35},{rr_petal_id_stinger, 0.25},{rr_petal_id_pellet, 0.15}}},
+    {rr_mob_id_termite_egg,      rr_rarity_id_common, rr_rarity_id_ultimate, 22,  0, 17.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_egg, 0.35},{rr_petal_id_sand, 0.25},{rr_petal_id_pellet, 0.15}}},
+    {rr_mob_id_queen_ant,        rr_rarity_id_common, rr_rarity_id_ultimate, 350, 35, 185.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_egg, 0.50},{rr_petal_id_clover, 0.40},{rr_petal_id_rice, 0.35}}},
+    {rr_mob_id_queen_fire_ant,   rr_rarity_id_common, rr_rarity_id_ultimate, 450, 45, 190.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_egg, 0.50},{rr_petal_id_mandible, 0.40},{rr_petal_id_stinger, 0.35}}},
+    {rr_mob_id_queen_termite,    rr_rarity_id_common, rr_rarity_id_ultimate, 400, 40, 185.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_egg, 0.50},{rr_petal_id_mandible, 0.40},{rr_petal_id_sand, 0.35}}},
 };
 
 char const *RR_MOB_NAMES[rr_mob_id_max] = {
@@ -168,7 +178,7 @@ char const *RR_MOB_NAMES[rr_mob_id_max] = {
 "Pachycephalosaurus","Ornithomimus","Ankylosaurus","Meteor",
 "Quetzalcoatlus","Edmontosaurus","Ant","Hornet","Dragonfly",
 "Honeybee","Beehive","Spider","House Centipede","Lanternfly",
-"Fat Bee","Ladybug","Rock", "Worker Ant", "Soldier Ant", "Fire Worker Ant", "Fire Soldier Ant", "Termite Worker", "Termite Soldier", "Worm"
+"Fat Bee","Ladybug","Rock", "Worker Ant", "Soldier Ant", "Fire Worker Ant", "Fire Soldier Ant", "Termite Worker", "Termite Soldier", "Worm", "Ant Egg", "Fire Ant Egg", "Termite Egg", "Queen Ant", "Queen Fire Ant", "Queen Termite"
 };
 
 uint32_t RR_MOB_DIFFICULTY_COEFFICIENTS[rr_mob_id_max] = {
@@ -202,7 +212,7 @@ double RR_HELL_CREEK_MOB_ID_RARITY_COEFFICIENTS[rr_mob_id_max] = {
     50, //fat_bee
     60, //ladybug
     45, //rock
-    0, 0, 0, 0, 0, 0, 0
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
 double RR_GARDEN_MOB_ID_RARITY_COEFFICIENTS[rr_mob_id_max] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 10, 30};

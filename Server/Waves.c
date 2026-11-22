@@ -48,9 +48,15 @@ uint8_t get_spawn_id(uint8_t biome, struct rr_maze_grid *zone)
         if (r_ant < 0.38) return rr_mob_id_soldier_ant;
         if (r_ant < 0.56) return rr_mob_id_fire_worker_ant;
         if (r_ant < 0.70) return rr_mob_id_fire_soldier_ant;
-        if (r_ant < 0.84) return rr_mob_id_termite_worker;
-        if (r_ant < 0.94) return rr_mob_id_termite_soldier;
-        return rr_mob_id_worm;
+        if (r_ant < 0.56) return rr_mob_id_termite_worker;
+        if (r_ant < 0.66) return rr_mob_id_termite_soldier;
+        if (r_ant < 0.74) return rr_mob_id_worm;
+        if (r_ant < 0.80) return rr_mob_id_ant_egg;
+        if (r_ant < 0.86) return rr_mob_id_fire_ant_egg;
+        if (r_ant < 0.80) return rr_mob_id_termite_egg;
+        if (r_ant < 0.87) return rr_mob_id_queen_ant;
+        if (r_ant < 0.94) return rr_mob_id_queen_fire_ant;
+        return rr_mob_id_queen_termite;
     }
      double r = rr_frand();
     if (r < 0.25)

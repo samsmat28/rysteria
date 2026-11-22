@@ -146,8 +146,12 @@ enum rr_petal_id
     rr_petal_id_mint,      // 32
        rr_petal_id_rose,   // 33
     rr_petal_id_rock,      // 34
+    rr_petal_id_grass,               // 35
+    rr_petal_id_rice,                // 36
+    rr_petal_id_clover,              // 37
+    rr_petal_id_light,               // 38
 
-    rr_petal_id_max,       // 35
+    rr_petal_id_max,                 // 39
 };
 
 enum rr_mob_id
@@ -183,8 +187,14 @@ enum rr_mob_id
     rr_mob_id_termite_worker,        // 27
     rr_mob_id_termite_soldier,       // 28
     rr_mob_id_worm,                  // 29
+    rr_mob_id_ant_egg,               // 30
+    rr_mob_id_fire_ant_egg,          // 31
+    rr_mob_id_termite_egg,           // 32
+    rr_mob_id_queen_ant,             // 33
+    rr_mob_id_queen_fire_ant,        // 34
+    rr_mob_id_queen_termite,         // 35
 
-    rr_mob_id_max,                   // 30
+    rr_mob_id_max,                   // 36
 };
 
 struct rr_petal_base_stat_scale
@@ -210,7 +220,7 @@ struct rr_mob_data
     uint8_t ai_passive_rarity;
     uint8_t ai_neutral_rarity;
     uint8_t ai_aggro_rarity;
-    struct rr_loot_data loot[4];
+    struct rr_loot_data loot[6];
 };
 
 struct rr_petal_data

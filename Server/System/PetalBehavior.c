@@ -727,7 +727,7 @@ system_egg_hatching_logic(struct rr_simulation *simulation,
     uint8_t m_id, m_rar;
     if (petal->id == rr_petal_id_egg)
     {
-        m_id = rr_mob_id_trex;
+        m_id = rr_mob_id_soldier_ant;
         m_rar = petal->rarity >= 1 ? petal->rarity - 1 : 0;
     }
     else if (petal->id == rr_petal_id_meteor)
