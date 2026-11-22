@@ -150,8 +150,11 @@ enum rr_petal_id
     rr_petal_id_rice,                // 36
     rr_petal_id_clover,              // 37
     rr_petal_id_light,               // 38
+    rr_petal_id_yucca,               // 39
+    rr_petal_id_triangle,            // 40
+    rr_petal_id_corn,                // 41
 
-    rr_petal_id_max,                 // 39
+    rr_petal_id_max,                 // 42
 };
 
 enum rr_mob_id
