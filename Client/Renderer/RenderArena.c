@@ -143,14 +143,14 @@ void rr_component_arena_render(EntityIdx entity, struct rr_game *this,
     if (arena != NULL && player_info->flower_id != RR_NULL_ENTITY &&
         (arena->biome == rr_biome_id_hell_creek || arena->biome == rr_biome_id_pvp))
     {
-        float portal_x = 27.5f * 2048.0f;
-        float portal_y = 3.5f * 2048.0f;
-        float portal_r = 110.0f;
+        float portal_x = 53.0f * 2048.0f;
+        float portal_y = 7.0f * 2048.0f;
+        float portal_r = 140.0f;
 
         struct rr_renderer *renderer = this->renderer;
         rr_renderer_set_global_alpha(renderer, 1.0f);
 
-        // Внешний обод норы
+        // Внешний обod норы
         rr_renderer_set_fill(renderer, arena->biome == rr_biome_id_hell_creek ? 0xff4a2e18 : 0xff7eef6d);
         rr_renderer_set_stroke(renderer, 0xff2b1a0e);
         rr_renderer_set_line_width(renderer, 10);
@@ -175,6 +175,19 @@ void rr_component_arena_render(EntityIdx entity, struct rr_game *this,
         char const *label = (arena->biome == rr_biome_id_hell_creek) ? "Ant Hell" : "Hell Creek";
         rr_renderer_stroke_text(renderer, label, portal_x, portal_y - portal_r - 20);
         rr_renderer_fill_text(renderer, label, portal_x, portal_y - portal_r - 20);
+
+                // Оранжевая линия-указатель от игрока к воронке
+        struct rr_component_physical *flower_ptr =
+            rr_simulation_get_physical(this->simulation, player_info->flower_id);
+        if (flower_ptr != NULL)
+        {
+            rr_renderer_set_stroke(renderer, 0xffffaa00);
+            rr_renderer_set_line_width(renderer, 6);
+            rr_renderer_begin_path(renderer);
+            rr_renderer_move_to(renderer, flower_ptr->x, flower_ptr->y);
+            rr_renderer_line_to(renderer, portal_x, portal_y);
+            rr_renderer_stroke(renderer);
+        }
 
         // Проверка наезда игрока на воронку
         static uint32_t portal_cooldown = 0;
