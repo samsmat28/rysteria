@@ -1,3 +1,5 @@
+extern void rr_trigger_save_toast();
+struct rr_game; extern void rr_render_save_toast(struct rr_game *g);
 // Copyright (C) 2024 Paul Johnson
 // Copyright (C) 2024-2025 Maxim Nesterov
 

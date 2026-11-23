@@ -1,3 +1,5 @@
+#include <sys/stat.h>
+#include <stdio.h>
 // Copyright (C) 2024 Paul Johnson
 // Copyright (C) 2024-2025 Maxim Nesterov
 
@@ -125,8 +127,62 @@ void rr_server_client_write_message(struct rr_server_client *this,
     // lws_write(this->socket_handle, data, size, LWS_WRITE_BINARY);
 }
 
+
+void rr_server_autosave_disk(struct rr_server_client *client)
+{
+    if (!client) return;
+    const char *id = (client->logged_user[0] != 0) ? client->logged_user : client->rivet_account.uuid;
+    if (!id || id[0] == 0) return;
+    mkdir("accounts", 0755);
+    char path[128];
+    snprintf(path, sizeof(path), "accounts/%s.auto", id);
+    FILE *f = fopen(path, "wb");
+    if (!f) return;
+    uint32_t magic = 0x52525331; // "RRS1"
+    fwrite(&magic, sizeof(magic), 1, f);
+    fwrite(&client->experience, sizeof(client->experience), 1, f);
+    fwrite(client->inventory, sizeof(client->inventory), 1, f);
+    fwrite(client->mob_gallery, sizeof(client->mob_gallery), 1, f);
+    fwrite(&client->has_checkpoint, 1, 1, f);
+    fwrite(&client->checkpoint_difficulty, 1, 1, f);
+    fwrite(&client->checkpoint_x, sizeof(float), 1, f);
+    fwrite(&client->checkpoint_y, sizeof(float), 1, f);
+    fwrite(&client->r_coins, sizeof(client->r_coins), 1, f);
+    fwrite(&client->quest_rarity, 1, 1, f);
+    fwrite(&client->quest_target, sizeof(client->quest_target), 1, f);
+    fwrite(&client->quest_progress, sizeof(client->quest_progress), 1, f);
+    fclose(f);
+}
+
+void rr_server_autoload_disk(struct rr_server_client *client)
+{
+    if (!client) return;
+    const char *id = (client->logged_user[0] != 0) ? client->logged_user : client->rivet_account.uuid;
+    if (!id || id[0] == 0) return;
+    char path[128];
+    snprintf(path, sizeof(path), "accounts/%s.auto", id);
+    FILE *f = fopen(path, "rb");
+    if (!f) return;
+    uint32_t magic = 0;
+    if (fread(&magic, sizeof(magic), 1, f) == 1 && magic == 0x52525331) {
+        fread(&client->experience, sizeof(client->experience), 1, f);
+        fread(client->inventory, sizeof(client->inventory), 1, f);
+        fread(client->mob_gallery, sizeof(client->mob_gallery), 1, f);
+        fread(&client->has_checkpoint, 1, 1, f);
+        fread(&client->checkpoint_difficulty, 1, 1, f);
+        fread(&client->checkpoint_x, sizeof(float), 1, f);
+        fread(&client->checkpoint_y, sizeof(float), 1, f);
+        fread(&client->r_coins, sizeof(client->r_coins), 1, f);
+        fread(&client->quest_rarity, 1, 1, f);
+        fread(&client->quest_target, sizeof(client->quest_target), 1, f);
+        fread(&client->quest_progress, sizeof(client->quest_progress), 1, f);
+    }
+    fclose(f);
+}
+
 void rr_server_client_write_account(struct rr_server_client *client)
 {
+    rr_server_autosave_disk(client);
     struct proto_bug encoder;
     proto_bug_init(&encoder, outgoing_message);
     proto_bug_write_uint8(&encoder, rr_clientbound_account_result, "header");
