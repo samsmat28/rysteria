@@ -51,10 +51,18 @@ EntityIdx rr_simulation_alloc_player(struct rr_simulation *this,
         rr_simulation_add_relations(this, flower_id);
     struct rr_component_arena *arena = rr_simulation_get_arena(this, arena_id);
     struct rr_spawn_zone *respawn_zone = &arena->respawn_zone;
-    rr_component_physical_set_x(
-        physical, respawn_zone->x + 2 * arena->maze->grid_size * rr_frand());
-    rr_component_physical_set_y(
-        physical, respawn_zone->y + 2 * arena->maze->grid_size * rr_frand());
+    if (player_info->client && player_info->client->has_checkpoint)
+    {
+        rr_component_physical_set_x(physical, player_info->client->checkpoint_x);
+        rr_component_physical_set_y(physical, player_info->client->checkpoint_y);
+    }
+    else
+    {
+        rr_component_physical_set_x(
+            physical, respawn_zone->x + 2 * arena->maze->grid_size * rr_frand());
+        rr_component_physical_set_y(
+            physical, respawn_zone->y + 2 * arena->maze->grid_size * rr_frand());
+    }
     rr_component_physical_set_radius(physical, 25.0f);
     physical->mass = 10;
     physical->arena = arena_id;
