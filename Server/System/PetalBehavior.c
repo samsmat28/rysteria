@@ -1,3 +1,4 @@
+#include <string.h>
 #include "../Server.h"
 // Copyright (C) 2024 Paul Johnson
 // Copyright (C) 2024-2025 Maxim Nesterov
@@ -259,6 +260,13 @@ static void system_flower_petal_movement_logic(
                     player_info->client->checkpoint_difficulty = g->difficulty;
                     player_info->client->checkpoint_x = flower_physical->x;
                     player_info->client->checkpoint_y = flower_physical->y;
+                if (simulation->animation_length < 256) {
+                    struct rr_simulation_animation *anim = &simulation->animations[simulation->animation_length++];
+                    memset(anim, 0, sizeof(*anim));
+                    anim->type = rr_animation_type_chat;
+                    strcpy(anim->name, "[Checkpoint]");
+                    strcpy(anim->message, "New zone progress saved!");
+                }
                 }
             }
         }
@@ -669,6 +677,18 @@ static void petal_modifiers(struct rr_simulation *simulation,
         struct rr_component_player_info_petal_slot *slot =
             &player_info->slots[outer];
         struct rr_petal_data const *data = &RR_PETAL_DATA[slot->id];
+        if (data->id == rr_petal_id_tail)
+            physical->acceleration_scale *= 1.15f;
+        if (data->id == rr_petal_id_sail)
+            to_rotate += 0.035f;
+        if (data->id == rr_petal_id_plate || data->id == rr_petal_id_scale)
+            health->damage_reduction_ratio += 0.08f;
+        if (data->id == rr_petal_id_crown || data->id == rr_petal_id_relic)
+        {
+            player_info->modifiers.reload_speed *= 1.18f;
+            player_info->modifiers.drop_pickup_radius += 40.0f;
+            physical->acceleration_scale *= 1.10f;
+        }
         if (data->id == rr_petal_id_leaf)
         {
             float heal = 0.075 * RR_PETAL_RARITY_SCALE[slot->rarity].heal;
