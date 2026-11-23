@@ -169,7 +169,7 @@ static void shop_rd(struct rr_ui_element *this, struct rr_game *g) {
     rr_shop_text(r, shop_status, 0, 142, 14, 0xffffe066);
 }
 struct rr_ui_element *rr_ui_shop_container_init(struct rr_game *g) {
-    (void)g; struct rr_ui_element *this = rr_ui_element_init();
+    (void)g; struct rr_ui_element *this = rr_ui_container_init();
     this->abs_width = this->width = 460; this->abs_height = this->height = 360;
     this->animate = act_btn_anim; this->should_show = shop_show; this->on_render = shop_rd;
     rr_ui_container_add_element(this, make_shop_btn(1, -105, -123, 185, 34));
@@ -196,7 +196,7 @@ static void q_rd(struct rr_ui_element *this, struct rr_game *g) {
     rr_shop_text(r, shop_status, 0, 122, 13, 0xffffe066);
 }
 struct rr_ui_element *rr_ui_quests_container_init(struct rr_game *g) {
-    (void)g; struct rr_ui_element *this = rr_ui_element_init();
+    (void)g; struct rr_ui_element *this = rr_ui_container_init();
     this->abs_width = this->width = 420; this->abs_height = this->height = 310;
     this->animate = act_btn_anim; this->should_show = q_show; this->on_render = q_rd;
     rr_ui_container_add_element(this, make_shop_btn(8, -97, 72, 175, 48));
