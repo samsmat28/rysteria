@@ -493,7 +493,7 @@ void rr_game_init(struct rr_game *this)
                             rr_ui_flex_container_init(
                                 rr_ui_h_container_init(rr_ui_container_init(), 0, 10,
                                     rr_ui_biome_button_init("Hell Creek", 0xff990000, rr_biome_id_hell_creek),
-                                    rr_ui_biome_button_init("PvP", 0xff3a6ee0, rr_biome_id_pvp),
+                                    rr_ui_biome_button_init("Ant Hell", 0xff8a5a36, rr_biome_id_pvp),
                                     NULL
                                 ),
                                 rr_ui_h_container_init(rr_ui_container_init(), 0, 10,

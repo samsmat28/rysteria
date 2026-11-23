@@ -30,7 +30,10 @@ struct rr_petal_base_stat_scale const offensive[rr_rarity_id_max] = {
     {8.5,  16},
     {14.5, 48},
     {24.6,144},
-    {42.0,432}
+    {42.0,432},
+    {72.0, 1296},
+    {125.0, 3888},
+    {220.0, 11664}
 };
 
 struct rr_petal_base_stat_scale const defensive[rr_rarity_id_max] = {
@@ -41,53 +44,56 @@ struct rr_petal_base_stat_scale const defensive[rr_rarity_id_max] = {
     {16,  8.5},
     {48, 14.5},
     {144,24.6},
-    {432,42.0}
+    {432,42.0},
+    {1296, 72.0},
+    {3888, 125.0},
+    {11664, 220.0}
 };
 
 struct rr_petal_data RR_PETAL_DATA[rr_petal_id_max] = {
 //   id                     min_rarity              scale        dmg      hp   clump   cd 2cd  count
-    {rr_petal_id_none,      rr_rarity_id_common,    offensive,  0.0f,   0.0f,   0.0f,   0,  0, {0,0,0,0,0,0,0,0}},
-    {rr_petal_id_basic,     rr_rarity_id_common,    offensive, 10.0f,  15.0f,   0.0f,  50,  0, {1,1,1,1,1,1,1,1}},
-    {rr_petal_id_pellet,    rr_rarity_id_common,    offensive,  8.0f,   5.0f,   0.0f,  13,  0, {1,2,2,3,3,5,6,6}},
-    {rr_petal_id_fossil,    rr_rarity_id_common,    offensive,  5.0f, 150.0f,   0.0f, 100,  0, {1,1,1,1,1,1,1,1}},
-    {rr_petal_id_stinger,   rr_rarity_id_common,    offensive, 70.0f,   3.0f,  10.0f, 150,  0, {1,1,1,1,1,3,5,5}},
-    {rr_petal_id_berry,     rr_rarity_id_rare,      offensive,  5.0f,   5.0f,  12.0f,  13,  0, {1,1,1,1,1,2,3,3}},
-    {rr_petal_id_shell,     rr_rarity_id_rare,      offensive, 10.0f,  16.0f,   0.0f,  50, 13, {1,1,1,1,1,2,3,3}},
-    {rr_petal_id_peas,      rr_rarity_id_rare,      offensive, 22.0f,  12.0f,   8.0f,  13, 12, {4,4,4,4,4,4,5,5}},
-    {rr_petal_id_leaf,      rr_rarity_id_unusual,   offensive,  9.0f,   8.0f,   8.0f,  38,  0, {1,1,1,1,1,2,2,2}},
-    {rr_petal_id_egg,       rr_rarity_id_unusual,   defensive,  1.0f,  75.0f,  10.0f,  25,100, {3,3,3,2,2,2,1,1}},
-    {rr_petal_id_magnet,    rr_rarity_id_unusual,   defensive,  2.0f,  25.0f,   0.0f,  38,  0, {1,1,1,1,1,1,1,1}},
-    {rr_petal_id_uranium,   rr_rarity_id_rare,      offensive,  3.0f,  40.0f,   0.0f,  25, 25, {1,1,1,1,1,1,1,1}},
-    {rr_petal_id_feather,   rr_rarity_id_common,    defensive,  1.0f,   3.0f,   0.0f,  25,  0, {1,1,1,1,1,1,1,1}},
-    {rr_petal_id_azalea,    rr_rarity_id_common,    defensive,  5.0f,  15.0f,  10.0f,  25, 50, {1,1,1,1,1,1,3,3}},
-    {rr_petal_id_bone,      rr_rarity_id_common,    defensive,  2.5f,  25.0f,   0.0f,  68,  0, {1,1,1,1,1,1,1,1}},
-    {rr_petal_id_web,       rr_rarity_id_rare,      defensive,  5.0f,   5.0f,   0.0f,  50, 13, {1,1,1,1,1,1,1,1}},
-    {rr_petal_id_seed,      rr_rarity_id_legendary, defensive,  1.0f,  75.0f,   0.0f,  63, 13, {1,1,1,1,1,1,1,1}},
-    {rr_petal_id_gravel,    rr_rarity_id_unusual,   offensive,  9.0f,  20.0f,   0.0f,  20, 10, {1,2,2,2,3,3,4,4}},
-    {rr_petal_id_club,      rr_rarity_id_common,    offensive,  2.0f,1200.0f,   0.0f, 200,  0, {1,1,1,1,1,1,1,1}},
-    {rr_petal_id_crest,     rr_rarity_id_rare,      offensive,  0.0f,   0.0f,   0.0f,   0,  0, {0,0,0,0,0,0,0,0}},
-    {rr_petal_id_droplet,   rr_rarity_id_common,    offensive, 15.0f,   5.0f,   0.0f,  37,  0, {1,1,1,1,1,1,1,1}},
-    {rr_petal_id_beak,      rr_rarity_id_unusual,   defensive,  5.0f,   5.0f,   0.0f,  55,  0, {1,1,1,1,1,1,1,1}},
-    {rr_petal_id_lightning, rr_rarity_id_unusual,   offensive,  7.0f,   1.0f,   0.0f,  63,  0, {1,1,1,1,1,1,1,1}},
-    {rr_petal_id_third_eye, rr_rarity_id_legendary, offensive,  0.0f,   0.0f,   0.0f,   0,  0, {0,0,0,0,0,0,0,0}},
-    {rr_petal_id_nest,      rr_rarity_id_legendary, defensive,  5.0f,  25.0f,   0.0f, 250, 13, {1,1,1,1,1,1,1,1}},
-    {rr_petal_id_fireball,  rr_rarity_id_unusual,   offensive,260.0f,   1.0f,   0.0f, 600,  0, {1,1,1,1,1,1,1,1}},
-    {rr_petal_id_meat,      rr_rarity_id_common,    offensive,  0.0f,1600.0f,   0.0f, 188, 13, {1,1,1,1,1,1,1,1}},
-    {rr_petal_id_bubble,    rr_rarity_id_common,    defensive,  1.0f,  25.0f,   0.0f, 150,  3, {1,1,1,1,1,1,1,1}},
-    {rr_petal_id_meteor,    rr_rarity_id_unusual,   defensive,  0.0f,   0.0f,   0.0f,  75,  0, {1,1,1,1,1,1,1,1}},
-    {rr_petal_id_mandible,  rr_rarity_id_common,    offensive,  5.0f,  10.0f,   0.0f,  75,  0, {1,1,1,1,1,1,1,1}},
-    {rr_petal_id_wax,       rr_rarity_id_unusual,   offensive, 10.0f,  10.0f,  10.0f,  38,  0, {2,2,2,2,2,2,2,2}},
-    {rr_petal_id_sand,      rr_rarity_id_common,    offensive, 15.0f,  10.0f,  10.0f,  37,  0, {4,4,4,4,4,4,4,4}},
-    {rr_petal_id_mint,      rr_rarity_id_unusual,   offensive,  5.0f,  10.0f,  10.0f,  50, 25, {1,1,1,1,1,1,1,1}},
-     {rr_petal_id_rose,      rr_rarity_id_common,    defensive,  5.0f,  15.0f,  10.0f,  25, 50, {1,1,1,1,1,1,3,3}},
-    {rr_petal_id_rock,      rr_rarity_id_common,    defensive, 15.0f, 350.0f,   0.0f, 120,  0, {1,1,1,1,1,1,1,1}},
-    {rr_petal_id_grass,              rr_rarity_id_common,    defensive,  5.0f,  15.0f, 10.0f,  50,  0, {1,1,1,1,1,1,1}},
-    {rr_petal_id_rice,               rr_rarity_id_common,    offensive,  6.0f,   5.0f,  0.0f,   5,  0, {1,1,1,1,1,1,1}},
-    {rr_petal_id_clover,             rr_rarity_id_unusual,   defensive,  4.0f,  10.0f,  0.0f,  50,  0, {1,1,1,1,1,1,1}},
-    {rr_petal_id_light,              rr_rarity_id_common,    offensive,  8.0f,   6.0f,  0.0f,  15,  0, {1,2,3,3,5,6,6}},
-    {rr_petal_id_yucca,              rr_rarity_id_common,    defensive,  6.0f,  15.0f,  8.0f,  45,  0, {1,1,1,1,1,1,1}},
-    {rr_petal_id_triangle,           rr_rarity_id_unusual,   offensive, 14.0f,   6.0f,  0.0f,  30,  0, {1,1,1,1,1,1,1}},
-    {rr_petal_id_corn,               rr_rarity_id_common,    offensive, 12.0f,  65.0f,  0.0f,  35,  0, {1,1,1,1,1,1,1}},
+    {rr_petal_id_none,      rr_rarity_id_common,    offensive,  0.0f,   0.0f,   0.0f,   0,  0, {0,0,0,0,0,0,0,0,0,0}},
+    {rr_petal_id_basic,     rr_rarity_id_common,    offensive, 10.0f,  15.0f,   0.0f,  50,  0, {1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_pellet,    rr_rarity_id_common,    offensive,  8.0f,   5.0f,   0.0f,  13,  0, {1,2,2,3,3,5,6,6,6,6}},
+    {rr_petal_id_fossil,    rr_rarity_id_common,    offensive,  5.0f, 150.0f,   0.0f, 100,  0, {1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_stinger,   rr_rarity_id_common,    offensive, 70.0f,   3.0f,  10.0f, 150,  0, {1,1,1,1,1,3,5,5,5,5}},
+    {rr_petal_id_berry,     rr_rarity_id_rare,      offensive,  5.0f,   5.0f,  12.0f,  13,  0, {1,1,1,1,1,2,3,3,3,3}},
+    {rr_petal_id_shell,     rr_rarity_id_rare,      offensive, 10.0f,  16.0f,   0.0f,  50, 13, {1,1,1,1,1,2,3,3,3,3}},
+    {rr_petal_id_peas,      rr_rarity_id_rare,      offensive, 22.0f,  12.0f,   8.0f,  13, 12, {4,4,4,4,4,4,5,5,5,5}},
+    {rr_petal_id_leaf,      rr_rarity_id_unusual,   offensive,  9.0f,   8.0f,   8.0f,  38,  0, {1,1,1,1,1,2,2,2,2,2}},
+    {rr_petal_id_egg,       rr_rarity_id_unusual,   defensive,  1.0f,  75.0f,  10.0f,  25,100, {3,3,3,2,2,2,1,1,1,1}},
+    {rr_petal_id_magnet,    rr_rarity_id_unusual,   defensive,  2.0f,  25.0f,   0.0f,  38,  0, {1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_uranium,   rr_rarity_id_rare,      offensive,  3.0f,  40.0f,   0.0f,  25, 25, {1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_feather,   rr_rarity_id_common,    defensive,  1.0f,   3.0f,   0.0f,  25,  0, {1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_azalea,    rr_rarity_id_common,    defensive,  5.0f,  15.0f,  10.0f,  25, 50, {1,1,1,1,1,1,3,3,3,3}},
+    {rr_petal_id_bone,      rr_rarity_id_common,    defensive,  2.5f,  25.0f,   0.0f,  68,  0, {1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_web,       rr_rarity_id_rare,      defensive,  5.0f,   5.0f,   0.0f,  50, 13, {1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_seed,      rr_rarity_id_legendary, defensive,  1.0f,  75.0f,   0.0f,  63, 13, {1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_gravel,    rr_rarity_id_unusual,   offensive,  9.0f,  20.0f,   0.0f,  20, 10, {1,2,2,2,3,3,4,4,4,4}},
+    {rr_petal_id_club,      rr_rarity_id_common,    offensive,  2.0f,1200.0f,   0.0f, 200,  0, {1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_crest,     rr_rarity_id_rare,      offensive,  0.0f,   0.0f,   0.0f,   0,  0, {0,0,0,0,0,0,0,0,0,0}},
+    {rr_petal_id_droplet,   rr_rarity_id_common,    offensive, 15.0f,   5.0f,   0.0f,  37,  0, {1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_beak,      rr_rarity_id_unusual,   defensive,  5.0f,   5.0f,   0.0f,  55,  0, {1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_lightning, rr_rarity_id_unusual,   offensive,  7.0f,   1.0f,   0.0f,  63,  0, {1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_third_eye, rr_rarity_id_legendary, offensive,  0.0f,   0.0f,   0.0f,   0,  0, {0,0,0,0,0,0,0,0,0,0}},
+    {rr_petal_id_nest,      rr_rarity_id_legendary, defensive,  5.0f,  25.0f,   0.0f, 250, 13, {1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_fireball,  rr_rarity_id_unusual,   offensive,260.0f,   1.0f,   0.0f, 600,  0, {1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_meat,      rr_rarity_id_common,    offensive,  0.0f,1600.0f,   0.0f, 188, 13, {1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_bubble,    rr_rarity_id_common,    defensive,  1.0f,  25.0f,   0.0f, 150,  3, {1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_meteor,    rr_rarity_id_unusual,   defensive,  0.0f,   0.0f,   0.0f,  75,  0, {1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_mandible,  rr_rarity_id_common,    offensive,  5.0f,  10.0f,   0.0f,  75,  0, {1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_wax,       rr_rarity_id_unusual,   offensive, 10.0f,  10.0f,  10.0f,  38,  0, {2,2,2,2,2,2,2,2,2,2}},
+    {rr_petal_id_sand,      rr_rarity_id_common,    offensive, 15.0f,  10.0f,  10.0f,  37,  0, {4,4,4,4,4,4,4,4,4,4}},
+    {rr_petal_id_mint,      rr_rarity_id_unusual,   offensive,  5.0f,  10.0f,  10.0f,  50, 25, {1,1,1,1,1,1,1,1,1,1}},
+     {rr_petal_id_rose,      rr_rarity_id_common,    defensive,  5.0f,  15.0f,  10.0f,  25, 50, {1,1,1,1,1,1,3,3,3,3}},
+    {rr_petal_id_rock,      rr_rarity_id_common,    defensive, 15.0f, 350.0f,   0.0f, 120,  0, {1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_grass,              rr_rarity_id_common,    defensive,  5.0f,  15.0f, 10.0f,  50,  0, {1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_rice,               rr_rarity_id_common,    offensive,  6.0f,   5.0f,  0.0f,   5,  0, {1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_clover,             rr_rarity_id_unusual,   defensive,  4.0f,  10.0f,  0.0f,  50,  0, {1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_light,              rr_rarity_id_common,    offensive,  8.0f,   6.0f,  0.0f,  15,  0, {1,2,3,3,5,6,6,6,6,6}},
+    {rr_petal_id_yucca,              rr_rarity_id_common,    defensive,  6.0f,  15.0f,  8.0f,  45,  0, {1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_triangle,           rr_rarity_id_unusual,   offensive, 14.0f,   6.0f,  0.0f,  30,  0, {1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_corn,               rr_rarity_id_common,    offensive, 12.0f,  65.0f,  0.0f,  35,  0, {1,1,1,1,1,1,1,1,1,1}},
 };    
 
 char const *RR_PETAL_NAMES[rr_petal_id_max] = {
@@ -138,42 +144,42 @@ char const *RR_PETAL_DESCRIPTIONS[rr_petal_id_max] = {
 
 struct rr_mob_data RR_MOB_DATA[rr_mob_id_max] = {
 //   id                                     min_rarity  max_rarity              hp dmg    rad  ai_passive_rarity    ai_neutral_rarity    ai_aggro_rarity       loot
-    {rr_mob_id_triceratops,        rr_rarity_id_common, rr_rarity_id_ultimate,  45, 15, 30.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max,     {{rr_petal_id_leaf,    0.15},{rr_petal_id_fossil,    0.05}}},
-    {rr_mob_id_trex,               rr_rarity_id_common, rr_rarity_id_ultimate,  40, 25, 32.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_unusual, {{rr_petal_id_stinger, 0.03},{rr_petal_id_egg,       0.05},{rr_petal_id_meat,      0.01}}},
-    {rr_mob_id_fern,               rr_rarity_id_common, rr_rarity_id_ultimate,  10,  5, 24.0f, rr_rarity_id_max,    rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_leaf,     0.1},{rr_petal_id_azalea,    0.25}}},
-    {rr_mob_id_tree,               rr_rarity_id_common, rr_rarity_id_ultimate, 100,  5, 64.0f, rr_rarity_id_max,    rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_leaf,     2.5},{rr_petal_id_peas,       2.5},{rr_petal_id_seed,      0.05}}},
-    {rr_mob_id_pteranodon,         rr_rarity_id_common, rr_rarity_id_ultimate,  40, 15, 20.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_rare,    {{rr_petal_id_shell,   0.05},{rr_petal_id_beak,      0.15},{rr_petal_id_nest,      0.01}}},
-    {rr_mob_id_dakotaraptor,       rr_rarity_id_common, rr_rarity_id_ultimate,  35, 10, 25.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_epic,    {{rr_petal_id_crest,    0.1},{rr_petal_id_feather,    0.1},{rr_petal_id_pellet,    0.05}}},
-    {rr_mob_id_pachycephalosaurus, rr_rarity_id_common, rr_rarity_id_ultimate,  35, 20, 20.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_common,  {{rr_petal_id_fossil,   0.1},{rr_petal_id_berry,      0.1},{rr_petal_id_web,       0.05}}},
-    {rr_mob_id_ornithomimus,       rr_rarity_id_common, rr_rarity_id_ultimate,  25, 10, 20.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max,     {{rr_petal_id_feather,  0.1},{rr_petal_id_droplet,   0.05},{rr_petal_id_pellet,     0.1}}},
-    {rr_mob_id_ankylosaurus,       rr_rarity_id_common, rr_rarity_id_ultimate,  50, 10, 30.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max,     {{rr_petal_id_club,    0.15},{rr_petal_id_gravel,    0.05},{rr_petal_id_bubble,     0.1}}},
-    {rr_mob_id_meteor,             rr_rarity_id_common, rr_rarity_id_ultimate, 100, 10, 32.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_magnet,   0.5},{rr_petal_id_uranium,   0.05},{rr_petal_id_fireball,   1.0},{rr_petal_id_meteor, 2.0}}},
-    {rr_mob_id_quetzalcoatlus,     rr_rarity_id_common, rr_rarity_id_ultimate,  65, 20, 28.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_common,  {{rr_petal_id_beak,    0.05},{rr_petal_id_fossil,     0.1},{rr_petal_id_lightning, 0.01}}},
-    {rr_mob_id_edmontosaurus,      rr_rarity_id_common, rr_rarity_id_ultimate,  50, 15, 30.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max,     {{rr_petal_id_bone,    0.01},{rr_petal_id_fossil,     0.1},{rr_petal_id_third_eye, 0.05}}},
-    {rr_mob_id_ant,                rr_rarity_id_common, rr_rarity_id_ultimate,  10, 10, 20.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_pellet,   0.1},{rr_petal_id_leaf,       0.1},{rr_petal_id_mandible,  0.05}}},
-    {rr_mob_id_hornet,             rr_rarity_id_common, rr_rarity_id_ultimate,  28, 25, 25.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_stinger,  0.1},{rr_petal_id_crest,     0.05}}},
-    {rr_mob_id_dragonfly,          rr_rarity_id_common, rr_rarity_id_ultimate,  20, 10, 25.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_pellet,   0.1},{rr_petal_id_magnet,    0.05}}},
-    {rr_mob_id_honeybee,           rr_rarity_id_common, rr_rarity_id_ultimate,  12, 25, 22.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_wax,     0.05},{rr_petal_id_stinger,   0.05}}},
-    {rr_mob_id_beehive,            rr_rarity_id_common, rr_rarity_id_ultimate,   0,  0, 45.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_wax,     0.05},{rr_petal_id_azalea,    0.05}}},
-    {rr_mob_id_spider,             rr_rarity_id_common, rr_rarity_id_ultimate,  20, 25, 25.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_web,      0.1},{rr_petal_id_third_eye, 0.01}}},
-    {rr_mob_id_house_centipede,    rr_rarity_id_common, rr_rarity_id_ultimate,  25, 10, 23.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_peas,     0.1},{rr_petal_id_sand,      0.05}}},
-    {rr_mob_id_lanternfly,         rr_rarity_id_common, rr_rarity_id_ultimate,  20, 10, 25.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_mint,     0.1},{rr_petal_id_sand,      0.05}}},
-    {rr_mob_id_fat_bee, rr_rarity_id_common, rr_rarity_id_ultimate, 60, 45, 34.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_stinger, 0.25},{rr_petal_id_wax, 0.20},{rr_petal_id_berry, 0.05}}},
-    {rr_mob_id_ladybug, rr_rarity_id_common, rr_rarity_id_ultimate, 35, 10, 26.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_rose, 0.35},{rr_petal_id_leaf, 0.15}}},
-    {rr_mob_id_rock,    rr_rarity_id_common, rr_rarity_id_ultimate, 150, 10, 38.0f, rr_rarity_id_max,    rr_rarity_id_max,    rr_rarity_id_max, {{rr_petal_id_rock, 0.35},{rr_petal_id_magnet, 0.25}}},
-    {rr_mob_id_worker_ant,       rr_rarity_id_common, rr_rarity_id_ultimate, 22, 10, 26.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_leaf, 0.25},{rr_petal_id_grass, 0.25},{rr_petal_id_rice, 0.20},{rr_petal_id_light, 0.20},{rr_petal_id_clover, 0.08}}},
-    {rr_mob_id_soldier_ant,      rr_rarity_id_common, rr_rarity_id_ultimate, 40, 16, 31.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_leaf, 0.25},{rr_petal_id_grass, 0.25},{rr_petal_id_rice, 0.20},{rr_petal_id_light, 0.20},{rr_petal_id_clover, 0.12}}},
-        {rr_mob_id_fire_worker_ant,  rr_rarity_id_common, rr_rarity_id_ultimate, 30, 14, 27.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_yucca, 0.35},{rr_petal_id_corn, 0.30},{rr_petal_id_triangle, 0.20}}},
-        {rr_mob_id_fire_soldier_ant, rr_rarity_id_common, rr_rarity_id_ultimate, 55, 22, 32.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_triangle, 0.35},{rr_petal_id_corn, 0.30},{rr_petal_id_yucca, 0.25}}},
-    {rr_mob_id_termite_worker,   rr_rarity_id_common, rr_rarity_id_ultimate, 28, 12, 27.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_sand, 0.20},{rr_petal_id_pellet, 0.15}}},
-    {rr_mob_id_termite_soldier,  rr_rarity_id_common, rr_rarity_id_ultimate, 50, 20, 32.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_mandible, 0.25},{rr_petal_id_sand, 0.15}}},
-    {rr_mob_id_worm,             rr_rarity_id_common, rr_rarity_id_ultimate, 45, 24, 21.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_sand, 0.25},{rr_petal_id_peas, 0.15}}},
-    {rr_mob_id_ant_egg,          rr_rarity_id_common, rr_rarity_id_ultimate, 18,  0, 24.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_egg, 0.35},{rr_petal_id_leaf, 0.25},{rr_petal_id_clover, 0.10}}},
-        {rr_mob_id_fire_ant_egg,     rr_rarity_id_common, rr_rarity_id_ultimate, 24,  0, 25.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_yucca, 0.35},{rr_petal_id_corn, 0.30},{rr_petal_id_triangle, 0.20}}},
-    {rr_mob_id_termite_egg,      rr_rarity_id_common, rr_rarity_id_ultimate, 22,  0, 25.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_egg, 0.35},{rr_petal_id_sand, 0.25},{rr_petal_id_pellet, 0.15}}},
-        {rr_mob_id_queen_ant,        rr_rarity_id_common, rr_rarity_id_ultimate, 3500, 35, 185.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_egg, 1.0}}},
-            {rr_mob_id_queen_fire_ant,   rr_rarity_id_common, rr_rarity_id_ultimate, 4500, 45, 190.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_triangle, 0.70},{rr_petal_id_corn, 0.70},{rr_petal_id_yucca, 0.70}}},
-        {rr_mob_id_queen_termite,    rr_rarity_id_common, rr_rarity_id_ultimate, 4000, 40, 185.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_egg, 1.0}}},
+    {rr_mob_id_triceratops,        rr_rarity_id_common, rr_rarity_id_gods,  45, 15, 30.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max,     {{rr_petal_id_leaf,    0.15},{rr_petal_id_fossil,    0.05}}},
+    {rr_mob_id_trex,               rr_rarity_id_common, rr_rarity_id_gods,  40, 25, 32.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_unusual, {{rr_petal_id_stinger, 0.03},{rr_petal_id_egg,       0.05},{rr_petal_id_meat,      0.01}}},
+    {rr_mob_id_fern,               rr_rarity_id_common, rr_rarity_id_gods,  10,  5, 24.0f, rr_rarity_id_max,    rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_leaf,     0.1},{rr_petal_id_azalea,    0.25}}},
+    {rr_mob_id_tree,               rr_rarity_id_common, rr_rarity_id_gods, 100,  5, 64.0f, rr_rarity_id_max,    rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_leaf,     2.5},{rr_petal_id_peas,       2.5},{rr_petal_id_seed,      0.05}}},
+    {rr_mob_id_pteranodon,         rr_rarity_id_common, rr_rarity_id_gods,  40, 15, 20.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_rare,    {{rr_petal_id_shell,   0.05},{rr_petal_id_beak,      0.15},{rr_petal_id_nest,      0.01}}},
+    {rr_mob_id_dakotaraptor,       rr_rarity_id_common, rr_rarity_id_gods,  35, 10, 25.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_epic,    {{rr_petal_id_crest,    0.1},{rr_petal_id_feather,    0.1},{rr_petal_id_pellet,    0.05}}},
+    {rr_mob_id_pachycephalosaurus, rr_rarity_id_common, rr_rarity_id_gods,  35, 20, 20.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_common,  {{rr_petal_id_fossil,   0.1},{rr_petal_id_berry,      0.1},{rr_petal_id_web,       0.05}}},
+    {rr_mob_id_ornithomimus,       rr_rarity_id_common, rr_rarity_id_gods,  25, 10, 20.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max,     {{rr_petal_id_feather,  0.1},{rr_petal_id_droplet,   0.05},{rr_petal_id_pellet,     0.1}}},
+    {rr_mob_id_ankylosaurus,       rr_rarity_id_common, rr_rarity_id_gods,  50, 10, 30.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max,     {{rr_petal_id_club,    0.15},{rr_petal_id_gravel,    0.05},{rr_petal_id_bubble,     0.1}}},
+    {rr_mob_id_meteor,             rr_rarity_id_common, rr_rarity_id_gods, 100, 10, 32.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_magnet,   0.5},{rr_petal_id_uranium,   0.05},{rr_petal_id_fireball,   1.0},{rr_petal_id_meteor, 2.0}}},
+    {rr_mob_id_quetzalcoatlus,     rr_rarity_id_common, rr_rarity_id_gods,  65, 20, 28.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_common,  {{rr_petal_id_beak,    0.05},{rr_petal_id_fossil,     0.1},{rr_petal_id_lightning, 0.01}}},
+    {rr_mob_id_edmontosaurus,      rr_rarity_id_common, rr_rarity_id_gods,  50, 15, 30.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max,     {{rr_petal_id_bone,    0.01},{rr_petal_id_fossil,     0.1},{rr_petal_id_third_eye, 0.05}}},
+    {rr_mob_id_ant,                rr_rarity_id_common, rr_rarity_id_gods,  10, 10, 20.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_pellet,   0.1},{rr_petal_id_leaf,       0.1},{rr_petal_id_mandible,  0.05}}},
+    {rr_mob_id_hornet,             rr_rarity_id_common, rr_rarity_id_gods,  28, 25, 25.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_stinger,  0.1},{rr_petal_id_crest,     0.05}}},
+    {rr_mob_id_dragonfly,          rr_rarity_id_common, rr_rarity_id_gods,  20, 10, 25.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_pellet,   0.1},{rr_petal_id_magnet,    0.05}}},
+    {rr_mob_id_honeybee,           rr_rarity_id_common, rr_rarity_id_gods,  12, 25, 22.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_wax,     0.05},{rr_petal_id_stinger,   0.05}}},
+    {rr_mob_id_beehive,            rr_rarity_id_common, rr_rarity_id_gods,   0,  0, 45.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_wax,     0.05},{rr_petal_id_azalea,    0.05}}},
+    {rr_mob_id_spider,             rr_rarity_id_common, rr_rarity_id_gods,  20, 25, 25.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_web,      0.1},{rr_petal_id_third_eye, 0.01}}},
+    {rr_mob_id_house_centipede,    rr_rarity_id_common, rr_rarity_id_gods,  25, 10, 23.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_peas,     0.1},{rr_petal_id_sand,      0.05}}},
+    {rr_mob_id_lanternfly,         rr_rarity_id_common, rr_rarity_id_gods,  20, 10, 25.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_mint,     0.1},{rr_petal_id_sand,      0.05}}},
+    {rr_mob_id_fat_bee, rr_rarity_id_common, rr_rarity_id_gods, 60, 45, 34.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_stinger, 0.25},{rr_petal_id_wax, 0.20},{rr_petal_id_berry, 0.05}}},
+    {rr_mob_id_ladybug, rr_rarity_id_common, rr_rarity_id_gods, 35, 10, 26.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_rose, 0.35},{rr_petal_id_leaf, 0.15}}},
+    {rr_mob_id_rock,    rr_rarity_id_common, rr_rarity_id_gods, 150, 10, 38.0f, rr_rarity_id_max,    rr_rarity_id_max,    rr_rarity_id_max, {{rr_petal_id_rock, 0.35},{rr_petal_id_magnet, 0.25}}},
+    {rr_mob_id_worker_ant,       rr_rarity_id_common, rr_rarity_id_gods, 22, 10, 26.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_leaf, 0.25},{rr_petal_id_grass, 0.25},{rr_petal_id_rice, 0.20},{rr_petal_id_light, 0.20},{rr_petal_id_clover, 0.08}}},
+    {rr_mob_id_soldier_ant,      rr_rarity_id_common, rr_rarity_id_gods, 40, 16, 31.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_leaf, 0.25},{rr_petal_id_grass, 0.25},{rr_petal_id_rice, 0.20},{rr_petal_id_light, 0.20},{rr_petal_id_clover, 0.12}}},
+        {rr_mob_id_fire_worker_ant,  rr_rarity_id_common, rr_rarity_id_gods, 30, 14, 27.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_yucca, 0.35},{rr_petal_id_corn, 0.30},{rr_petal_id_triangle, 0.20}}},
+        {rr_mob_id_fire_soldier_ant, rr_rarity_id_common, rr_rarity_id_gods, 55, 22, 32.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_triangle, 0.35},{rr_petal_id_corn, 0.30},{rr_petal_id_yucca, 0.25}}},
+        {rr_mob_id_termite_worker,   rr_rarity_id_common, rr_rarity_id_gods, 28, 12, 27.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_bone, 0.30},{rr_petal_id_sand, 0.25},{rr_petal_id_pellet, 0.15}}},
+        {rr_mob_id_termite_soldier,  rr_rarity_id_common, rr_rarity_id_gods, 50, 20, 32.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_bone, 0.35},{rr_petal_id_mandible, 0.30},{rr_petal_id_sand, 0.20},{rr_petal_id_egg, 0.12}}},
+    {rr_mob_id_worm,             rr_rarity_id_common, rr_rarity_id_gods, 45, 24, 21.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_sand, 0.25},{rr_petal_id_peas, 0.15}}},
+    {rr_mob_id_ant_egg,          rr_rarity_id_common, rr_rarity_id_gods, 18,  0, 24.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_egg, 0.35},{rr_petal_id_leaf, 0.25},{rr_petal_id_clover, 0.10}}},
+        {rr_mob_id_fire_ant_egg,     rr_rarity_id_common, rr_rarity_id_gods, 24,  0, 25.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_yucca, 0.35},{rr_petal_id_corn, 0.30},{rr_petal_id_triangle, 0.20}}},
+        {rr_mob_id_termite_egg,      rr_rarity_id_common, rr_rarity_id_gods, 22,  0, 25.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_egg, 0.35},{rr_petal_id_bone, 0.25},{rr_petal_id_sand, 0.20}}},
+        {rr_mob_id_queen_ant,        rr_rarity_id_common, rr_rarity_id_gods, 3500, 35, 185.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_egg, 1.0}}},
+            {rr_mob_id_queen_fire_ant,   rr_rarity_id_common, rr_rarity_id_gods, 4500, 45, 190.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_triangle, 0.70},{rr_petal_id_corn, 0.70},{rr_petal_id_yucca, 0.70}}},
+            {rr_mob_id_queen_termite,    rr_rarity_id_common, rr_rarity_id_gods, 4000, 40, 185.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_bone, 0.70},{rr_petal_id_mandible, 0.70},{rr_petal_id_egg, 0.85}}},
 };
 
 char const *RR_MOB_NAMES[rr_mob_id_max] = {
@@ -229,6 +235,9 @@ struct rr_petal_rarity_scale RR_PETAL_RARITY_SCALE[rr_rarity_id_max] = {
     {24.5, 7.5, 150},
     {60,   2.5, 200},
     {180,  0.5, 250},
+    {540,  0.2, 310},
+    {1620, 0.1, 380},
+    {4860, 0.05, 460},
 };
 
 struct rr_mob_rarity_scale RR_MOB_RARITY_SCALING[rr_rarity_id_max] = {
@@ -245,7 +254,7 @@ struct rr_mob_rarity_scale RR_MOB_RARITY_SCALING[rr_rarity_id_max] = {
 
 uint32_t RR_RARITY_COLORS[rr_rarity_id_max] = {
     0xff7eef6d, 0xffffe65d, 0xff4d52e3, 0xff861fde,
-    0xffde1f1f, 0xff1fdbde, 0xffff2b75, 0xff2bffa3};
+    0xffde1f1f, 0xff1fdbde, 0xffff2b75, 0xff2bffa3, 0xff9b30ff, 0xff8e99a4, 0xffffffff};
 
 char const *RR_RARITY_NAMES[rr_rarity_id_max] = {
     "Common",    "Unusual", "Rare",   "Epic",
@@ -253,16 +262,16 @@ char const *RR_RARITY_NAMES[rr_rarity_id_max] = {
 
 #ifdef PVP
 uint64_t RR_PVP_POINTS_PER_RARITY[rr_rarity_id_max] = {
-    20, 100, 1000, 10000, 150000, 2250000, 45000000, 900000000};
+    20, 100, 1000, 10000, 150000, 2250000, 45000000, 900000000, 5000000000ULL, 25000000000ULL, 100000000000ULL};
 #endif
 
 double RR_MOB_WAVE_RARITY_COEFFICIENTS[rr_rarity_id_max + 1] = {
-    0, 1, 6, 10, 15, 25, 160, 1200, 250};
+    0, 1, 6, 10, 15, 25, 160, 1200, 250, 180, 140, 100};
 
 double RR_DROP_RARITY_COEFFICIENTS[rr_rarity_id_max] = {
-    0, 1, 8, 15, 40, 150, 500, 2500};
+    0, 1, 8, 15, 40, 150, 500, 2500, 12000, 60000, 300000};
 double RR_MOB_LOOT_RARITY_COEFFICIENTS[rr_rarity_id_max] = {2.5, 4,  6,   15,
-                                                            35,  50, 125, 150};
+                                                            35,  50, 125, 150, 200, 260, 350};
 
 static void init_game_coefficients()
 {
@@ -412,8 +421,8 @@ static void print_chances(float difficulty)
 {
     printf("-----Chances for %.0f-----\n", difficulty);
     uint32_t rarity_cap = rr_rarity_id_common + (difficulty + 7) / 8;
-    if (rarity_cap > rr_rarity_id_ultimate)
-        rarity_cap = rr_rarity_id_ultimate;
+    if (rarity_cap > rr_rarity_id_gods)
+        rarity_cap = rr_rarity_id_gods;
     uint32_t rarity = rarity_cap >= 2 ? rarity_cap - 2 : 0;
     for (; rarity <= rarity_cap; ++rarity)
     {
@@ -434,7 +443,7 @@ static void print_chances(float difficulty)
 }
 
 double RR_BASE_CRAFT_CHANCES[rr_rarity_id_max - 1] = {0.5,  0.3,  0.15, 0.05,
-                                                      0.03, 0.02, 0.015};
+                                                      0.03, 0.02, 0.015, 0.01, 0.007, 0.005};
 double RR_CRAFT_CHANCES[rr_rarity_id_max - 1];
 
 static double from_prd_base(double C)
@@ -636,88 +645,88 @@ RR_DEFINE_MAZE(HELL_CREEK, 160) = {
 RR_DEFINE_MAZE(PVP, 160) = {
     {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 0
     {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 1
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 2
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 3
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,c,c,c,c,c,c,c,c,c,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 4
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 5
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 6
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 7
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 8
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 9
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 10
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 11
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 12
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 13
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 14
-    {_,_,_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,r,r,r,_,_,_,_,_,C,C,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,R,R,_,_,_,_,_,e,e,e,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_}, // 15
-    {_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,r,r,r,r,r,r,r,_,_,C,C,C,C,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,R,R,R,R,_,_,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_}, // 16
-    {_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,C,C,C,C,C,C,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,R,R,R,R,R,R,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_,_,_,_,_}, // 17
-    {_,_,_,_,_,_,_,_,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,C,C,C,C,C,C,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,R,R,R,R,R,R,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_,_,_,_}, // 18
-    {_,_,_,_,_,_,_,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,C,C,C,C,C,C,C,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,R,R,R,R,R,R,R,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_,_,_}, // 19
-    {_,_,_,_,_,_,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,C,C,C,C,C,C,C,C,C,c,c,c,c,c,c,c,c,c,R,R,R,R,R,R,R,R,R,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_,_}, // 20
-    {_,_,_,_,_,_,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,C,C,C,C,C,C,C,_,_,_,_,_,_,_,_,_,_,_,_,_,R,R,R,R,R,R,R,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_,_}, // 21
-    {_,_,_,_,_,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,C,C,C,C,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,R,R,R,R,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_}, // 22
-    {_,_,_,_,_,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,C,C,C,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,R,R,R,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_}, // 23
-    {_,_,_,_,_,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,C,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,R,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_}, // 24
-    {_,_,_,_,_,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_}, // 25
-    {_,_,_,_,_,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_}, // 26
-    {_,_,_,_,_,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_}, // 27
-    {_,_,_,_,_,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,E,_,_,_,_,_,_,l,l,l,l,l,l,l,l,l,l,l,_,_,_,_,_,_,L,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_}, // 28
-    {_,_,_,_,_,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,E,E,E,_,_,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,_,_,L,L,L,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_}, // 29
-    {_,_,_,_,_,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,E,E,E,E,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,L,L,L,L,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_}, // 30
-    {_,_,_,_,_,_,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,E,E,E,E,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,L,L,L,L,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_,_}, // 31
-    {_,_,_,_,_,_,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,E,E,E,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,L,L,L,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_,_}, // 32
-    {_,_,_,_,_,_,_,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,E,E,E,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,L,L,L,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_,_,_}, // 33
-    {_,_,_,_,_,_,_,_,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,E,E,E,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,L,L,L,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_,_,_,_}, // 34
-    {_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,E,E,E,E,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,L,L,L,L,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_,_,_,_,_}, // 35
-    {_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,r,r,r,r,r,r,r,_,_,E,E,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,L,L,_,_,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_}, // 36
-    {_,_,_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,r,r,r,_,_,_,_,_,E,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,L,_,_,_,_,_,e,e,e,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_}, // 37
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 38
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 39
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 40
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 41
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 42
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 43
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 44
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,M,M,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,a,a,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 45
-    {_,_,_,_,_,_,_,_,_,_,_,_,m,m,m,m,m,m,m,m,m,_,_,_,_,M,M,M,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,a,a,a,_,_,_,_,x,x,x,x,x,x,x,x,x,_,_,_,_,_,_,_,_,_,_,_}, // 46
-    {_,_,_,_,_,_,_,_,_,_,m,m,m,m,m,m,m,m,m,m,m,m,m,M,M,M,M,M,M,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,a,a,a,a,a,a,x,x,x,x,x,x,x,x,x,x,x,x,x,_,_,_,_,_,_,_,_,_}, // 47
-    {_,_,_,_,_,_,_,_,_,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,M,M,M,M,M,M,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,a,a,a,a,a,a,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,_,_,_,_,_,_,_,_}, // 48
-    {_,_,_,_,_,_,_,_,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,M,M,M,M,M,M,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,a,a,a,a,a,a,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,_,_,_,_,_,_,_}, // 49
-    {_,_,_,_,_,_,_,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,M,M,M,M,M,M,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,a,a,a,a,a,a,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,_,_,_,_,_,_}, // 50
-    {_,_,_,_,_,_,_,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,M,M,M,M,M,M,M,l,l,l,l,l,l,l,l,l,l,l,l,l,l,l,a,a,a,a,a,a,a,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,_,_,_,_,_,_}, // 51
-    {_,_,_,_,_,_,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,M,M,M,M,M,_,_,_,l,l,l,l,l,l,l,l,l,l,l,_,_,_,a,a,a,a,a,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,_,_,_,_,_}, // 52
-    {_,_,_,_,_,_,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,M,M,M,M,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,a,a,a,a,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,_,_,_,_,_}, // 53
-    {_,_,_,_,_,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,M,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,a,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,_,_,_,_}, // 54
-    {_,_,_,_,_,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,_,_,_,_}, // 55
-    {_,_,_,_,_,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,_,_,_,_}, // 56
-    {_,_,_,_,_,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,_,_,_,_}, // 57
-    {_,_,_,_,_,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,_,_,_,_}, // 58
-    {_,_,_,_,_,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,A,A,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,u,u,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,_,_,_,_}, // 59
-    {_,_,_,_,_,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,A,A,A,A,A,_,U,U,U,U,U,U,U,U,U,U,U,U,U,_,u,u,u,u,u,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,_,_,_,_}, // 60
-    {_,_,_,_,_,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,A,A,A,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,u,u,u,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,_,_,_,_}, // 61
-    {_,_,_,_,_,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,_,_,_,_}, // 62
-    {_,_,_,_,_,_,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,_,_,_,_,_}, // 63
-    {_,_,_,_,_,_,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,_,_,_,_,_}, // 64
-    {_,_,_,_,_,_,_,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,_,_,_,_,_,_}, // 65
-    {_,_,_,_,_,_,_,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,_,_,_,_,_,_}, // 66
-    {_,_,_,_,_,_,_,_,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,_,_,_,_,_,_,_}, // 67
-    {_,_,_,_,_,_,_,_,_,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,_,_,_,_,_,_,_,_}, // 68
-    {_,_,_,_,_,_,_,_,_,_,m,m,m,m,m,m,m,m,m,m,m,m,m,_,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,_,x,x,x,x,x,x,x,x,x,x,x,x,x,_,_,_,_,_,_,_,_,_}, // 69
-    {_,_,_,_,_,_,_,_,_,_,_,_,m,m,m,m,m,m,m,m,m,_,_,_,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,_,_,_,x,x,x,x,x,x,x,x,x,_,_,_,_,_,_,_,_,_,_,_}, // 70
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 71
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 72
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 73
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 74
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 75
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,U,U,U,U,U,U,U,U,U,U,U,U,U,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 76
-    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 77
+    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,r,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 2
+    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,l,l,l,l,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 3
+    {_,_,_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,r,r,r,l,l,l,l,l,l,l,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 4
+    {_,_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,r,r,r,r,l,l,l,l,l,l,l,r,r,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 5
+    {_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,r,r,r,r,r,l,l,l,l,l,l,l,l,r,r,c,c,c,e,e,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,r,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 6
+    {_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,r,r,r,_,r,l,l,l,l,l,l,l,r,r,r,c,e,e,e,e,e,c,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,r,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 7
+    {_,_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,_,_,_,_,c,l,l,l,l,l,l,r,r,c,e,e,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,e,r,e,r,r,r,r,_,_,_,_,_,_,_,_,_,_,_,_}, // 8
+    {_,_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,c,c,c,c,c,l,l,l,l,l,r,r,r,e,e,e,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,r,e,e,e,e,e,e,r,r,r,r,_,_,_,_,_,_,_,_,_,_}, // 9
+    {_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,r,c,c,c,c,c,c,c,c,c,c,c,_,_,e,e,e,e,e,e,e,e,e,c,c,c,_,_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,r,e,e,e,e,e,e,e,r,r,r,r,r,_,_,_,_,_,_,_,_}, // 10
+    {_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,r,c,c,c,c,c,c,c,c,c,c,c,_,_,_,e,e,e,e,e,e,e,e,e,c,c,c,c,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,r,e,e,e,e,e,e,e,e,e,r,r,r,r,_,_,_,_,_,_,_,_}, // 11
+    {_,_,_,_,_,_,_,r,r,r,r,r,r,r,r,c,c,c,c,c,c,c,c,c,c,c,_,_,_,_,_,e,e,e,e,e,e,e,e,c,c,c,c,c,_,_,_,_,_,_,r,r,r,r,r,r,r,r,r,e,e,e,e,e,e,e,e,e,r,r,r,r,r,_,_,_,_,_,_,_}, // 12
+    {_,_,_,_,_,_,c,c,r,r,r,r,r,r,r,r,_,c,c,c,c,c,c,c,_,_,_,_,_,c,c,e,e,e,e,e,e,c,c,c,c,c,c,c,_,_,_,_,_,r,r,r,r,r,r,r,r,_,_,_,e,e,e,e,e,e,e,e,r,r,r,r,r,_,_,_,_,_,_,_}, // 13
+    {_,_,_,_,_,_,c,c,r,r,r,r,r,r,r,r,c,c,_,c,_,_,c,_,_,_,_,c,c,c,c,c,c,e,c,e,_,_,_,c,c,c,c,c,_,_,_,_,_,r,r,r,r,r,r,r,_,_,_,_,e,e,e,e,e,e,e,e,r,r,r,r,r,_,_,_,_,_,_,_}, // 14
+    {_,_,_,_,_,_,_,c,r,r,r,r,r,r,r,c,c,c,c,c,c,c,_,c,c,c,c,c,c,c,c,c,c,c,c,c,_,_,_,c,c,c,c,c,_,_,_,_,r,r,r,r,r,r,r,_,_,_,_,_,_,e,e,e,e,e,e,_,r,r,r,r,r,r,_,_,_,_,_,_}, // 15
+    {_,_,_,_,_,_,_,c,c,r,c,r,r,_,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,_,_,_,_,c,_,_,_,_,_,_,_,r,r,r,r,r,r,_,_,_,_,_,_,_,_,e,_,_,_,_,_,r,r,r,r,r,_,_,_,_,_,_}, // 16
+    {_,_,_,_,_,_,_,c,c,c,c,c,c,_,_,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,r,_,_,_,_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,_,_,_,_,_}, // 17
+    {_,_,_,_,_,_,_,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,r,r,_,_,_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,_,_,_,_,_}, // 18
+    {_,_,_,_,_,_,_,_,c,c,c,c,c,c,c,c,_,c,_,c,c,c,c,c,c,c,c,c,c,c,_,_,_,_,c,c,c,c,c,c,_,_,_,e,e,e,e,_,_,_,r,r,r,r,r,r,_,_,_,_,_,_,_,_,_,_,r,_,r,r,r,r,r,r,r,_,_,_,_,_}, // 19
+    {_,_,_,_,_,_,_,_,_,c,c,c,c,c,c,c,_,_,_,c,_,_,c,c,c,c,_,_,_,_,_,_,_,_,c,c,c,c,c,c,_,_,e,e,e,e,e,_,_,_,_,r,r,e,e,e,r,_,_,_,_,_,_,_,r,r,r,r,r,r,r,r,r,r,r,_,_,_,_,_}, // 20
+    {_,_,_,_,_,_,_,_,_,c,c,c,c,c,c,c,c,c,c,_,_,_,_,_,_,c,c,c,c,c,_,_,c,c,c,c,c,c,c,_,_,e,e,e,e,e,e,_,_,_,r,r,e,e,e,e,e,_,_,_,_,_,_,e,e,e,e,r,r,r,r,r,r,r,_,_,_,_,_,_}, // 21
+    {_,_,_,_,_,_,_,_,_,_,_,c,c,c,c,c,c,c,c,c,_,_,_,_,_,c,c,c,c,c,c,c,e,e,e,c,e,c,c,_,e,e,e,e,e,e,e,_,_,r,r,r,e,e,e,e,e,_,_,_,_,_,r,e,e,e,e,e,r,r,r,r,r,_,_,_,_,_,_,_}, // 22
+    {_,_,_,_,_,_,_,_,_,_,_,_,c,c,c,c,c,c,c,c,_,_,_,_,c,c,c,c,c,c,c,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,r,r,r,r,e,e,e,e,e,_,_,_,_,e,e,e,e,e,e,r,r,_,_,_,_,_,_,_,_,_,_}, // 23
+    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,c,c,c,c,c,c,c,c,_,c,c,c,c,c,c,c,c,e,e,e,e,e,e,e,e,e,e,r,e,r,r,_,r,r,r,r,r,r,r,e,e,e,e,e,_,_,_,_,e,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_}, // 24
+    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,e,e,e,e,e,e,e,e,r,r,r,r,r,r,r,r,r,r,r,r,r,r,e,e,e,e,e,e,_,_,_,_,e,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_}, // 25
+    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,c,_,c,c,r,r,r,r,c,c,c,c,_,_,_,c,c,e,e,e,e,e,e,r,r,r,r,r,r,r,r,r,r,r,r,r,r,e,e,e,e,e,e,_,_,_,_,e,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_}, // 26
+    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,c,c,r,r,r,r,r,c,c,_,_,_,_,_,_,c,_,e,e,e,e,e,r,r,r,r,r,r,r,r,r,r,r,r,r,_,e,e,e,e,e,e,_,_,_,_,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_}, // 27
+    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,c,r,r,r,r,r,r,c,c,_,_,_,_,_,_,_,_,_,_,_,_,_,e,r,r,r,r,r,r,r,r,r,r,r,_,_,_,e,e,e,e,e,e,_,_,_,_,e,e,e,e,e,e,e,_,_,_,_,_,_,_,_}, // 28
+    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,c,r,r,r,r,r,c,c,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,_,_,_,_,e,e,e,e,e,_,l,_,l,l,_,e,e,e,e,e,e,e,_,_,_,_,_,_,_}, // 29
+    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,c,c,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,e,e,e,e,l,l,l,l,l,l,l,_,e,e,e,e,e,e,_,_,_,_,_,_,_}, // 30
+    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,c,c,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,e,e,e,e,e,l,l,l,l,l,l,l,l,l,e,e,e,e,e,e,e,_,_,_,_,_,_}, // 31
+    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,e,e,e,e,e,l,l,l,l,l,l,l,l,l,l,e,e,e,e,e,e,_,_,_,_,_,_}, // 32
+    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,r,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,e,e,e,e,e,l,l,l,l,l,l,l,l,l,l,_,e,e,e,e,e,e,_,_,_,_,_,_}, // 33
+    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,r,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,e,e,e,e,e,e,e,l,l,l,l,l,l,l,l,l,l,_,e,e,e,e,e,e,_,_,_,_,_,_}, // 34
+    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,e,e,e,e,e,e,e,e,e,l,l,l,l,l,l,l,l,_,_,e,e,e,e,e,_,_,_,_,_,_,_}, // 35
+    {_,_,_,_,_,_,_,_,_,_,_,r,_,r,r,r,r,r,r,r,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,e,e,e,e,e,e,e,_,_,l,l,l,l,l,l,l,l,e,e,e,e,e,e,_,_,_,_,_,_,_,_}, // 36
+    {_,_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,r,r,r,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,e,e,e,e,e,e,e,_,_,_,_,_,l,l,l,l,l,_,e,e,e,e,e,e,_,_,_,_,_,_,_,_}, // 37
+    {_,_,_,_,_,_,_,_,_,r,r,r,r,r,r,r,r,r,r,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,e,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_,e,e,e,e,e,_,_,_,_,_,_,_,_,_}, // 38
+    {_,_,_,_,_,_,_,_,r,r,r,r,e,e,e,e,e,e,e,_,_,_,_,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,e,e,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_,e,e,e,e,e,_,_,_,_,_,_,_,_,_}, // 39
+    {_,_,_,_,_,_,_,_,r,r,r,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,e,e,e,e,e,e,e,e,_,_,_,_,_,_,e,e,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_}, // 40
+    {_,_,_,_,_,_,_,_,r,r,r,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_}, // 41
+    {_,_,_,_,_,_,_,_,r,r,r,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,e,e,l,l,l,l,l,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_}, // 42
+    {_,_,_,_,_,_,_,_,_,r,r,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,e,l,l,l,l,l,l,e,e,e,e,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_}, // 43
+    {_,_,_,_,_,_,_,_,_,r,e,e,e,e,e,r,e,e,e,_,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,l,l,l,l,l,l,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 44
+    {_,_,_,_,_,_,_,_,_,_,e,e,e,e,e,r,_,_,_,_,_,_,e,e,e,e,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,l,l,l,l,l,l,e,e,_,e,_,e,e,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 45
+    {_,_,_,_,_,_,_,_,_,_,e,e,e,e,e,r,_,_,_,_,_,_,_,e,e,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,l,l,l,l,l,l,l,l,e,e,_,_,_,_,_,_,_,_,_,_,l,l,_,_,_,_,_,_,_,_}, // 46
+    {_,_,_,_,_,_,_,_,_,e,e,e,e,e,_,_,_,_,_,_,_,_,_,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,l,l,l,l,l,l,l,l,_,m,m,m,_,m,m,_,_,_,_,l,l,l,l,_,_,_,_,_,_,_}, // 47
+    {_,_,_,_,_,_,_,_,_,e,e,e,e,e,_,_,_,_,_,_,_,_,_,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,l,l,l,l,l,l,l,l,_,m,m,m,m,m,m,m,_,_,_,l,l,l,l,l,_,_,_,_,_,_,_}, // 48
+    {_,_,_,_,_,_,_,_,_,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,l,l,l,l,l,l,l,l,l,m,m,m,m,m,m,m,m,m,_,l,l,l,l,l,l,l,_,_,_,_,_,_}, // 49
+    {_,_,_,_,_,_,_,_,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,l,l,l,l,l,l,_,_,_,m,m,m,m,m,m,m,m,m,_,l,l,l,l,l,l,l,_,_,_,_,_,_}, // 50
+    {_,_,_,_,_,_,_,e,e,e,e,e,e,e,e,_,_,_,_,_,_,_,_,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,l,l,l,l,l,l,_,_,_,m,m,m,m,m,m,m,m,m,m,_,l,l,l,l,l,_,_,_,_,_,_,_}, // 51
+    {_,_,_,_,_,e,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_,_,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,l,l,l,l,l,l,_,_,_,m,m,m,m,m,m,m,m,m,m,l,l,l,l,l,l,_,_,_,_,_,_,_}, // 52
+    {_,_,_,_,_,_,e,e,e,e,e,e,e,e,e,e,e,_,_,_,_,_,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,l,l,l,l,l,l,l,_,_,_,m,m,m,m,m,m,m,m,l,m,l,l,l,l,_,_,_,_,_,_,_,_}, // 53
+    {_,_,_,_,_,e,e,e,e,e,e,e,e,e,e,e,e,e,_,e,l,l,e,e,e,e,e,l,l,l,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,l,l,l,l,l,l,l,l,_,m,m,m,m,m,m,m,m,m,m,m,m,l,l,_,_,_,_,_,_,_,_}, // 54
+    {_,_,_,_,_,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,l,l,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,l,l,l,l,l,l,l,_,_,m,m,m,m,l,l,m,m,m,m,m,l,_,_,_,_,_,_,_,_,_}, // 55
+    {_,_,_,_,_,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,l,l,l,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,l,l,l,l,l,l,l,l,_,l,l,l,l,l,l,m,m,m,m,m,m,_,_,_,_,_,_,_,_,_}, // 56
+    {_,_,_,_,_,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,l,l,l,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,l,l,l,l,m,l,l,l,l,l,l,l,l,m,m,m,m,m,m,_,_,_,_,_,_,_,_,_}, // 57
+    {_,_,_,_,_,_,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,l,l,l,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,l,l,m,m,m,m,l,l,l,l,l,l,m,m,m,m,m,_,_,_,_,_,_,_,_,_,_}, // 58
+    {_,_,_,_,_,_,e,e,e,e,e,e,e,e,e,e,_,_,_,l,l,l,e,e,e,e,e,l,l,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,m,m,m,m,m,m,l,l,l,l,l,l,m,m,m,m,m,m,_,_,_,_,_,_,_,_,_}, // 59
+    {_,_,_,_,_,_,_,e,e,e,e,e,e,_,e,_,_,_,_,_,l,l,l,e,e,e,e,e,l,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,m,m,m,m,m,m,l,l,l,l,l,_,_,m,m,m,m,m,m,_,_,_,_,_,_,_,_}, // 60
+    {_,_,_,_,_,_,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_,l,l,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,m,m,m,m,m,m,m,l,_,_,_,_,_,_,m,m,m,m,m,m,_,_,_,_,_,_,_,_}, // 61
+    {_,_,_,_,_,_,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_,_,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,m,m,m,m,m,m,_,_,_,_,_,_,_,_,_,m,m,m,m,m,m,_,_,_,_,_,_,_}, // 62
+    {_,_,_,_,_,_,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_,_,_,e,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,m,m,m,m,m,m,_,_,_,_,_,_,_,_,_,_,m,m,m,m,m,m,_,_,_,_,_,_,_}, // 63
+    {_,_,_,_,_,_,e,e,e,e,e,e,_,_,m,m,_,_,_,_,_,_,_,_,_,e,e,e,e,e,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,m,m,m,m,m,m,m,_,_,_,_,_,_,_,_,_,_,_,m,m,m,m,m,_,_,_,_,_,_,_}, // 64
+    {_,_,_,_,_,_,_,e,e,e,e,e,e,m,m,m,m,_,m,m,_,_,_,_,_,e,e,e,e,e,u,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,m,m,m,m,m,m,_,_,_,_,_,_,_,u,u,_,_,_,m,m,m,m,m,m,_,_,_,_,_,_}, // 65
+    {_,_,_,_,_,_,_,e,e,e,e,e,e,e,m,m,m,m,m,_,_,_,_,_,_,e,e,e,e,e,u,u,u,_,u,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,m,m,m,m,m,_,_,_,_,u,u,u,u,u,u,u,_,_,m,m,m,m,m,m,_,_,_,_,_,_}, // 66
+    {_,_,_,_,_,_,_,_,m,e,e,e,e,e,e,m,m,m,m,m,m,_,_,_,u,u,e,e,e,e,e,u,u,u,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,m,m,m,m,m,m,_,_,_,u,u,u,u,u,u,u,u,u,u,m,m,m,m,m,m,_,_,_,_,_,_}, // 67
+    {_,_,_,_,_,_,_,_,m,m,e,e,e,e,e,e,e,e,m,m,m,m,u,u,u,u,e,e,e,e,e,u,u,u,u,u,_,_,_,_,_,_,_,_,_,_,_,_,_,m,m,m,m,m,m,m,m,m,u,u,u,u,u,u,u,u,u,u,u,u,m,m,m,m,_,_,_,_,_,_}, // 68
+    {_,_,_,_,_,_,_,m,m,m,m,e,e,e,e,e,e,e,e,e,e,e,_,e,e,e,e,e,e,e,e,u,u,u,u,u,_,_,_,_,_,_,_,_,_,_,_,_,_,m,m,m,m,m,m,m,m,u,u,u,u,u,u,u,u,u,u,u,u,m,m,m,m,m,_,_,_,_,_,_}, // 69
+    {_,_,_,_,_,_,_,m,m,m,m,m,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,u,u,u,u,u,u,_,_,_,_,_,_,_,_,_,_,_,_,m,m,m,m,m,m,m,m,u,u,u,u,u,u,u,u,u,u,u,u,m,m,m,m,m,_,_,_,_,_,_}, // 70
+    {_,_,_,_,_,_,_,m,m,m,m,m,m,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,u,u,u,u,u,_,_,_,_,_,_,_,_,_,_,_,_,_,_,m,m,m,m,m,m,m,u,u,u,u,u,u,u,u,u,u,u,m,m,m,m,_,_,_,_,_,_,_}, // 71
+    {_,_,_,_,_,_,_,_,m,m,m,m,m,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,e,u,u,u,u,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,m,m,m,m,m,u,u,u,u,u,u,u,u,u,u,u,m,m,_,_,_,_,_,_,_,_,_}, // 72
+    {_,_,_,_,_,_,_,_,m,m,m,m,m,m,m,m,m,m,m,m,_,e,e,e,e,u,e,e,e,u,u,u,u,u,u,u,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,m,m,m,m,m,u,u,u,u,u,u,u,u,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 73
+    {_,_,_,_,_,_,_,_,_,m,m,m,m,m,m,m,m,m,m,m,_,_,_,u,u,u,u,u,u,u,u,u,u,u,u,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,m,m,u,m,u,u,u,u,u,u,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 74
+    {_,_,_,_,_,_,_,_,_,_,_,m,m,m,m,m,m,m,m,_,_,_,_,u,u,u,u,u,u,u,u,u,u,u,u,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,m,m,u,m,u,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 75
+    {_,_,_,_,_,_,_,_,_,_,_,_,_,m,_,m,_,_,_,_,_,_,_,_,_,_,u,u,u,u,u,u,_,u,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 76
+    {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,u,_,_,u,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 77
     {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 78
     {_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_}, // 79
 };
 
 // clang-format on
-RR_DEFINE_MAZE(BURROW, 4) = {{1, 1}, {0, 1}};
+RR_DEFINE_MAZE(BURROW, 4) = {{1, 1}, {0,1,1,1,1,1,1,1,1,1}};
 
 #define MAZE_ENTRY(MAZE, GRID_SIZE)                                            \
     (sizeof(RR_MAZE_##MAZE[0]) / sizeof(struct rr_maze_grid)), GRID_SIZE,      \

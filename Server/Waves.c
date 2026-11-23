@@ -29,8 +29,8 @@ uint32_t get_spawn_rarity(float difficulty)
         difficulty = 1;
     double rarity_seed = rr_frand();
     uint32_t rarity_cap = rr_rarity_id_common + (difficulty + 7) / 8;
-    if (rarity_cap > rr_rarity_id_ultimate)
-        rarity_cap = rr_rarity_id_ultimate;
+    if (rarity_cap > rr_rarity_id_gods)
+        rarity_cap = rr_rarity_id_gods;
     uint32_t rarity = rarity_cap >= 2 ? rarity_cap - 2 : 0;
     for (; rarity < rarity_cap; ++rarity)
         if (pow(1 - (1 - RR_MOB_WAVE_RARITY_COEFFICIENTS[rarity + 1]) * 0.3,
@@ -43,40 +43,33 @@ uint8_t get_spawn_id(uint8_t biome, struct rr_maze_grid *zone)
 {
     if (biome == rr_biome_id_pvp)
     {
-        long idx = zone - &RR_MAZE_PVP;RR_MAZE_PVP[0][0];
-        int gx = (idx >= 0 && idx < 160 * 160) ? (int)(idx % 160) : 80;
-        int gy = (idx >= 0 && idx < 160 * 160) ? (int)(idx / 160) : 74;
+        long idx = zone - (const struct rr_maze_grid *)RR_MAZE_PVP;
+        int gx = (idx >= 0 && idx < 160 * 160) ? (int)(idx % 160) : 44;
+        int gy = (idx >= 0 && idx < 160 * 160) ? (int)(idx / 160) : 56;
         double r_ant = rr_frand();
 
-        // Центральная шахта снизу (64 <= gx <= 96 и gy >= 106): Черви (Worm)
-        if (gy >= 106 && gx >= 64 && gx <= 96)
+        // ПРАВЫЙ СЕКТОР (gx >= 85): Лабиринт Термитов + глубокие Черви (gy >= 122)
+        if (gx >= 85)
         {
-            if (r_ant < 0.94) return rr_mob_id_worm;
-            if (r_ant < 0.96) return rr_mob_id_queen_ant;
-            if (r_ant < 0.98) return rr_mob_id_queen_fire_ant;
+            if (gy >= 122 && r_ant < 0.35) return rr_mob_id_worm;
+            if (r_ant < 0.55) return rr_mob_id_termite_worker;
+            if (r_ant < 0.88) return rr_mob_id_termite_soldier;
+            if (r_ant < 0.98) return rr_mob_id_termite_egg;
             return rr_mob_id_queen_termite;
         }
-        // Северное крыло (gy < 66): ТОЛЬКО Обычные муравьи
-        if (gy < 66)
+        // ВЕРХНИЙ СЕКТОР (gx < 85 && gy < 64): Тоннели Обычных Муравьёв
+        if (gy < 64)
         {
             if (r_ant < 0.55) return rr_mob_id_worker_ant;
             if (r_ant < 0.88) return rr_mob_id_soldier_ant;
             if (r_ant < 0.98) return rr_mob_id_ant_egg;
             return rr_mob_id_queen_ant;
         }
-        // Юго-Западное крыло (gx < 80, gy >= 66): ТОЛЬКО Огненные (красные) муравьи
-        if (gx < 80)
-        {
-            if (r_ant < 0.55) return rr_mob_id_fire_worker_ant;
-            if (r_ant < 0.88) return rr_mob_id_fire_soldier_ant;
-            if (r_ant < 0.98) return rr_mob_id_fire_ant_egg;
-            return rr_mob_id_queen_fire_ant;
-        }
-        // Юго-Восточное крыло (gx >= 80, gy >= 66): ТОЛЬКО Термиты
-        if (r_ant < 0.55) return rr_mob_id_termite_worker;
-        if (r_ant < 0.88) return rr_mob_id_termite_soldier;
-        if (r_ant < 0.98) return rr_mob_id_termite_egg;
-        return rr_mob_id_queen_termite;
+        // НИЖНИЙ-ЛЕВЫЙ СЕКТОР (gx < 85 && gy >= 64): Пещеры Огненных Муравьёв
+        if (r_ant < 0.55) return rr_mob_id_fire_worker_ant;
+        if (r_ant < 0.88) return rr_mob_id_fire_soldier_ant;
+        if (r_ant < 0.98) return rr_mob_id_fire_ant_egg;
+        return rr_mob_id_queen_fire_ant;
     }
      double r = rr_frand();
     if (r < 0.25)

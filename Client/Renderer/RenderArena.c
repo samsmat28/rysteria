@@ -104,6 +104,30 @@ void render_background(struct rr_component_player_info *player_info,
                 rr_renderer_line_to(renderer, -ox1 * 0.6f + 15.0f, -oy2 * 0.6f + 4.0f);
                 rr_renderer_stroke(renderer);
             }
+
+            // Дополнительные подземные прожилки, крошка и кратеры
+            rr_renderer_set_fill(renderer, 0xff855c38);
+            rr_renderer_begin_path(renderer);
+            rr_renderer_arc(renderer, -ox2 * 0.7f, ox1 * 0.7f, 11.0f + (tile_index % 7));
+            rr_renderer_fill(renderer);
+
+            rr_renderer_set_fill(renderer, 0xff6b4728);
+            rr_renderer_begin_path(renderer);
+            rr_renderer_arc(renderer, oy1 * 0.8f, -ox2 * 0.8f, 4.5f);
+            rr_renderer_arc(renderer, oy1 * 0.8f + 12.0f, -ox2 * 0.8f + 7.0f, 3.5f);
+            rr_renderer_arc(renderer, -oy2 * 0.75f, oy1 * 0.75f, 5.0f);
+            rr_renderer_fill(renderer);
+
+            if (tile_index % 3 == 1)
+            {
+                rr_renderer_set_stroke(renderer, 0xff7d5533);
+                rr_renderer_set_line_width(renderer, 2.0f);
+                rr_renderer_begin_path(renderer);
+                rr_renderer_move_to(renderer, oy2 * 0.5f - 10.0f, ox1 * 0.5f + 10.0f);
+                rr_renderer_line_to(renderer, oy2 * 0.5f + 4.0f, ox1 * 0.5f - 2.0f);
+                rr_renderer_line_to(renderer, oy2 * 0.5f + 14.0f, ox1 * 0.5f - 12.0f);
+                rr_renderer_stroke(renderer);
+            }
         }
         else if (this->selected_biome == rr_biome_id_hell_creek)
             rr_renderer_draw_tile_hell_creek(renderer, tile_index);
