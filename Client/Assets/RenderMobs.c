@@ -333,6 +333,22 @@ void rr_renderer_draw_mob(struct rr_renderer *renderer, uint8_t id,
         rr_renderer_fill(renderer);
         rr_renderer_stroke(renderer);
         break;
+    case rr_mob_id_compsognathus: rr_renderer_scale(renderer, 0.75f); render_sprite(renderer, rr_mob_id_dakotaraptor, 0, flags); break;
+    case rr_mob_id_stegosaurus: rr_renderer_scale(renderer, 1.25f); render_sprite(renderer, rr_mob_id_ankylosaurus, 0, flags); break;
+    case rr_mob_id_dilophosaurus: rr_renderer_scale(renderer, 1.05f); render_sprite(renderer, rr_mob_id_ornithomimus, 0, flags); break;
+    case rr_mob_id_spinosaurus: rr_renderer_scale(renderer, 1.45f); render_sprite(renderer, rr_mob_id_trex, 0, flags); break;
+    case rr_mob_id_carnotaurus: rr_renderer_scale(renderer, 1.25f); render_sprite(renderer, rr_mob_id_trex, 0, flags); break;
+    case rr_mob_id_brachiosaurus: rr_renderer_scale(renderer, 1.85f); render_sprite(renderer, rr_mob_id_edmontosaurus, 0, flags); break;
+    case rr_mob_id_therizinosaurus: rr_renderer_scale(renderer, 1.40f); render_sprite(renderer, rr_mob_id_dakotaraptor, 0, flags); break;
+    case rr_mob_id_mosasaurus: rr_renderer_scale(renderer, 1.65f); render_sprite(renderer, rr_mob_id_quetzalcoatlus, 0, flags); break;
+    case rr_mob_id_volcano:
+        rr_renderer_set_fill(renderer, 0xff4a3525); rr_renderer_set_stroke(renderer, 0xff2b1d12); rr_renderer_set_line_width(renderer, 5.0f);
+        rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 58.0f); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+        rr_renderer_set_fill(renderer, 0xffff5400); rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 24.0f); rr_renderer_fill(renderer); break;
+    case rr_mob_id_titanoboa:
+        rr_renderer_set_fill(renderer, 0xff2d6a4f); rr_renderer_set_stroke(renderer, 0xff081c15); rr_renderer_set_line_width(renderer, 6.0f);
+        rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, -22, 0, 44.0f); rr_renderer_arc(renderer, 22, 0, 38.0f); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+        rr_renderer_set_fill(renderer, 0xffffd60a); rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 38, -10, 6.0f); rr_renderer_arc(renderer, 38, 10, 6.0f); rr_renderer_fill(renderer); break;
     case rr_mob_id_queen_ant:
     case rr_mob_id_queen_fire_ant:
     case rr_mob_id_queen_termite:

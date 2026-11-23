@@ -75,29 +75,28 @@ uint8_t get_spawn_id(uint8_t biome, struct rr_maze_grid *zone)
     {
         float diff = zone ? zone->difficulty : 1.0f;
         double r = rr_frand();
-        if (diff <= 24.0f)
-        {
-            if (r < 0.22) return rr_mob_id_triceratops;
-            if (r < 0.42) return rr_mob_id_ornithomimus;
-            if (r < 0.60) return rr_mob_id_pachycephalosaurus;
-            if (r < 0.76) return rr_mob_id_edmontosaurus;
-            if (r < 0.90) return rr_mob_id_ankylosaurus;
+        if (diff <= 18.0f) {
+            if (r < 0.24) return rr_mob_id_compsognathus;
+            if (r < 0.46) return rr_mob_id_stegosaurus;
+            if (r < 0.65) return rr_mob_id_triceratops;
+            if (r < 0.84) return rr_mob_id_dilophosaurus;
             return rr_mob_id_fern;
-        }
-        else if (diff <= 48.0f)
-        {
-            if (r < 0.32) return rr_mob_id_dakotaraptor;
-            if (r < 0.58) return rr_mob_id_pteranodon;
+        } else if (diff <= 38.0f) {
+            if (r < 0.24) return rr_mob_id_spinosaurus;
+            if (r < 0.46) return rr_mob_id_carnotaurus;
+            if (r < 0.68) return rr_mob_id_brachiosaurus;
+            if (r < 0.86) return rr_mob_id_dakotaraptor;
+            return rr_mob_id_pteranodon;
+        } else if (diff <= 56.0f) {
+            if (r < 0.28) return rr_mob_id_therizinosaurus;
+            if (r < 0.56) return rr_mob_id_mosasaurus;
             if (r < 0.80) return rr_mob_id_quetzalcoatlus;
-            if (r < 0.93) return rr_mob_id_ankylosaurus;
             return rr_mob_id_trex;
-        }
-        else
-        {
-            if (r < 0.45) return rr_mob_id_trex;
-            if (r < 0.78) return rr_mob_id_meteor;
-            if (r < 0.92) return rr_mob_id_dakotaraptor;
-            return rr_mob_id_tree;
+        } else {
+            if (r < 0.30) return rr_mob_id_titanoboa;
+            if (r < 0.58) return rr_mob_id_volcano;
+            if (r < 0.82) return rr_mob_id_trex;
+            return rr_mob_id_meteor;
         }
     }
     double *table =

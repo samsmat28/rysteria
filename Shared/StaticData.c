@@ -101,7 +101,7 @@ char const *RR_PETAL_NAMES[rr_petal_id_max] = {
     "Peas",     "Leaf",      "Egg",       "Magnet", "Uranium",  "Feather", "Azalea",
     "Bone",     "Web",       "Seed",      "Gravel", "Club",     "Crest",   "Droplet",
     "Beak",     "Lightning", "Third Eye", "Nest",   "Fireball", "Meat",    "Bubble",
-    "Meteor",   "Mandible",  "Wax",       "Sand",   "Mint",     "Rose",     "Rock", "Grass", "Rice", "Clover", "Light", "Yucca", "Triangle", "Corn", "Yggdrasil"
+    "Meteor",   "Mandible",  "Wax",       "Sand",   "Mint",     "Rose",     "Rock", "Grass", "Rice", "Clover", "Light", "Yucca", "Triangle", "Corn", "Yggdrasil", "Claw", "Fang", "Tooth", "Horn", "Thagomizer", "Scythe", "Magma", "Obsidian", "Plate", "Scale", "Amber", "Branch", "Pearl", "Tail", "Frill", "Venom", "Sail", "Ash", "Crown", "Relic"
 };
     
 char const *RR_PETAL_DESCRIPTIONS[rr_petal_id_max] = {
@@ -180,6 +180,16 @@ struct rr_mob_data RR_MOB_DATA[rr_mob_id_max] = {
         {rr_mob_id_queen_ant,        rr_rarity_id_common, rr_rarity_id_gods, 3500, 35, 185.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_egg, 1.0},{rr_petal_id_clover, 0.60},{rr_petal_id_light, 0.75},{rr_petal_id_yggdrasil, 0.45}}},
             {rr_mob_id_queen_fire_ant,   rr_rarity_id_common, rr_rarity_id_gods, 4500, 45, 190.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_triangle, 0.85},{rr_petal_id_corn, 0.85},{rr_petal_id_yucca, 0.85},{rr_petal_id_yggdrasil, 0.45}}},
             {rr_mob_id_queen_termite,    rr_rarity_id_common, rr_rarity_id_gods, 4000, 40, 185.0f, rr_rarity_id_max, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_egg, 0.95},{rr_petal_id_bone, 0.85},{rr_petal_id_mandible, 0.85},{rr_petal_id_yggdrasil, 0.45}}},
+    {rr_mob_id_compsognathus, rr_rarity_id_common, rr_rarity_id_gods, 22, 12, 18.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_claw, 0.35},{rr_petal_id_tail, 0.3}}},
+    {rr_mob_id_stegosaurus, rr_rarity_id_common, rr_rarity_id_gods, 85, 18, 38.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_thagomizer, 0.35},{rr_petal_id_plate, 0.35}}},
+    {rr_mob_id_dilophosaurus, rr_rarity_id_common, rr_rarity_id_gods, 48, 22, 26.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_venom, 0.35},{rr_petal_id_frill, 0.3}}},
+    {rr_mob_id_spinosaurus, rr_rarity_id_common, rr_rarity_id_gods, 140, 32, 46.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_sail, 0.4},{rr_petal_id_tooth, 0.35}}},
+    {rr_mob_id_carnotaurus, rr_rarity_id_common, rr_rarity_id_gods, 110, 30, 36.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_horn, 0.4},{rr_petal_id_claw, 0.35}}},
+    {rr_mob_id_brachiosaurus, rr_rarity_id_common, rr_rarity_id_gods, 320, 15, 68.0f, rr_rarity_id_max, rr_rarity_id_max, rr_rarity_id_max, {{rr_petal_id_amber, 0.45},{rr_petal_id_branch, 0.45}}},
+    {rr_mob_id_therizinosaurus, rr_rarity_id_common, rr_rarity_id_gods, 180, 42, 44.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_scythe, 0.45},{rr_petal_id_feather, 0.4}}},
+    {rr_mob_id_mosasaurus, rr_rarity_id_common, rr_rarity_id_gods, 260, 45, 56.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_pearl, 0.45},{rr_petal_id_scale, 0.45}}},
+    {rr_mob_id_volcano, rr_rarity_id_common, rr_rarity_id_gods, 500, 35, 64.0f, rr_rarity_id_max, rr_rarity_id_max, rr_rarity_id_max, {{rr_petal_id_magma, 0.5},{rr_petal_id_obsidian, 0.45}}},
+    {rr_mob_id_titanoboa, rr_rarity_id_common, rr_rarity_id_gods, 1600, 55, 72.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_crown, 0.65},{rr_petal_id_relic, 0.65}}},
 };
 
 char const *RR_MOB_NAMES[rr_mob_id_max] = {
@@ -187,7 +197,7 @@ char const *RR_MOB_NAMES[rr_mob_id_max] = {
 "Pachycephalosaurus","Ornithomimus","Ankylosaurus","Meteor",
 "Quetzalcoatlus","Edmontosaurus","Ant","Hornet","Dragonfly",
 "Honeybee","Beehive","Spider","House Centipede","Lanternfly",
-"Fat Bee","Ladybug","Rock", "Worker Ant", "Soldier Ant", "Fire Worker Ant", "Fire Soldier Ant", "Termite Worker", "Termite Soldier", "Worm", "Ant Egg", "Fire Ant Egg", "Termite Egg", "Queen Ant", "Queen Fire Ant", "Queen Termite"
+"Fat Bee","Ladybug","Rock", "Worker Ant", "Soldier Ant", "Fire Worker Ant", "Fire Soldier Ant", "Termite Worker", "Termite Soldier", "Worm", "Ant Egg", "Fire Ant Egg", "Termite Egg", "Queen Ant", "Queen Fire Ant", "Queen Termite", "Compsognathus", "Stegosaurus", "Dilophosaurus", "Spinosaurus", "Carnotaurus", "Brachiosaurus", "Therizinosaurus", "Mosasaurus", "Volcano", "Titanoboa"
 };
 
 uint32_t RR_MOB_DIFFICULTY_COEFFICIENTS[rr_mob_id_max] = {

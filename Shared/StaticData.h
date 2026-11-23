@@ -158,7 +158,27 @@ enum rr_petal_id
     rr_petal_id_corn,                // 41
 
     rr_petal_id_yggdrasil,      // 42
-    rr_petal_id_max,            // 43
+    rr_petal_id_claw,
+    rr_petal_id_fang,
+    rr_petal_id_tooth,
+    rr_petal_id_horn,
+    rr_petal_id_thagomizer,
+    rr_petal_id_scythe,
+    rr_petal_id_magma,
+    rr_petal_id_obsidian,
+    rr_petal_id_plate,
+    rr_petal_id_scale,
+    rr_petal_id_amber,
+    rr_petal_id_branch,
+    rr_petal_id_pearl,
+    rr_petal_id_tail,
+    rr_petal_id_frill,
+    rr_petal_id_venom,
+    rr_petal_id_sail,
+    rr_petal_id_ash,
+    rr_petal_id_crown,
+    rr_petal_id_relic,
+    rr_petal_id_max,
 };
 
 enum rr_mob_id
@@ -199,9 +219,18 @@ enum rr_mob_id
     rr_mob_id_termite_egg,           // 32
     rr_mob_id_queen_ant,             // 33
     rr_mob_id_queen_fire_ant,        // 34
-    rr_mob_id_queen_termite,         // 35
-
-    rr_mob_id_max,                   // 36
+    rr_mob_id_queen_termite,    // 35
+    rr_mob_id_compsognathus,
+    rr_mob_id_stegosaurus,
+    rr_mob_id_dilophosaurus,
+    rr_mob_id_spinosaurus,
+    rr_mob_id_carnotaurus,
+    rr_mob_id_brachiosaurus,
+    rr_mob_id_therizinosaurus,
+    rr_mob_id_mosasaurus,
+    rr_mob_id_volcano,
+    rr_mob_id_titanoboa,
+    rr_mob_id_max,
 };
 
 struct rr_petal_base_stat_scale
