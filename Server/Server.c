@@ -326,6 +326,25 @@ void rr_server_init(struct rr_server *this)
         rr_squad_init(&this->squads[i], this, i);
 }
 
+
+
+
+static void rr_send_shop_msg(struct rr_server_client *client, const char *text) {
+    if (!client || !text) return;
+    uint8_t buf[300];
+    memset(buf, 0, sizeof(buf));
+    const char *sender = "[Shop]";
+    size_t slen = strlen(sender);
+    size_t tlen = strlen(text);
+    if (tlen > 240) tlen = 240;
+    buf[0] = rr_clientbound_leaderboard_update;
+    buf[1] = (uint8_t)slen;
+    memcpy(buf + 2, sender, slen);
+    buf[2 + slen] = (uint8_t)tlen;
+    memcpy(buf + 3 + slen, text, tlen);
+    rr_server_client_write_message(client, buf, 3 + slen + tlen);
+}
+
 void rr_server_free(struct rr_server *this)
 {
     lws_context_destroy(this->server);
@@ -1035,7 +1054,8 @@ static int handle_lws_event(struct rr_server *this, struct lws *ws,
             rr_server_client_craft_petal(client, this, id, rarity, count);
             break;
         }
-        case rr_serverbound_chat:
+        
+case rr_serverbound_chat:
         {
             if (!client->in_squad)
                 break;

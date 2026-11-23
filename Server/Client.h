@@ -68,6 +68,10 @@ struct rr_server_client
     struct rr_component_player_info *player_info;
     struct rr_server_client_dev_cheats dev_cheats;
     double experience;
+    uint64_t r_coins;
+    uint8_t quest_rarity;
+    uint16_t quest_target;
+    uint16_t quest_progress;
     uint64_t pvp_points;
     float player_accel_x;
     float player_accel_y;

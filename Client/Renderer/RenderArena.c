@@ -1,3 +1,4 @@
+#include <emscripten.h>
 // Copyright (C) 2024 Paul Johnson
 // Copyright (C) 2024-2025 Maxim Nesterov
 
