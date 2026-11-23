@@ -86,6 +86,7 @@ set(SRCS
     Ui/TitleScreen/Account.c
     Ui/TitleScreen/BiomeButton.c
     Ui/TitleScreen/Crafting.c
+    Ui/TitleScreen/Shop.c
     Ui/TitleScreen/DevSquadPanel.c
     Ui/TitleScreen/Discord.c
     Ui/TitleScreen/Fullscreen.c

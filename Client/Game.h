@@ -36,6 +36,8 @@ enum rr_game_menu
     rr_game_menu_crafting,
     rr_game_menu_settings,
     rr_game_menu_account,
+    rr_game_menu_shop,
+    rr_game_menu_quests,
     rr_game_menu_dev_squad_panel
 };
 

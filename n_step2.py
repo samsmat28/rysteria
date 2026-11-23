@@ -1,0 +1,326 @@
+LB, RB = chr(91), chr(93)
+
+shop_c = f"""#include <Client/Ui/Ui.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <Client/Assets/RenderFunctions.h>
+#include <Client/Game.h>
+#include <Client/InputData.h>
+#include <Client/Renderer/Renderer.h>
+#include <Client/Ui/Engine.h>
+#include <Shared/StaticData.h>
+#include <Shared/Utilities.h>
+#include <Shared/pb.h>
+
+static uint8_t shop_tab = 0;
+static int shop_petal = 43;
+static int shop_rarity = 3;
+static char shop_status{LB}96{RB} = "Ready to trade!";
+
+static const uint64_t RR_SELL_PRICES{LB}11{RB} = {{
+    5, 15, 40, 120, 350, 1000, 3000, 9000, 25000, 75000, 200000
+}};
+
+static void rr_shop_send_chat(struct rr_game *game, const char *cmd) {{
+    if (!game || !cmd) return;
+    struct proto_bug encoder;
+    proto_bug_init(&encoder, RR_OUTGOING_PACKET);
+    proto_bug_write_uint8(&encoder, game->socket.quick_verification, "qv");
+    proto_bug_write_uint8(&encoder, rr_serverbound_chat, "header");
+    proto_bug_write_string(&encoder, cmd, 64, "chat");
+    rr_websocket_send(&game->socket, encoder.current - encoder.start);
+    snprintf(shop_status, sizeof(shop_status), "Sent: %s", cmd);
+}}
+
+static void shop_btn_on_event(struct rr_ui_element *this, struct rr_game *game, enum rr_ui_event event) {{
+    if (event == rr_ui_click && this->hovered) {{
+        game->menu_open = (game->menu_open == rr_game_menu_shop) ? rr_game_menu_none : rr_game_menu_shop;
+        if (game->menu_open == rr_game_menu_shop) rr_shop_send_chat(game, "/balance");
+    }}
+}}
+
+static void shop_btn_animate(struct rr_ui_element *this, struct rr_game *game) {{
+    if (rr_bitset_get_bit(game->input_data->keys_pressed_this_tick, 'B') && !game->text_input_focused) {{
+        game->menu_open = (game->menu_open == rr_game_menu_shop) ? rr_game_menu_none : rr_game_menu_shop;
+        if (game->menu_open == rr_game_menu_shop) rr_shop_send_chat(game, "/balance");
+    }}
+}}
+
+static void shop_btn_render(struct rr_ui_element *this, struct rr_game *game) {{
+    struct rr_renderer *r = game->renderer;
+    rr_renderer_scale(r, r->scale);
+    rr_renderer_set_fill(r, this->hovered || game->menu_open == rr_game_menu_shop ? 0xffd98a1c : 0xffa66814);
+    rr_renderer_set_stroke(r, 0xff6e4209);
+    rr_renderer_set_line_width(r, 5);
+    rr_renderer_begin_path(r);
+    rr_renderer_round_rect(r, -this->width / 2, -this->height / 2, this->width, this->height, 8);
+    rr_renderer_fill(r);
+    rr_renderer_stroke(r);
+    rr_render_text(r, "SHOP", 0, -2, 13, 0xffffffff, 0xff000000, 2.5f);
+    rr_render_text(r, "[B]", 0, 16, 11, 0xffffe066, 0xff000000, 2.0f);
+}}
+
+struct rr_ui_element *rr_ui_shop_toggle_button_init() {{
+    struct rr_ui_element *this = rr_ui_element_init();
+    this->abs_width = this->abs_height = this->width = this->height = 60;
+    this->animate = shop_btn_animate;
+    this->on_event = shop_btn_on_event;
+    this->on_render = shop_btn_render;
+    return this;
+}}
+
+static void quests_btn_on_event(struct rr_ui_element *this, struct rr_game *game, enum rr_ui_event event) {{
+    if (event == rr_ui_click && this->hovered) {{
+        game->menu_open = (game->menu_open == rr_game_menu_quests) ? rr_game_menu_none : rr_game_menu_quests;
+        if (game->menu_open == rr_game_menu_quests) rr_shop_send_chat(game, "/quest");
+    }}
+}}
+
+static void quests_btn_animate(struct rr_ui_element *this, struct rr_game *game) {{
+    if (rr_bitset_get_bit(game->input_data->keys_pressed_this_tick, 'Q') && !game->text_input_focused) {{
+        game->menu_open = (game->menu_open == rr_game_menu_quests) ? rr_game_menu_none : rr_game_menu_quests;
+        if (game->menu_open == rr_game_menu_quests) rr_shop_send_chat(game, "/quest");
+    }}
+}}
+
+static void quests_btn_render(struct rr_ui_element *this, struct rr_game *game) {{
+    struct rr_renderer *r = game->renderer;
+    rr_renderer_scale(r, r->scale);
+    rr_renderer_set_fill(r, this->hovered || game->menu_open == rr_game_menu_quests ? 0xff62cc52 : 0xff459e38);
+    rr_renderer_set_stroke(r, 0xff28631f);
+    rr_renderer_set_line_width(r, 5);
+    rr_renderer_begin_path(r);
+    rr_renderer_round_rect(r, -this->width / 2, -this->height / 2, this->width, this->height, 8);
+    rr_renderer_fill(r);
+    rr_renderer_stroke(r);
+    rr_render_text(r, "QUEST", 0, -2, 13, 0xffffffff, 0xff000000, 2.5f);
+    rr_render_text(r, "[Q]", 0, 16, 11, 0xffd4ff9e, 0xff000000, 2.0f);
+}}
+
+struct rr_ui_element *rr_ui_quests_toggle_button_init() {{
+    struct rr_ui_element *this = rr_ui_element_init();
+    this->abs_width = this->abs_height = this->width = this->height = 60;
+    this->animate = quests_btn_animate;
+    this->on_event = quests_btn_on_event;
+    this->on_render = quests_btn_render;
+    return this;
+}}
+
+static uint8_t shop_win_should_show(struct rr_ui_element *this, struct rr_game *game) {{
+    (void)this;
+    return game->menu_open == rr_game_menu_shop;
+}}
+
+static void shop_win_animate(struct rr_ui_element *this, struct rr_game *game) {{
+    (void)game;
+    this->width = this->abs_width;
+    this->height = this->abs_height;
+}}
+
+static void shop_win_on_event(struct rr_ui_element *this, struct rr_game *game, enum rr_ui_event event) {{
+    if (event != rr_ui_click || !this->hovered) return;
+    float mx = (game->input_data->mouse_x - game->renderer->width / 2.0f) / game->renderer->scale - this->x;
+    float my = (game->input_data->mouse_y - game->renderer->height / 2.0f) / game->renderer->scale - this->y;
+
+    if (my >= -145 && my <= -105) shop_tab = (mx < 0) ? 0 : 1;
+    if (my >= -75 && my <= -35) {{
+        if (mx < 0) {{ shop_petal--; if (shop_petal < 1) shop_petal = rr_petal_id_max - 1; }}
+        else        {{ shop_petal++; if (shop_petal >= rr_petal_id_max) shop_petal = 1; }}
+    }}
+    if (my >= -15 && my <= 25) {{
+        int min_r = (shop_tab == 0) ? 3 : 0;
+        if (mx < 0) {{ shop_rarity--; if (shop_rarity < min_r) shop_rarity = rr_rarity_id_max - 1; }}
+        else        {{ shop_rarity++; if (shop_rarity >= rr_rarity_id_max) shop_rarity = min_r; }}
+    }}
+    if (my >= 50 && my <= 105) {{
+        char cmd{LB}48{RB};
+        if (shop_tab == 0) {{
+            if (shop_rarity < 3) shop_rarity = 3;
+            snprintf(cmd, sizeof(cmd), "/buy %d %d", shop_petal, shop_rarity);
+        }} else {{
+            snprintf(cmd, sizeof(cmd), "/sell %d %d", shop_petal, shop_rarity);
+        }}
+        rr_shop_send_chat(game, cmd);
+    }}
+}}
+
+static void shop_win_render(struct rr_ui_element *this, struct rr_game *game) {{
+    (void)this;
+    struct rr_renderer *r = game->renderer;
+    rr_renderer_scale(r, r->scale);
+
+    rr_renderer_set_fill(r, 0xee291b0e);
+    rr_renderer_set_stroke(r, 0xfff5c542);
+    rr_renderer_set_line_width(r, 6);
+    rr_renderer_begin_path(r);
+    rr_renderer_round_rect(r, -230, -180, 460, 360, 14);
+    rr_renderer_fill(r);
+    rr_renderer_stroke(r);
+
+    rr_render_text(r, "RYSTERIA SHOP [R]", 0, -158, 22, 0xffffd700, 0xff000000, 3.0f);
+
+    rr_renderer_set_fill(r, shop_tab == 0 ? 0xff8b5a2b : 0xff3b2613);
+    rr_renderer_begin_path(r);
+    rr_renderer_round_rect(r, -200, -140, 190, 34, 8);
+    rr_renderer_fill(r);
+    rr_render_text(r, "BUY RARE", -105, -123, 15, 0xffffffff, 0xff000000, 2.0f);
+
+    rr_renderer_set_fill(r, shop_tab == 1 ? 0xff8b5a2b : 0xff3b2613);
+    rr_renderer_begin_path(r);
+    rr_renderer_round_rect(r, 10, -140, 190, 34, 8);
+    rr_renderer_fill(r);
+    rr_render_text(r, "SELL PETAL", 105, -123, 15, 0xffffffff, 0xff000000, 2.0f);
+
+    if (shop_tab == 0 && shop_rarity < 3) shop_rarity = 3;
+    char p_line{LB}64{RB};
+    snprintf(p_line, sizeof(p_line), "<  #%d %s  >", shop_petal, RR_PETAL_NAMES{LB}shop_petal{RB});
+    rr_renderer_set_fill(r, 0xff1f140a);
+    rr_renderer_begin_path(r);
+    rr_renderer_round_rect(r, -190, -75, 380, 40, 8);
+    rr_renderer_fill(r);
+    rr_render_text(r, p_line, 0, -55, 18, 0xffffffff, 0xff000000, 2.5f);
+
+    char r_line{LB}64{RB};
+    snprintf(r_line, sizeof(r_line), "<  %s  >", RR_RARITY_NAMES{LB}shop_rarity{RB});
+    rr_renderer_set_fill(r, 0xff1f140a);
+    rr_renderer_begin_path(r);
+    rr_renderer_round_rect(r, -190, -15, 380, 40, 8);
+    rr_renderer_fill(r);
+    rr_render_text(r, r_line, 0, 5, 18, 0xffffe066, 0xff000000, 2.5f);
+
+    uint64_t val = shop_tab == 0 ? (RR_SELL_PRICES{LB}shop_rarity{RB} * 2) : RR_SELL_PRICES{LB}shop_rarity{RB};
+    char act_line{LB}64{RB};
+    snprintf(act_line, sizeof(act_line), shop_tab == 0 ? "BUY FOR %llu R" : "SELL FOR +%llu R", (unsigned long long)val);
+    rr_renderer_set_fill(r, shop_tab == 0 ? 0xffd98a1c : 0xff2e8b57);
+    rr_renderer_begin_path(r);
+    rr_renderer_round_rect(r, -160, 50, 320, 52, 10);
+    rr_renderer_fill(r);
+    rr_render_text(r, act_line, 0, 76, 20, 0xffffffff, 0xff000000, 3.0f);
+
+    rr_render_text(r, shop_status, 0, 140, 14, 0xffffe066, 0xff000000, 2.0f);
+}}
+
+struct rr_ui_element *rr_ui_shop_container_init(struct rr_game *game) {{
+    (void)game;
+    struct rr_ui_element *this = rr_ui_element_init();
+    this->abs_width = this->width = 460;
+    this->abs_height = this->height = 360;
+    this->animate = shop_win_animate;
+    this->should_show = shop_win_should_show;
+    this->on_event = shop_win_on_event;
+    this->on_render = shop_win_render;
+    return this;
+}}
+
+static uint8_t quests_win_should_show(struct rr_ui_element *this, struct rr_game *game) {{
+    (void)this;
+    return game->menu_open == rr_game_menu_quests;
+}}
+
+static void quests_win_animate(struct rr_ui_element *this, struct rr_game *game) {{
+    (void)game;
+    this->width = this->abs_width;
+    this->height = this->abs_height;
+}}
+
+static void quests_win_on_event(struct rr_ui_element *this, struct rr_game *game, enum rr_ui_event event) {{
+    if (event != rr_ui_click || !this->hovered) return;
+    float mx = (game->input_data->mouse_x - game->renderer->width / 2.0f) / game->renderer->scale - this->x;
+    float my = (game->input_data->mouse_y - game->renderer->height / 2.0f) / game->renderer->scale - this->y;
+    if (my >= 45 && my <= 100) {{
+
+cat << 'EOF' > n_step2a.py
+LB, RB = chr(91), chr(93)
+code = f"""#include <Client/Ui/Ui.h>
+#include <stdio.h>
+#include <string.h>
+#include <Client/Assets/RenderFunctions.h>
+#include <Client/Game.h>
+#include <Client/InputData.h>
+#include <Client/Renderer/Renderer.h>
+#include <Client/Ui/Engine.h>
+#include <Shared/StaticData.h>
+#include <Shared/Utilities.h>
+#include <Shared/pb.h>
+
+static uint8_t shop_tab = 0;
+static int shop_petal = 43;
+static int shop_rarity = 3;
+static char shop_status{LB}96{RB} = "Ready to trade!";
+static const uint64_t RR_SELL_PRICES{LB}11{RB} = {{5,15,40,120,350,1000,3000,9000,25000,75000,200000}};
+
+static void rr_shop_send_chat(struct rr_game *game, const char *cmd) {{
+    if (!game || !cmd) return;
+    struct proto_bug encoder;
+    proto_bug_init(&encoder, RR_OUTGOING_PACKET);
+    proto_bug_write_uint8(&encoder, game->socket.quick_verification, "qv");
+    proto_bug_write_uint8(&encoder, rr_serverbound_chat, "header");
+    proto_bug_write_string(&encoder, cmd, 64, "chat");
+    rr_websocket_send(&game->socket, encoder.current - encoder.start);
+    snprintf(shop_status, sizeof(shop_status), "Sent: %s", cmd);
+}}
+
+static void shop_btn_ev(struct rr_ui_element *this, struct rr_game *g, enum rr_ui_event ev) {{
+    if (ev == rr_ui_click && this->hovered) {{
+        g->menu_open = (g->menu_open == rr_game_menu_shop) ? rr_game_menu_none : rr_game_menu_shop;
+        if (g->menu_open == rr_game_menu_shop) rr_shop_send_chat(g, "/balance");
+    }}
+}}
+static void shop_btn_an(struct rr_ui_element *this, struct rr_game *g) {{
+    (void)this;
+    if (rr_bitset_get_bit(g->input_data->keys_pressed_this_tick, 'B') && !g->text_input_focused)
+        g->menu_open = (g->menu_open == rr_game_menu_shop) ? rr_game_menu_none : rr_game_menu_shop;
+}}
+static void shop_btn_rd(struct rr_ui_element *this, struct rr_game *g) {{
+    struct rr_renderer *r = g->renderer;
+    rr_renderer_scale(r, r->scale);
+    rr_renderer_set_fill(r, this->hovered || g->menu_open == rr_game_menu_shop ? 0xffd98a1c : 0xffa66814);
+    rr_renderer_set_stroke(r, 0xff6e4209);
+    rr_renderer_set_line_width(r, 5);
+    rr_renderer_begin_path(r);
+    rr_renderer_round_rect(r, -this->width/2, -this->height/2, this->width, this->height, 8);
+    rr_renderer_fill(r); rr_renderer_stroke(r);
+    rr_render_text(r, "SHOP", 0, -2, 13, 0xffffffff, 0xff000000, 2.5f);
+    rr_render_text(r, "[B]", 0, 16, 11, 0xffffe066, 0xff000000, 2.0f);
+}}
+struct rr_ui_element *rr_ui_shop_toggle_button_init() {{
+    struct rr_ui_element *this = rr_ui_element_init();
+    this->abs_width = this->abs_height = this->width = this->height = 60;
+    this->animate = shop_btn_an; this->on_event = shop_btn_ev; this->on_render = shop_btn_rd;
+    return this;
+}}
+
+static void q_btn_ev(struct rr_ui_element *this, struct rr_game *g, enum rr_ui_event ev) {{
+    if (ev == rr_ui_click && this->hovered) {{
+        g->menu_open = (g->menu_open == rr_game_menu_quests) ? rr_game_menu_none : rr_game_menu_quests;
+        if (g->menu_open == rr_game_menu_quests) rr_shop_send_chat(g, "/quest");
+    }}
+}}
+static void q_btn_an(struct rr_ui_element *this, struct rr_game *g) {{
+    (void)this;
+    if (rr_bitset_get_bit(g->input_data->keys_pressed_this_tick, 'Q') && !g->text_input_focused)
+        g->menu_open = (g->menu_open == rr_game_menu_quests) ? rr_game_menu_none : rr_game_menu_quests;
+}}
+static void q_btn_rd(struct rr_ui_element *this, struct rr_game *g) {{
+    struct rr_renderer *r = g->renderer;
+    rr_renderer_scale(r, r->scale);
+    rr_renderer_set_fill(r, this->hovered || g->menu_open == rr_game_menu_quests ? 0xff62cc52 : 0xff459e38);
+    rr_renderer_set_stroke(r, 0xff28631f);
+    rr_renderer_set_line_width(r, 5);
+    rr_renderer_begin_path(r);
+    rr_renderer_round_rect(r, -this->width/2, -this->height/2, this->width, this->height, 8);
+    rr_renderer_fill(r); rr_renderer_stroke(r);
+    rr_render_text(r, "QUEST", 0, -2, 13, 0xffffffff, 0xff000000, 2.5f);
+    rr_render_text(r, "[Q]", 0, 16, 11, 0xffd4ff9e, 0xff000000, 2.0f);
+}}
+struct rr_ui_element *rr_ui_quests_toggle_button_init() {{
+    struct rr_ui_element *this = rr_ui_element_init();
+    this->abs_width = this->abs_height = this->width = this->height = 60;
+    this->animate = q_btn_an; this->on_event = q_btn_ev; this->on_render = q_btn_rd;
+    return this;
+}}
+"""
+with open("Client/Ui/TitleScreen/Shop.c", "w", encoding="utf-8") as f:
+    f.write(code)
+print("[OK] Шаг 2а готов")
