@@ -129,6 +129,71 @@ void render_background(struct rr_component_player_info *player_info,
                 rr_renderer_stroke(renderer);
             }
         }
+        if (this->selected_biome == rr_biome_id_pvp)
+        {
+            // Уникальный хеш для каждого тайла, чтобы узор не повторялся каждые 3 клетки
+            uint32_t h = rr_get_hash(((uint32_t)((newLeftX + 8192) / GRID_SIZE) * 73856093u) ^ ((uint32_t)((currY + 8192) / GRID_SIZE) * 19349663u));
+
+            // Чистый базовый пол Ant Hell (теплый земляной оттенок florr.io)
+            rr_renderer_set_fill(renderer, 0xff9d734d);
+            rr_renderer_begin_path(renderer);
+            rr_renderer_rect(renderer, -128, -128, 256, 256);
+            rr_renderer_fill(renderer);
+
+            // Песчаные крупинки (мелкие четкие точки)
+            rr_renderer_set_fill(renderer, 0xff8b623e);
+            for (int i = 0; i < 4; i++) {
+                uint32_t sh = rr_get_hash(h + (uint32_t)(i * 101));
+                float px = (float)((int)(sh % 210) - 105);
+                float py = (float)((int)((sh >> 8) % 210) - 105);
+                float pr = 2.2f + (float)((sh >> 16) % 3);
+                rr_renderer_begin_path(renderer);
+                rr_renderer_arc(renderer, px, py, pr);
+                rr_renderer_fill(renderer);
+            }
+
+            // Четкие подземные камешки с темным контуром (на 65% тайлов)
+            if ((h % 100) < 65) {
+                float sx = (float)((int)((h >> 4) % 170) - 85);
+                float sy = (float)((int)((h >> 12) % 170) - 85);
+                float sr = 5.5f + (float)((h >> 20) % 5);
+
+                // Тень/контур камешка
+                rr_renderer_set_fill(renderer, 0xff6b492b);
+                rr_renderer_begin_path(renderer);
+                rr_renderer_arc(renderer, sx, sy + 1.5f, sr + 1.4f);
+                rr_renderer_fill(renderer);
+
+                // Тело камешка
+                rr_renderer_set_fill(renderer, (h & 1) ? 0xff825b37 : 0xff785331);
+                rr_renderer_begin_path(renderer);
+                rr_renderer_arc(renderer, sx, sy, sr);
+                rr_renderer_fill(renderer);
+            }
+
+            // Аккуратный второй мелкий камешек (на 35% тайлов)
+            if (((h >> 3) % 100) < 35) {
+                float sx2 = (float)((int)((h >> 6) % 180) - 90);
+                float sy2 = (float)((int)((h >> 14) % 180) - 90);
+                rr_renderer_set_fill(renderer, 0xff6e4c2e);
+                rr_renderer_begin_path(renderer);
+                rr_renderer_arc(renderer, sx2, sy2, 3.6f);
+                rr_renderer_fill(renderer);
+            }
+
+            // Тонкая четкая трещинка (на 25% тайлов)
+            if (((h >> 5) % 100) < 25) {
+                float cx = (float)((int)((h >> 7) % 140) - 70);
+                float cy = (float)((int)((h >> 15) % 140) - 70);
+                rr_renderer_set_stroke(renderer, 0xff77512f);
+                rr_renderer_set_line_width(renderer, 2.0f);
+                rr_renderer_begin_path(renderer);
+                rr_renderer_move_to(renderer, cx - 10.0f, cy - 4.0f);
+                rr_renderer_line_to(renderer, cx, cy + 2.0f);
+                rr_renderer_line_to(renderer, cx + 11.0f, cy - 2.0f);
+                rr_renderer_stroke(renderer);
+            }
+        }
         else if (this->selected_biome == rr_biome_id_hell_creek)
             rr_renderer_draw_tile_hell_creek(renderer, tile_index);
         else
