@@ -333,7 +333,8 @@ void render_background(struct rr_component_player_info *player_info,
                     float lx = nx * grid_size;
                     float ly = currY * grid_size;
                     rr_renderer_set_stroke(renderer, RR_RARITY_COLORS[hi]);
-                    rr_renderer_set_line_width(renderer, 10.0f);
+                    rr_renderer_set_global_alpha(renderer, 0.85f);
+                    rr_renderer_set_line_width(renderer, 18.0f);
                     rr_renderer_begin_path(renderer);
                     rr_renderer_move_to(renderer, lx, ly);
                     rr_renderer_line_to(renderer, lx, ly + grid_size);
@@ -341,14 +342,15 @@ void render_background(struct rr_component_player_info *player_info,
 
                     rr_renderer_set_fill(renderer, RR_RARITY_COLORS[hi]);
                     rr_renderer_set_stroke(renderer, 0xff1a1a1a);
-                    rr_renderer_set_line_width(renderer, 6.0f);
-                    rr_renderer_set_text_size(renderer, 68);
+                    rr_renderer_set_line_width(renderer, 12.0f);
+                    rr_renderer_set_text_size(renderer, 180);
                     rr_renderer_set_text_align(renderer, 1);
                     rr_renderer_set_text_baseline(renderer, 1);
                     float tx = (r_cur > r_left) ? (lx + grid_size * 0.45f) : (lx - grid_size * 0.45f);
                     float ty = ly + grid_size * 0.5f;
                     rr_renderer_stroke_text(renderer, RR_RARITY_NAMES[hi], tx, ty);
                     rr_renderer_fill_text(renderer, RR_RARITY_NAMES[hi], tx, ty);
+                    rr_renderer_set_global_alpha(renderer, 0.5f);
                 }
                 if (r_cur != r_top)
                 {
@@ -356,7 +358,8 @@ void render_background(struct rr_component_player_info *player_info,
                     float lx = nx * grid_size;
                     float ly = currY * grid_size;
                     rr_renderer_set_stroke(renderer, RR_RARITY_COLORS[hi]);
-                    rr_renderer_set_line_width(renderer, 10.0f);
+                    rr_renderer_set_global_alpha(renderer, 0.85f);
+                    rr_renderer_set_line_width(renderer, 18.0f);
                     rr_renderer_begin_path(renderer);
                     rr_renderer_move_to(renderer, lx, ly);
                     rr_renderer_line_to(renderer, lx + grid_size, ly);
@@ -364,14 +367,15 @@ void render_background(struct rr_component_player_info *player_info,
 
                     rr_renderer_set_fill(renderer, RR_RARITY_COLORS[hi]);
                     rr_renderer_set_stroke(renderer, 0xff1a1a1a);
-                    rr_renderer_set_line_width(renderer, 6.0f);
-                    rr_renderer_set_text_size(renderer, 68);
+                    rr_renderer_set_line_width(renderer, 12.0f);
+                    rr_renderer_set_text_size(renderer, 180);
                     rr_renderer_set_text_align(renderer, 1);
                     rr_renderer_set_text_baseline(renderer, 1);
                     float tx = lx + grid_size * 0.5f;
                     float ty = (r_cur > r_top) ? (ly + grid_size * 0.45f) : (ly - grid_size * 0.45f);
                     rr_renderer_stroke_text(renderer, RR_RARITY_NAMES[hi], tx, ty);
                     rr_renderer_fill_text(renderer, RR_RARITY_NAMES[hi], tx, ty);
+                    rr_renderer_set_global_alpha(renderer, 0.5f);
                 }
             }
             if (this->cache.show_coordinates && nx % 2 && currY % 2)
