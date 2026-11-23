@@ -166,7 +166,10 @@ void rr_simulation_init(struct rr_simulation *this)
     struct rr_component_arena *arena = rr_simulation_add_arena(this, id);
     arena->biome = RR_GLOBAL_BIOME;
     rr_component_arena_spatial_hash_init(arena, this);
-    set_respawn_zone(arena, SPAWN_ZONE_X, SPAWN_ZONE_Y);
+    if (RR_GLOBAL_BIOME == rr_biome_id_pvp)
+        set_respawn_zone(arena, 25, 22);
+    else
+        set_respawn_zone(arena, SPAWN_ZONE_X, SPAWN_ZONE_Y);
     set_spawn_zones();
 }
 

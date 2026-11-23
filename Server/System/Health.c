@@ -308,6 +308,32 @@ static uint8_t damage_effect(struct rr_simulation *simulation, EntityIdx target,
                 (1 + sqrtf(RR_PETAL_RARITY_SCALE[petal->rarity].heal) / 3) *
                 (1 - physical->slow_resist);
         }
+        else if (petal->id == rr_petal_id_triangle)
+        {
+            struct rr_component_health *health =
+                rr_simulation_get_health(simulation, attacker);
+            struct rr_component_relations *relations =
+                rr_simulation_get_relations(simulation, attacker);
+            if (rr_simulation_has_player_info(simulation, relations->owner))
+            {
+                struct rr_component_player_info *pinfo =
+                    rr_simulation_get_player_info(simulation, relations->owner);
+                uint32_t tri_count = 0;
+                for (uint64_t i = 0; i < pinfo->slot_count; ++i)
+                {
+                    if (pinfo->slots[i].id == rr_petal_id_triangle)
+                        ++tri_count;
+                }
+                if (tri_count < 1)
+                    tri_count = 1;
+                float mult = 1.0f + 0.25f * (float)(tri_count - 1);
+                float base_dmg =
+                    RR_PETAL_DATA[petal->id].damage *
+                    RR_PETAL_DATA[petal->id].scale[petal->rarity].damage /
+                    RR_PETAL_DATA[petal->id].count[petal->rarity];
+                health->damage = base_dmg * mult;
+            }
+        }
         else if (petal->id == rr_petal_id_lightning)
         {
             lightning_petal_system(simulation, petal, target);
