@@ -1078,7 +1078,8 @@ case rr_serverbound_chat:
                         strncmp(animation->message, "/buy ", 5) == 0 ||
                         strncmp(animation->message, "/sell ", 6) == 0 ||
                         strcmp(animation->message, "/quest") == 0 ||
-                        strcmp(animation->message, "/claim") == 0)
+                        strcmp(animation->message, "/claim") == 0 ||
+                        strncmp(animation->message, "/pack ", 6) == 0)
                     {
                         static const uint64_t sell_p[11] = { 5, 15, 40, 120, 350, 1000, 3000, 9000, 25000, 75000, 200000 };
                         static const uint64_t q_rew[11] = { 40, 100, 250, 700, 2000, 6000, 18000, 50000, 150000, 400000, 1000000 };
@@ -1120,6 +1121,46 @@ case rr_serverbound_chat:
                             if (client->quest_target == 0) { client->quest_rarity = 0; client->quest_target = 5; client->quest_progress = 0; }
                             uint8_t r = client->quest_rarity < 11 ? client->quest_rarity : 0;
                             snprintf(animation->message, 64, "Quest: %u/%u %s (+%llu R)", client->quest_progress, client->quest_target, RR_RARITY_NAMES[r], (unsigned long long)q_rew[r]);
+                        } else if (strncmp(animation->message, "/pack ", 6) == 0) {
+                            int pk = atoi(animation->message + 6);
+                            if (pk == 1) {
+                                // Набор Охотника (300 R): Epic Claw + Epic Bone + Epic Amber
+                                if (client->r_coins >= 300) {
+                                    client->r_coins -= 300;
+                                    client->inventory[43][3]++;
+                                    client->inventory[44][3]++;
+                                    client->inventory[45][3]++;
+                                    rr_server_client_write_account(client);
+                                    snprintf(animation->message, 64, "Dino Pack x3! Bal: %llu R", (unsigned long long)client->r_coins);
+                                } else {
+                                    snprintf(animation->message, 64, "Need 300 R! Bal: %llu R", (unsigned long long)client->r_coins);
+                                }
+                            } else if (pk == 2) {
+                                // Сундук Удачи (500 R): случайный доисторический лепесток Legendary-Ultra!
+                                if (client->r_coins >= 500) {
+                                    client->r_coins -= 500;
+                                    int pid = 43 + (rand() % (rr_petal_id_max - 43));
+                                    int rid = 4 + (rand() % 3); // Legendary(4), Mythic(5), Ultra(6)
+                                    client->inventory[pid][rid]++;
+                                    rr_server_client_write_account(client);
+                                    snprintf(animation->message, 64, "Box: %s [%s]!", RR_PETAL_NAMES[pid], RR_RARITY_NAMES[rid]);
+                                } else {
+                                    snprintf(animation->message, 64, "Need 500 R! Bal: %llu R", (unsigned long long)client->r_coins);
+                                }
+                            } else if (pk == 3) {
+                                // Набор Бога (5000 R): Mythic Crown + Mythic Relic
+                                if (client->r_coins >= 5000) {
+                                    client->r_coins -= 5000;
+                                    client->inventory[61][5]++;
+                                    client->inventory[62][5]++;
+                                    rr_server_client_write_account(client);
+                                    snprintf(animation->message, 64, "Mythic God Pack! Bal: %llu R", (unsigned long long)client->r_coins);
+                                } else {
+                                    snprintf(animation->message, 64, "Need 5000 R! Bal: %llu R", (unsigned long long)client->r_coins);
+                                }
+                            } else {
+                                snprintf(animation->message, 64, "Usage: /pack 1..3");
+                            }
                         } else if (strcmp(animation->message, "/claim") == 0) {
                             if (client->quest_target > 0 && client->quest_progress >= client->quest_target) {
                                 uint8_t r = client->quest_rarity < 11 ? client->quest_rarity : 0;

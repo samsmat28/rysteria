@@ -1,15 +1,14 @@
 import re, json
 
-# 1. Очищаем MasterServer/main.js от лишнего блока, чтобы серверы и Account работали стабильно
 with open("MasterServer/main.js", "r", encoding="utf-8") as f:
     ms = f.read()
-if "// === Rysteria Web Shop & Quests API ===" in ms:
-    ms = next(iter(ms.split("// === Rysteria Web Shop ms.split("// === Rysteria Web Shop & Quests API ===").rstrip() Quests API ==="))).rstrip() + "\n"
+marker = "// === Rysteria Web Shop & Quests API ==="
+if marker in ms:
+    ms = ms.partition(marker)[0].rstrip() + "\n"
     with open("MasterServer/main.js", "w", encoding="utf-8") as f:
         f.write(ms)
     print("[OK] MasterServer/main.js очищен")
 
-# 2. Берём имена лепестков и редкостей из Shared/StaticData.c
 with open("Shared/StaticData.c", "r", encoding="utf-8") as f:
     sdc = f.read()
 m_p = re.search(r"RR_PETAL_NAMES\s*\[[^\]]*\]\s*=\s*\{(.*?)\};", sdc, re.DOTALL)
@@ -20,7 +19,6 @@ rarities = re.findall(r'"([^"]+)"', m_r.group(1)) if m_r else ["Common","Uncommo
 LB, RB = chr(91), chr(93)
 prices_js = f"{LB}5,15,40,120,350,1000,3000,9000,25000,75000,200000{RB}"
 
-# 3. Простой и надёжный сайт Client/public/shop.html (работает без внешних портов!)
 html = f"""<!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -62,7 +60,6 @@ html = f"""<!DOCTYPE html>
       <button style="background:#7eef6d;color:#10240b;" onclick="copyCmd('/claim')">💰 Забрать награду (/claim)</button>
     </div>
   </div>
-
   <div class="card">
     <h3 style="margin-top:0;color:#ffd700;">🛒 Купить лепестки за R</h3>
     <div class="promo">
@@ -72,7 +69,6 @@ html = f"""<!DOCTYPE html>
     <select id="brar" onchange="renderBuy()"></select>
     <div class="grid" id="blist"></div>
   </div>
-
   <div class="card">
     <h3 style="margin-top:0;color:#7eef6d;">💰 Продать свои лепестки за R</h3>
     <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px;">
@@ -86,11 +82,9 @@ html = f"""<!DOCTYPE html>
 const P = {json.dumps(petals, ensure_ascii=False)};
 const R = {json.dumps(rarities, ensure_ascii=False)};
 const S = {prices_js};
-
 for (let i = 3; i < R.length; i++) brar.innerHTML += `<option value="${{i}}">${{R[i]}} (${{S[i]*2}} R)</option>`;
 for (let i = 0; i < R.length; i++) srar.innerHTML += `<option value="${{i}}">${{R[i]}} (+${{S[i]}} R)</option>`;
 for (let i = 1; i < P.length; i++) spet.innerHTML += `<option value="${{i}}">#${{i}} ${{P[i]}}</option>`;
-
 function renderBuy() {{
   const r = +brar.value, cost = S[r]*2;
   blist.innerHTML = '';
@@ -99,11 +93,8 @@ function renderBuy() {{
     blist.innerHTML += `<div class="item"><span>${{p>=43?'🦖 ':''}}${{P[p]}}</span><button onclick="copyCmd('/buy ${{p}} ${{r}}')">${{c}} R</button></div>`;
   }}
 }}
-function updSell() {{
-  sbtn.textContent = `Продать ${{P[+spet.value]}} [${{R[+srar.value]}}] за +${{S[+srar.value]}} R`;
-}}
+function updSell() {{ sbtn.textContent = `Продать ${{P[+spet.value]}} [${{R[+srar.value]}}] за +${{S[+srar.value]}} R`; }}
 renderBuy(); updSell();
-
 function copyCmd(cmd) {{
   navigator.clipboard.writeText(cmd).catch(()=>{{}});
   toast.textContent = `✅ Скопировано: ${{cmd}} — вставь в чат игры (Enter → Ctrl+V → Enter)`;
