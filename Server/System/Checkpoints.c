@@ -1,3 +1,4 @@
+#include <string.h>
 // Copyright (C) 2024 Paul Johnson
 // Copyright (C) 2024-2025 Maxim Nesterov
 
@@ -42,6 +43,14 @@ static void system_for_each_function(EntityIdx entity, void *_captures)
                                 0, arena->maze->maze_dim - 1);
     uint32_t grid_y = rr_fclamp(physical->y / arena->maze->grid_size,
                                 0, arena->maze->maze_dim - 1);
+    struct rr_maze_grid *cur_g = &arena->maze->maze[grid_y * arena->maze->maze_dim + grid_x];
+    if (cur_g->difficulty > player_info->client->checkpoint_difficulty)
+    {
+        player_info->client->has_checkpoint = 1;
+        player_info->client->checkpoint_difficulty = cur_g->difficulty;
+        player_info->client->checkpoint_x = physical->x;
+        player_info->client->checkpoint_y = physical->y;
+    }
     for (uint8_t i = 0; i < arena->maze->checkpoint_count; ++i)
     {
         struct rr_checkpoint checkpoint = arena->maze->checkpoints[i];
