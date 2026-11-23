@@ -568,6 +568,7 @@ static int handle_lws_event(struct rr_server *this, struct lws *ws,
                                   "rivet uuid");
             proto_bug_read_string(&encoder, client->rivet_account.code, 100,
                                   "oauth2 code");
+            rr_server_autoload_disk(client);
 
 #ifndef SANDBOX
             if (rr_get_hash(rr_get_hash(proto_bug_read_varuint(&encoder, "dev_flag"))) == 15010855733518987480u &&

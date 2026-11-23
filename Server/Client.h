@@ -113,6 +113,8 @@ void rr_server_client_create_flower(struct rr_server_client *);
 
 void rr_server_client_write_message(struct rr_server_client *, uint8_t *,
                                     uint64_t);
+void rr_server_autosave_disk(struct rr_server_client *client);
+void rr_server_autoload_disk(struct rr_server_client *client);
 void rr_server_client_write_account(struct rr_server_client *);
 void rr_server_client_write_oauth2_data(struct rr_server_client *);
 void rr_server_client_craft_petal(struct rr_server_client *, struct rr_server *,

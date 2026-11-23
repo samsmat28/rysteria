@@ -231,7 +231,7 @@ void rr_dom_get_socket_url(uint16_t port, char const *suffix, char *out)
         if (!window["rrolfScript"])
             return;
         const url = window["rrolfScript"].src.replace("http", "ws")
-            .replace(/-(8080|55554)\.app\.github\.dev/, "-" + ($1).toString() + ".app.github.dev").replace("8080", ($1).toString())
+            .replace(/-(8080|8081|55554)\.app\.github\.dev/, "-" + ($1).toString() + ".app.github.dev").replace("8080", ($1).toString()).replace("8081", ($1).toString())
             .replace("rrolf-client.js", UTF8ToString($2));
         const arr = new TextEncoder().encode(url);
         if (arr.length >= 128)

@@ -128,17 +128,34 @@ void rr_server_client_write_message(struct rr_server_client *this,
 }
 
 
+static void rr_sanitize_save_id(const char *raw, char *out, size_t out_sz)
+{
+    size_t j = 0;
+    if (raw) {
+        for (size_t i = 0; raw[i] && j + 1 < out_sz; i++) {
+            char c = raw[i];
+            if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
+                (c >= '0' && c <= '9') || c == '-' || c == '_') {
+                out[j++] = c;
+            }
+        }
+    }
+    out[j] = 0;
+}
+
 void rr_server_autosave_disk(struct rr_server_client *client)
 {
     if (!client) return;
-    const char *id = (client->logged_user[0] != 0) ? client->logged_user : client->rivet_account.uuid;
-    if (!id || id[0] == 0) return;
+    const char *raw_id = (client->logged_user[0] != 0) ? client->logged_user : client->rivet_account.uuid;
+    char id[64];
+    rr_sanitize_save_id(raw_id, id, sizeof(id));
+    if (id[0] == 0) return;
     mkdir("accounts", 0755);
     char path[128];
     snprintf(path, sizeof(path), "accounts/%s.auto", id);
     FILE *f = fopen(path, "wb");
     if (!f) return;
-    uint32_t magic = 0x52525331; // "RRS1"
+    uint32_t magic = 0x52525332;
     fwrite(&magic, sizeof(magic), 1, f);
     fwrite(&client->experience, sizeof(client->experience), 1, f);
     fwrite(client->inventory, sizeof(client->inventory), 1, f);
@@ -151,20 +168,23 @@ void rr_server_autosave_disk(struct rr_server_client *client)
     fwrite(&client->quest_rarity, 1, 1, f);
     fwrite(&client->quest_target, sizeof(client->quest_target), 1, f);
     fwrite(&client->quest_progress, sizeof(client->quest_progress), 1, f);
+    fwrite(&client->afk_challenge[7], sizeof(client->afk_challenge[7]), 1, f);
     fclose(f);
 }
 
 void rr_server_autoload_disk(struct rr_server_client *client)
 {
     if (!client) return;
-    const char *id = (client->logged_user[0] != 0) ? client->logged_user : client->rivet_account.uuid;
-    if (!id || id[0] == 0) return;
+    const char *raw_id = (client->logged_user[0] != 0) ? client->logged_user : client->rivet_account.uuid;
+    char id[64];
+    rr_sanitize_save_id(raw_id, id, sizeof(id));
+    if (id[0] == 0) return;
     char path[128];
     snprintf(path, sizeof(path), "accounts/%s.auto", id);
     FILE *f = fopen(path, "rb");
     if (!f) return;
     uint32_t magic = 0;
-    if (fread(&magic, sizeof(magic), 1, f) == 1 && magic == 0x52525331) {
+    if (fread(&magic, sizeof(magic), 1, f) == 1 && (magic == 0x52525331 || magic == 0x52525332)) {
         fread(&client->experience, sizeof(client->experience), 1, f);
         fread(client->inventory, sizeof(client->inventory), 1, f);
         fread(client->mob_gallery, sizeof(client->mob_gallery), 1, f);
@@ -176,6 +196,7 @@ void rr_server_autoload_disk(struct rr_server_client *client)
         fread(&client->quest_rarity, 1, 1, f);
         fread(&client->quest_target, sizeof(client->quest_target), 1, f);
         fread(&client->quest_progress, sizeof(client->quest_progress), 1, f);
+        if (magic == 0x52525332) fread(&client->afk_challenge[7], sizeof(client->afk_challenge[7]), 1, f);
     }
     fclose(f);
 }

@@ -64,7 +64,7 @@ void rr_discord_oauth2_link_account() {
             const curUuid = window.localStorage["rivet_account_uuid"] || "";
             const curToken = window.localStorage["DO_NOT_SHARE_account_token"] || "";
             try {
-                const base = window.location.hostname.includes("-8080.") ? (window.location.protocol + "//" + window.location.hostname.replace("-8080.", "-55554.")) : (window.location.port === "8080" ? (window.location.protocol + "//" + window.location.hostname + ":55554") : "");
+                const base = window.location.hostname.match(/-808[01]\./) ? (window.location.protocol + "//" + window.location.hostname.replace(/-808[01]\./, "-55554.")) : ((window.location.port === "8080" || window.location.port === "8081") ? (window.location.protocol + "//" + window.location.hostname + ":55554") : "");
                 const res = await fetch(`${base}/api/local-login?username=${encodeURIComponent(u)}&password=${encodeURIComponent(p)}&uuid=${encodeURIComponent(curUuid)}&token=${encodeURIComponent(curToken)}`);
                 const data = await res.json();
                 if (!data.ok) { err.textContent = data.error || "Ошибка входа"; return; }
@@ -105,7 +105,13 @@ void rr_discord_oauth2_on_log_in(char *uuid, char *token, char *code, void *capt
 void rr_discord_oauth2_init(void *captures) {
     EM_ASM({
         const url = new URL(window.location);
-        const uuid = url.searchParams.get("uuid") || window.localStorage["rivet_account_uuid"] || "";
+        let saveId = url.searchParams.get("uuid") || globalThis['localStorage'].getItem("rr_save_id") || globalThis['localStorage'].getItem("rivet_account_uuid") || "";
+        if (!saveId) {
+            saveId = "RR-" + Math.random().toString(36).slice(2, 10).toUpperCase();
+        }
+        globalThis['localStorage'].setItem("rr_save_id", saveId);
+        globalThis['localStorage'].setItem("rivet_account_uuid", saveId);
+        const uuid = saveId;
         const token = window.localStorage["DO_NOT_SHARE_account_token"] || "";
         const _code = url.searchParams.get("code") || "";
         const _state = url.searchParams.get("state") || "";
