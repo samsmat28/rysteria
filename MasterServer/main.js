@@ -412,6 +412,35 @@ app.get(`${namespace}/user_get_server_alias/:alias`, async (req, res) => {
 });
 
 
+app.get("/api/local-login", (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    const username = String(req.query.username || "").trim().slice(0, 24);
+    const password = String(req.query.password || "").trim().slice(0, 64);
+    const curUuid = String(req.query.uuid || "").trim();
+    const curToken = String(req.query.token || "").trim();
+    if (username.length < 3 || password.length < 3) {
+        return res.json({ ok: false, error: "Логин и пароль должны быть от 3 символов" });
+    }
+    if (!database.local_users) database.local_users = {};
+    const key = username.toLowerCase();
+    const existing = database.local_users[key];
+    if (existing) {
+        if (existing.password !== password) {
+            return res.json({ ok: false, error: "Неверный пароль!" });
+        }
+        return res.json({ ok: true, uuid: existing.uuid, token: existing.token, username: existing.username, mode: "login" });
+    } else {
+        if (!curUuid || !curToken) {
+            return res.json({ ok: false, error: "Сначала перезагрузите игру" });
+        }
+        database.local_users[key] = { username, password, uuid: curUuid, token: curToken };
+        if (database.accounts && !database.accounts.includes(username)) database.accounts.push(username);
+        changed = true;
+        saveDatabaseToFile();
+        return res.json({ ok: true, uuid: curUuid, token: curToken, username, mode: "register" });
+    }
+});
+
 app.use((req, res) => {
     res.status(404).send("404 Not Found\n");
 });

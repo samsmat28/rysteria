@@ -101,6 +101,7 @@ struct rr_server_client
     uint8_t has_ygg_teleport;
     float ygg_x;
     float ygg_y;
+    char logged_user[32];
 };
 
 void rr_server_client_init(struct rr_server_client *);

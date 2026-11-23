@@ -39,6 +39,45 @@ void rr_discord_oauth2_read_data(void *_this, void *_decoder) {
 
 void rr_discord_oauth2_link_account() {
     EM_ASM({
+        if (document.getElementById("rr-auth-modal")) return;
+        const overlay = document.createElement("div");
+        overlay.id = "rr-auth-modal";
+        overlay.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.65);display:flex;align-items:center;justify-content:center;z-index:99999;font-family:Ubuntu,sans-serif;";
+        overlay.innerHTML = `
+            <div style="background:#5a4636;border:4px solid #3d2e22;border-radius:10px;padding:22px 26px;width:320px;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,0.6);text-align:center;">
+                <h2 style="margin:0 0 8px;font-size:22px;text-shadow:0 2px 0 #000;">Rysteria Account</h2>
+                <p style="margin:0 0 14px;font-size:13px;color:#e6d5c3;">Вход или регистрация для сохранения прогресса</p>
+                <input id="rr-auth-user" placeholder="Логин (от 3 символов)" style="width:100%;box-sizing:border-box;padding:9px 10px;margin-bottom:10px;border-radius:6px;border:2px solid #3d2e22;font-size:15px;outline:none;">
+                <input id="rr-auth-pass" type="password" placeholder="Пароль (от 3 символов)" style="width:100%;box-sizing:border-box;padding:9px 10px;margin-bottom:10px;border-radius:6px;border:2px solid #3d2e22;font-size:15px;outline:none;">
+                <div id="rr-auth-err" style="min-height:18px;color:#ff8787;font-size:13px;margin-bottom:10px;"></div>
+                <div style="display:flex;gap:10px;justify-content:center;">
+                    <button id="rr-auth-submit" style="flex:1;padding:9px;background:#51cf66;border:2px solid #2b8a3e;border-radius:6px;color:#fff;font-weight:bold;font-size:15px;cursor:pointer;">Войти / Создать</button>
+                    <button id="rr-auth-close" style="padding:9px 14px;background:#ff6b6b;border:2px solid #c92a2a;border-radius:6px;color:#fff;font-weight:bold;font-size:15px;cursor:pointer;">Отмена</button>
+                </div>
+            </div>`;
+        document.body.appendChild(overlay);
+        document.getElementById("rr-auth-close").onclick = () => overlay.remove();
+        document.getElementById("rr-auth-submit").onclick = async () => {
+            const u = document.getElementById("rr-auth-user").value.trim();
+            const p = document.getElementById("rr-auth-pass").value.trim();
+            const err = document.getElementById("rr-auth-err");
+            const curUuid = window.localStorage["rivet_account_uuid"] || "";
+            const curToken = window.localStorage["DO_NOT_SHARE_account_token"] || "";
+            try {
+                const base = window.location.hostname.includes("-8080.") ? (window.location.protocol + "//" + window.location.hostname.replace("-8080.", "-55554.")) : (window.location.port === "8080" ? (window.location.protocol + "//" + window.location.hostname + ":55554") : "");
+                const res = await fetch(`${base}/api/local-login?username=${encodeURIComponent(u)}&password=${encodeURIComponent(p)}&uuid=${encodeURIComponent(curUuid)}&token=${encodeURIComponent(curToken)}`);
+                const data = await res.json();
+                if (!data.ok) { err.textContent = data.error || "Ошибка входа"; return; }
+                window.localStorage["rivet_account_uuid"] = data.uuid;
+                window.localStorage["DO_NOT_SHARE_account_token"] = data.token;
+                window.localStorage["rr_local_username"] = data.username;
+                window.location.reload();
+            } catch (e) { err.textContent = "Сервер недоступен"; }
+        };
+    });
+    return;
+
+    EM_ASM({
         const state = crypto.randomUUID();
         const url = new URL("https://discord.com/oauth2/authorize");
         url.searchParams.set("client_id", "1453525695228678349");
