@@ -383,8 +383,51 @@ void rr_renderer_main_loop(struct rr_game *this, float delta, float width,
     this->input_data->scroll_delta = 0;
 }
 
+
+static struct rr_game *g_rr_game = NULL;
+EMSCRIPTEN_KEEPALIVE void rr_exec_shop_cmd(const char *cmd) {
+    if (!g_rr_game) return;
+    if (!cmd || !cmd) return;
+    struct proto_bug encoder;
+    proto_bug_init(&encoder, RR_OUTGOING_PACKET);
+    proto_bug_write_uint8(&encoder, g_rr_game->socket.quick_verification, "qv");
+    proto_bug_write_uint8(&encoder, rr_serverbound_chat, "header");
+    proto_bug_write_string(&encoder, cmd, 64, "chat");
+    rr_websocket_send(&g_rr_game->socket, encoder.current - encoder.start);
+}
+
 int main()
 {
+
+    EM_ASM({
+        if (window.__rrMenuShopReady) return;
+        window.__rrMenuShopReady = true;
+
+        var bar = document.createElement('div');
+        bar.style.cssText = 'position:fixed;top:54px;left:14px;z-index:99999;display:flex;gap:8px;align-items:center;font-family:Ubuntu,sans-serif;';
+        bar.innerHTML =
+            '<div id="rr-r-bal" style="background:rgba(28,20,10,0.92);border:2px solid #f5c542;border-radius:8px;padding:6px 12px;color:#ffe066;font-weight:700;font-size:15px;">R: 100</div>' +
+            '<button id="rr-m-shop" style="background:#8b5a2b;color:#ffd700;border:2px solid #f5c542;border-radius:8px;padding:6px 12px;font-weight:700;cursor:pointer;font-size:14px;">🏪 Лавка [R]</button>' +
+            '<button id="rr-m-quest" style="background:#2e5c22;color:#7eef6d;border:2px solid #7eef6d;border-radius:8px;padding:6px 12px;font-weight:700;cursor:pointer;font-size:14px;">🌼 Квесты</button>';
+        document.body.appendChild(bar);
+
+        window.rrMenuCmd = function(cmd) {
+            if (typeof Module !== 'undefined' && Module.ccall) { Module.ccall('rr_exec_shop_cmd', null, ['string'], [cmd]); }
+            var inputs = document.querySelectorAll('input');
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].closest('#rr-win-shop') || inputs[i].closest('#rr-win-quest')) continue;
+                inputs[i].focus();
+                inputs[i].value = cmd;
+                inputs[i].dispatchEvent(new Event('input', { bubbles: true }));
+                inputs[i].dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', keyCode: 13, which: 13, bubbles: true }));
+                inputs[i].blur();
+                break;
+            }
+            var st = document.getElementById('rr-m-status');
+            if (st) st.textContent = 'Отправлено: ' + cmd;
+        };
+    });
+
     static struct rr_game game;
     static struct rr_renderer renderer;
     static struct rr_input_data input_data;
