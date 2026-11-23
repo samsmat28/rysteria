@@ -439,19 +439,6 @@ void rr_component_arena_render(EntityIdx entity, struct rr_game *this,
         rr_renderer_stroke_text(renderer, label, portal_x, portal_y - portal_r - 20);
         rr_renderer_fill_text(renderer, label, portal_x, portal_y - portal_r - 20);
 
-                // Оранжевая линия-указатель от игрока к воронке
-        struct rr_component_physical *flower_ptr =
-            rr_simulation_get_physical(this->simulation, player_info->flower_id);
-        if (flower_ptr != NULL)
-        {
-            rr_renderer_set_stroke(renderer, 0xffffaa00);
-            rr_renderer_set_line_width(renderer, 6);
-            rr_renderer_begin_path(renderer);
-            rr_renderer_move_to(renderer, flower_ptr->x, flower_ptr->y);
-            rr_renderer_line_to(renderer, portal_x, portal_y);
-            rr_renderer_stroke(renderer);
-        }
-
         // Проверка наезда игрока на воронку
         static uint32_t portal_cooldown = 0;
         if (portal_cooldown > 0)
