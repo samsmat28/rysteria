@@ -71,15 +71,35 @@ uint8_t get_spawn_id(uint8_t biome, struct rr_maze_grid *zone)
         if (r_ant < 0.98) return rr_mob_id_fire_ant_egg;
         return rr_mob_id_queen_fire_ant;
     }
-     double r = rr_frand();
-    if (r < 0.25)
-        return rr_mob_id_fat_bee;
-    if (r < 0.50)
-        return rr_mob_id_ladybug;
-    if (r < 0.75)
-        return rr_mob_id_rock;
-    if (r < 0.85)
-        return rr_mob_id_dragonfly;
+     if (biome == rr_biome_id_hell_creek)
+    {
+        float diff = zone ? zone->difficulty : 1.0f;
+        double r = rr_frand();
+        if (diff <= 24.0f)
+        {
+            if (r < 0.22) return rr_mob_id_triceratops;
+            if (r < 0.42) return rr_mob_id_ornithomimus;
+            if (r < 0.60) return rr_mob_id_pachycephalosaurus;
+            if (r < 0.76) return rr_mob_id_edmontosaurus;
+            if (r < 0.90) return rr_mob_id_ankylosaurus;
+            return rr_mob_id_fern;
+        }
+        else if (diff <= 48.0f)
+        {
+            if (r < 0.32) return rr_mob_id_dakotaraptor;
+            if (r < 0.58) return rr_mob_id_pteranodon;
+            if (r < 0.80) return rr_mob_id_quetzalcoatlus;
+            if (r < 0.93) return rr_mob_id_ankylosaurus;
+            return rr_mob_id_trex;
+        }
+        else
+        {
+            if (r < 0.45) return rr_mob_id_trex;
+            if (r < 0.78) return rr_mob_id_meteor;
+            if (r < 0.92) return rr_mob_id_dakotaraptor;
+            return rr_mob_id_tree;
+        }
+    }
     double *table =
         biome < rr_biome_id_garden ? RR_HELL_CREEK_MOB_ID_RARITY_COEFFICIENTS
                                    : RR_GARDEN_MOB_ID_RARITY_COEFFICIENTS;
