@@ -90,4 +90,28 @@ void rr_component_mob_render(EntityIdx entity, struct rr_game *game,
     rr_renderer_draw_mob(renderer, mob->id, physical->animation_timer,
                          physical->turning_animation - physical->lerp_angle,
                          use_cache | (is_friendly << 1) | (is_centi_body << 2));
+    if (health->damage_animation > 0.08f)
+    {
+        float dmg_a = health->damage_animation;
+        float wave_r = 22.0f + (1.0f - dmg_a) * 28.0f;
+        rr_renderer_set_global_alpha(renderer, dmg_a * 0.75f);
+        rr_renderer_set_stroke(renderer, 0xffffa94d);
+        rr_renderer_set_line_width(renderer, 3.0f * dmg_a + 1.0f);
+        rr_renderer_begin_path(renderer);
+        rr_renderer_arc(renderer, 0, 0, wave_r);
+        rr_renderer_stroke(renderer);
+
+        rr_renderer_set_stroke(renderer, 0xffffec99);
+        rr_renderer_set_line_width(renderer, 2.5f);
+        for (int s = 0; s < 6; ++s)
+        {
+            float ang = s * 1.047f + dmg_a * 3.0f;
+            float r1 = 14.0f + (1.0f - dmg_a) * 16.0f;
+            float r2 = r1 + 10.0f * dmg_a;
+            rr_renderer_begin_path(renderer);
+            rr_renderer_move_to(renderer, cosf(ang) * r1, sinf(ang) * r1);
+            rr_renderer_line_to(renderer, cosf(ang) * r2, sinf(ang) * r2);
+            rr_renderer_stroke(renderer);
+        }
+    }
 }

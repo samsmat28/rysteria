@@ -67,14 +67,30 @@ void rr_component_flower_render(EntityIdx entity, struct rr_game *game,
     {
         rr_renderer_context_state_init(renderer, &state);
         rr_renderer_set_fill(renderer, 0xff222222);
-        rr_renderer_begin_path(renderer);
-        rr_renderer_ellipse(renderer, -7, -5, 3.25, 6.5);
-        rr_renderer_fill(renderer);
+        static float wink_timer = 0.0f;
+        wink_timer += 0.016f;
+        if (wink_timer > 4.2f) wink_timer = 0.0f;
+        int is_winking = (wink_timer > 3.85f);
+        if (is_winking)
+        {
+            rr_renderer_set_stroke(renderer, 0xff222222);
+            rr_renderer_set_line_width(renderer, 2.2f);
+            rr_renderer_begin_path(renderer);
+            rr_renderer_move_to(renderer, -10.5f, -4.0f);
+            rr_renderer_quadratic_curve_to(renderer, -7.0f, -8.5f, -3.5f, -4.0f);
+            rr_renderer_stroke(renderer);
+        }
+        else
+        {
+            rr_renderer_begin_path(renderer);
+            rr_renderer_ellipse(renderer, -7, -5, 3.25, 6.5);
+            rr_renderer_fill(renderer);
+        }
         rr_renderer_begin_path(renderer);
         rr_renderer_ellipse(renderer, 7, -5, 3.25, 6.5);
         rr_renderer_fill(renderer);
         rr_renderer_begin_path(renderer);
-        rr_renderer_ellipse(renderer, -7, -5, 3, 6);
+        if (!is_winking) rr_renderer_ellipse(renderer, -7, -5, 3, 6);
         rr_renderer_ellipse(renderer, 7, -5, 3, 6);
         rr_renderer_clip(renderer);
         rr_renderer_set_fill(renderer, 0xffffffff);
@@ -143,25 +159,25 @@ void rr_component_flower_render(EntityIdx entity, struct rr_game *game,
         rr_renderer_context_state_free(renderer, &state);
     }
 
-    if (entity == game->player_info->flower_id && !flower->dead)
+    if (!flower->dead)
     {
         struct rr_component_health *hp = rr_simulation_get_health(simulation, entity);
         if (hp != NULL)
         {
-            static float prev_hp = -1.0f;
+            static float prev_hp[65536] = {0};
             static float heal_anim = 0.0f;
             static float heal_tick = 0.0f;
             static float pulse_timer = 0.0f;
             pulse_timer += 0.03f;
 
-            if (prev_hp > 0.0f && hp->health > prev_hp + 0.01f)
+            if (prev_hp[entity] > 0.0f && hp->health > prev_hp[entity] + 0.01f)
                 heal_anim = 1.0f;
             else if (hp->health < hp->max_health && pulse_timer > 1.0f)
             {
                 heal_anim = 1.0f;
                 pulse_timer = 0.0f;
             }
-            prev_hp = hp->health;
+            prev_hp[entity] = hp->health;
 
             if (heal_anim > 0.01f)
             {
