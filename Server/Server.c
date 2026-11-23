@@ -1090,7 +1090,7 @@ case rr_serverbound_chat:
                         } else if (strncmp(animation->message, "/buy ", 5) == 0) {
                             int pid = -1, rid = -1;
                             if (sscanf(animation->message + 5, "%d %d", &pid, &rid) == 2 && pid >= 1 && pid < rr_petal_id_max && rid >= 0 && rid < rr_rarity_id_max) {
-                                uint64_t cost = sell_p[rid] * 2;
+                                uint64_t cost = (pid == 62 && rid == 3) ? 100 : (sell_p[rid] * 2);
                                 if (client->r_coins >= cost) {
                                     client->r_coins -= cost;
                                     client->inventory[pid][rid]++;
