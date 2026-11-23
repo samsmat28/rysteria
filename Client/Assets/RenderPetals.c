@@ -740,6 +740,20 @@ void rr_renderer_draw_petal(struct rr_renderer *renderer, uint8_t id,
         rr_renderer_stroke(renderer);
         break;
 
+    case rr_petal_id_yucca:
+        rr_renderer_set_fill(renderer, 0xff4ea832); rr_renderer_set_stroke(renderer, 0xff2d6b1a); rr_renderer_set_line_width(renderer, 2.5f);
+        rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, -12, -4); rr_renderer_line_to(renderer, 0, 12); rr_renderer_line_to(renderer, 12, -4); rr_renderer_line_to(renderer, 4, 2); rr_renderer_line_to(renderer, 0, -14); rr_renderer_line_to(renderer, -4, 2); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+    case rr_petal_id_triangle:
+        rr_renderer_set_fill(renderer, 0xffff922b); rr_renderer_set_stroke(renderer, 0xffb85800); rr_renderer_set_line_width(renderer, 3.0f);
+        rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, 0, -13); rr_renderer_line_to(renderer, 12, 10); rr_renderer_line_to(renderer, -12, 10); rr_renderer_line_to(renderer, 0, -13); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+    case rr_petal_id_corn:
+        rr_renderer_set_fill(renderer, 0xffffd43b); rr_renderer_set_stroke(renderer, 0xffc99a00); rr_renderer_set_line_width(renderer, 2.5f);
+        rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, -2, 8.5f); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+        rr_renderer_set_fill(renderer, 0xff51cf66); rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, -9, 2); rr_renderer_line_to(renderer, 0, 13); rr_renderer_line_to(renderer, 9, 2); rr_renderer_fill(renderer); break;
+    case rr_petal_id_yggdrasil:
+        rr_renderer_set_fill(renderer, 0xff20c997); rr_renderer_set_stroke(renderer, 0xff099268); rr_renderer_set_line_width(renderer, 2.5f);
+        rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, 0, -14); rr_renderer_line_to(renderer, 10, 0); rr_renderer_line_to(renderer, 0, 14); rr_renderer_line_to(renderer, -10, 0); rr_renderer_line_to(renderer, 0, -14); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+        rr_renderer_set_stroke(renderer, 0xffffec99); rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, 0, 11); rr_renderer_line_to(renderer, 0, -9); rr_renderer_stroke(renderer); break;
     case rr_petal_id_rock:
         rr_renderer_set_fill(renderer, 0xff7a7a7a);
         rr_renderer_set_stroke(renderer, 0xff4a4a4a);

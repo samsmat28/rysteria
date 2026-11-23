@@ -98,6 +98,9 @@ struct rr_server_client
     uint8_t checkpoint_difficulty;
     float checkpoint_x;
     float checkpoint_y;
+    uint8_t has_ygg_teleport;
+    float ygg_x;
+    float ygg_y;
 };
 
 void rr_server_client_init(struct rr_server_client *);

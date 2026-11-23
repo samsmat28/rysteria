@@ -51,7 +51,13 @@ EntityIdx rr_simulation_alloc_player(struct rr_simulation *this,
         rr_simulation_add_relations(this, flower_id);
     struct rr_component_arena *arena = rr_simulation_get_arena(this, arena_id);
     struct rr_spawn_zone *respawn_zone = &arena->respawn_zone;
-    if (player_info->client && player_info->client->has_checkpoint)
+    if (player_info->client && player_info->client->has_ygg_teleport)
+    {
+        rr_component_physical_set_x(physical, player_info->client->ygg_x);
+        rr_component_physical_set_y(physical, player_info->client->ygg_y);
+        player_info->client->has_ygg_teleport = 0;
+    }
+    else if (player_info->client && player_info->client->has_checkpoint)
     {
         rr_component_physical_set_x(physical, player_info->client->checkpoint_x);
         rr_component_physical_set_y(physical, player_info->client->checkpoint_y);
