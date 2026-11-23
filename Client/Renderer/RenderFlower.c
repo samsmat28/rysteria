@@ -62,6 +62,31 @@ void rr_component_flower_render(EntityIdx entity, struct rr_game *game,
         rr_renderer_move_to(renderer, 4, -8);
         rr_renderer_line_to(renderer, 10, -2);
         rr_renderer_stroke(renderer);
+        static float death_float = 0.0f;
+        death_float += 0.04f;
+        struct rr_renderer_context_state dstate;
+        rr_renderer_context_state_init(renderer, &dstate);
+        rr_renderer_rotate(renderer, -physical->lerp_angle);
+        float bob = sinf(death_float) * 4.0f;
+
+        // Восходящий золотой нимб
+        rr_renderer_set_global_alpha(renderer, 0.85f);
+        rr_renderer_set_stroke(renderer, 0xffffd43b);
+        rr_renderer_set_line_width(renderer, 2.5f);
+        rr_renderer_begin_path(renderer);
+        rr_renderer_ellipse(renderer, 0, -34.0f + bob, 14.0f, 4.5f);
+        rr_renderer_stroke(renderer);
+
+        // Эпичная надпись над головой
+        rr_renderer_set_fill(renderer, 0xffffd43b);
+        rr_renderer_set_stroke(renderer, 0xff1a1a1a);
+        rr_renderer_set_line_width(renderer, 4.0f);
+        rr_renderer_set_text_size(renderer, 15);
+        rr_renderer_set_text_align(renderer, 1);
+        rr_renderer_set_text_baseline(renderer, 1);
+        rr_renderer_stroke_text(renderer, "FALLEN IN GLORY", 0, -50.0f + bob);
+        rr_renderer_fill_text(renderer, "FALLEN IN GLORY", 0, -50.0f + bob);
+        rr_renderer_context_state_free(renderer, &dstate);
     }
     else
     {
