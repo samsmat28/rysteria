@@ -1,3 +1,0 @@
-/workspaces/rysteria/Server/build-nether/CMakeFiles/rrolf-server.dir
-/workspaces/rysteria/Server/build-nether/CMakeFiles/edit_cache.dir
-/workspaces/rysteria/Server/build-nether/CMakeFiles/rebuild_cache.dir
