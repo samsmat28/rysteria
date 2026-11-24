@@ -14,17 +14,21 @@ drop component is id 9, size is 24
 player_info component is id 1, size is 1472
 petal component is id 8, size is 48
 nest component is id 13, size is 24
-[2026/11/24 06:02:48:1173] N: lws_create_context: LWS: 4.3.5-unknown, NET CLI SRV H1 H2 WS ConMon IPV6-on
-[2026/11/24 06:02:48:1234] N: __lws_lc_tag:  ++ [wsi|0|pipe] (1)
-[2026/11/24 06:02:48:1236] N: __lws_lc_tag:  ++ [vh|0|netlink] (1)
-[2026/11/24 06:02:48:1239] N: __lws_lc_tag:  ++ [vh|1|default||1238] (2)
-[2026/11/24 06:02:48:1241] N: [vh|1|default||1238]: lws_socket_bind: source ads 0.0.0.0
-[2026/11/24 06:02:48:1242] N: __lws_lc_tag:  ++ [wsi|1|listen|default||1238] (2)
-[2026/11/24 06:02:48:1243] N: [vh|1|default||1238]: lws_socket_bind: source ads ::
-[2026/11/24 06:02:48:1245] N: __lws_lc_tag:  ++ [wsi|2|listen|default||1238] (3)
-[2026/11/24 06:02:48:1246] N: lws_create_context: LWS: 4.3.5-unknown, NET CLI SRV H1 H2 WS ConMon IPV6-on
-[2026/11/24 06:02:48:1332] N: __lws_lc_tag:  ++ [wsi|0|pipe] (1)
-[2026/11/24 06:02:48:1333] N: __lws_lc_tag:  ++ [vh|0|netlink] (1)
-[2026/11/24 06:02:48:1335] N: __lws_lc_tag:  ++ [vh|1|default||-1] (2)
-[2026/11/24 06:02:48:1337] N: __lws_lc_tag:  ++ [wsicli|0|WS/h1/default/localhost] (1)
-tick took 436418 microseconds
+[2026/11/24 06:03:51:2045] N: lws_create_context: LWS: 4.3.5-unknown, NET CLI SRV H1 H2 WS ConMon IPV6-on
+[2026/11/24 06:03:51:2114] N: __lws_lc_tag:  ++ [wsi|0|pipe] (1)
+[2026/11/24 06:03:51:2117] N: __lws_lc_tag:  ++ [vh|0|netlink] (1)
+[2026/11/24 06:03:51:2118] N: __lws_lc_tag:  ++ [vh|1|default||1238] (2)
+[2026/11/24 06:03:51:2125] E: [null wsi]: lws_socket_bind: ERROR on binding fd 6 to port 1238 (-1 98)
+[2026/11/24 06:03:51:2126] E: [vh|1|default||1238]: lws_create_vhost: init server failed
+[2026/11/24 06:03:51:2127] N: __lws_lc_untag:  -- [vh|1|default||1238] (1) 864μs
+[2026/11/24 06:03:51:2127] E: lws_create_context: Failed to create default vhost
+[2026/11/24 06:03:51:2145] N: __lws_lc_untag:  -- [wsi|0|pipe] (0) 3.138ms
+[2026/11/24 06:03:51:2153] N: __lws_lc_untag:  -- [vh|0|netlink] (0) 3.654ms
+[2026/11/24 06:03:51:2176] N: lws_create_context: LWS: 4.3.5-unknown, NET CLI SRV H1 H2 WS ConMon IPV6-on
+[2026/11/24 06:03:51:2237] N: __lws_lc_tag:  ++ [wsi|0|pipe] (1)
+[2026/11/24 06:03:51:2239] N: __lws_lc_tag:  ++ [vh|0|netlink] (1)
+[2026/11/24 06:03:51:2240] N: __lws_lc_tag:  ++ [vh|1|default||-1] (2)
+[2026/11/24 06:03:51:2241] N: __lws_lc_tag:  ++ [wsicli|0|WS/h1/default/localhost] (1)
+tick took 850554 microseconds
+tick took 39119 microseconds
+tick took 30026 microseconds
