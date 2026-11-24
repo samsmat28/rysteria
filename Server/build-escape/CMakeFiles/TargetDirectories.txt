@@ -1,3 +1,0 @@
-/workspaces/rysteria/Server/build-escape/CMakeFiles/rrolf-server.dir
-/workspaces/rysteria/Server/build-escape/CMakeFiles/edit_cache.dir
-/workspaces/rysteria/Server/build-escape/CMakeFiles/rebuild_cache.dir
