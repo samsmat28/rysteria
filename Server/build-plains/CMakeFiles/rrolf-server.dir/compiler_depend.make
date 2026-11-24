@@ -4033,7 +4033,10 @@ CMakeFiles/rrolf-server.dir/workspaces/rysteria/Shared/StaticData.c.obj: /worksp
   /usr/lib/llvm-19/lib/clang/19/include/stdint.h \
   /workspaces/rysteria/Shared/Entity.h \
   /workspaces/rysteria/Shared/StaticData.h \
-  /workspaces/rysteria/Shared/Utilities.h
+  /workspaces/rysteria/Shared/Utilities.h \
+  /workspaces/rysteria/Shared/Nether_map.h \
+  /workspaces/rysteria/Shared/Ocean_map.h \
+  /workspaces/rysteria/Shared/Plains_map.h
 
 CMakeFiles/rrolf-server.dir/workspaces/rysteria/Shared/Utilities.c.obj: /workspaces/rysteria/Shared/Utilities.c \
   /usr/include/alloca.h \
@@ -4220,6 +4223,8 @@ CMakeFiles/rrolf-server.dir/workspaces/rysteria/Shared/pb.c.obj: /workspaces/rys
   /workspaces/rysteria/Shared/MagicNumber.h \
   /workspaces/rysteria/Shared/pb.h
 
+
+/workspaces/rysteria/Shared/Plains_map.h:
 
 /workspaces/rysteria/Shared/StaticData.c:
 
@@ -4527,6 +4532,8 @@ CMakeFiles/rrolf-server.dir/workspaces/rysteria/Shared/pb.c.obj: /workspaces/rys
 
 /usr/include/libwebsockets/lws-writeable.h:
 
+/workspaces/rysteria/Shared/Nether_map.h:
+
 /usr/include/libwebsockets/lws-write.h:
 
 /usr/include/openssl/ssl2.h:
@@ -4732,6 +4739,8 @@ CMakeFiles/rrolf-server.dir/workspaces/rysteria/Shared/pb.c.obj: /workspaces/rys
 /usr/include/openssl/cterr.h:
 
 /usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
+
+/workspaces/rysteria/Shared/Ocean_map.h:
 
 /usr/include/libwebsockets/lws-dsh.h:
 

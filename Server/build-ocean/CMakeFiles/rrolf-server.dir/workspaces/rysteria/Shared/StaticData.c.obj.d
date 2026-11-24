@@ -42,4 +42,7 @@ CMakeFiles/rrolf-server.dir/workspaces/rysteria/Shared/StaticData.c.obj: \
   /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
   /usr/include/x86_64-linux-gnu/bits/stdio.h \
-  /workspaces/rysteria/Server/../Shared/Utilities.h
+  /workspaces/rysteria/Server/../Shared/Utilities.h \
+  /workspaces/rysteria/Shared/Nether_map.h \
+  /workspaces/rysteria/Shared/Ocean_map.h \
+  /workspaces/rysteria/Shared/Plains_map.h

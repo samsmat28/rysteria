@@ -4077,6 +4077,9 @@ CMakeFiles/rrolf-server.dir/workspaces/rysteria/Shared/StaticData.c.obj
  /workspaces/rysteria/Shared/Entity.h
  /workspaces/rysteria/Shared/StaticData.h
  /workspaces/rysteria/Shared/Utilities.h
+ /workspaces/rysteria/Shared/Nether_map.h
+ /workspaces/rysteria/Shared/Ocean_map.h
+ /workspaces/rysteria/Shared/Plains_map.h
 
 CMakeFiles/rrolf-server.dir/workspaces/rysteria/Shared/Utilities.c.obj
  /workspaces/rysteria/Shared/Utilities.c
