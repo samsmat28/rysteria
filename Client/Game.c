@@ -828,7 +828,7 @@ void rr_game_init(struct rr_game *this)
 
     rr_assets_init(this);
     rr_game_cache_load(this);
-    if (this->selected_biome >= rr_biome_id_garden ||
+    if (this->selected_biome > rr_biome_id_garden ||
         RR_BIOME_SERVERS[this->selected_biome].port == 0)
         this->selected_biome = 0;
     rr_dom_set_text("_0x4346", this->cache.nickname);

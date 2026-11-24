@@ -868,7 +868,7 @@ struct rr_maze_declaration RR_MAZES[rr_biome_id_max] = {
 struct rr_biome_server RR_BIOME_SERVERS[rr_biome_id_max] = {
     {"default", 1234, "hc"},  // hell creek
     {"pvp",     1235, "ant"}, // ant hell
-    {NULL,      0,    NULL},
+    {"escape", 1236, "esc"},
     {NULL,      0,    NULL},
 };
 
