@@ -146,6 +146,65 @@ void rr_server_client_free(struct rr_server_client *this)
     puts("<rr_server::client_disconnect>");
 }
 
+static int rr_eval_q100(struct rr_server_client *c, int q, char *h, size_t hs) {
+    if (!c || q < 1 || q > 100) return 0;
+    uint64_t kb[12] = {0}, min_sp = UINT64_MAX;
+    int sp_done = 0;
+    uint64_t req_sp = (q > 90) ? (uint64_t)((q - 90) * 100) : 0;
+    for (int m = 0; m < rr_mob_id_max; m++) {
+        uint64_t ms = 0;
+        for (int r = 0; r < rr_rarity_id_max; r++) {
+            uint32_t v = c->mob_gallery[m][r];
+            ms += v;
+            if (r < 12) kb[r] += v;
+        }
+        if (ms < min_sp) min_sp = ms;
+        if (req_sp > 0 && ms >= req_sp) sp_done++;
+    }
+    if (min_sp == UINT64_MAX) min_sp = 0;
+    uint64_t ep = 0, mp = 0, uk = 0;
+    for (int p = 0; p < rr_petal_id_max; p++)
+        for (int r = 0; r < rr_rarity_id_max; r++) {
+            if (r >= 3) ep += c->inventory[p][r];
+            if (r >= 5) mp += c->inventory[p][r];
+        }
+    for (int r = 6; r < rr_rarity_id_max && r < 12; r++) uk += kb[r];
+    static const uint64_t tr[20] = {
+        60,180,300,600,1200,1800,2700,3600,7200,10800,
+        18000,28800,43200,86400,259200,604800,1209600,2592000,5184000,8640000
+    };
+    static const uint64_t xr[20] = {
+        500,1200,2500,5000,10000,18000,30000,45000,65000,90000,
+        120000,160000,210000,270000,350000,450000,570000,700000,850000,1000000
+    };
+    static const uint64_t em[8] = {5,15,30,60,100,200,350,500};
+    static const uint64_t lm[8] = {3,10,20,40,75,125,200,300};
+    static const uint64_t mm[7] = {1,5,15,30,60,100,150};
+    static const uint64_t um[7] = {1,3,10,20,40,70,100};
+    int ok = 0;
+    if (q <= 20) ok = (c->play_seconds >= tr[q - 1]);
+    else if (q <= 40) ok = ((uint64_t)c->experience >= xr[q - 21]);
+    else if (q <= 48) ok = (kb[3] >= em[q - 41]);
+    else if (q <= 56) ok = (kb[4] >= lm[q - 49]);
+    else if (q <= 63) ok = (kb[5] >= mm[q - 57]);
+    else if (q <= 70) ok = (uk >= um[q - 64]);
+    else if (q <= 80) ok = (ep >= (uint64_t)((q - 70) * 3));
+    else if (q <= 90) ok = (mp >= (uint64_t)(q - 80));
+    else ok = (min_sp >= req_sp);
+    if (!ok && h && hs > 0) {
+        if (q <= 20) snprintf(h, hs, "Time: %llu/%llus", (unsigned long long)c->play_seconds, (unsigned long long)tr[q-1]);
+        else if (q <= 40) snprintf(h, hs, "XP: %llu/%llu", (unsigned long long)c->experience, (unsigned long long)xr[q-21]);
+        else if (q <= 48) snprintf(h, hs, "Epic mobs: %llu/%llu", (unsigned long long)kb[3], (unsigned long long)em[q-41]);
+        else if (q <= 56) snprintf(h, hs, "Leg mobs: %llu/%llu", (unsigned long long)kb[4], (unsigned long long)lm[q-49]);
+        else if (q <= 63) snprintf(h, hs, "Myth mobs: %llu/%llu", (unsigned long long)kb[5], (unsigned long long)mm[q-57]);
+        else if (q <= 70) snprintf(h, hs, "Ultra+ mobs: %llu/%llu", (unsigned long long)uk, (unsigned long long)um[q-64]);
+        else if (q <= 80) snprintf(h, hs, "Epic+ petals: %llu/%d", (unsigned long long)ep, (q-70)*3);
+        else if (q <= 90) snprintf(h, hs, "Myth+ petals: %llu/%d", (unsigned long long)mp, q-80);
+        else snprintf(h, hs, "All species %llu: %d/%d (min %llu)", (unsigned long long)req_sp, sp_done, rr_mob_id_max, (unsigned long long)min_sp);
+    }
+    return ok;
+}
+
 static void write_animation_function(struct rr_simulation *simulation,
                                      struct proto_bug *encoder,
                                      struct rr_server_client *client,
@@ -1080,7 +1139,9 @@ case rr_serverbound_chat:
                         strncmp(animation->message, "/sell ", 6) == 0 ||
                         strcmp(animation->message, "/quest") == 0 ||
                         strcmp(animation->message, "/claim") == 0 ||
-                        strncmp(animation->message, "/pack ", 6) == 0)
+                        strncmp(animation->message, "/pack ", 6) == 0 ||
+                        strcmp(animation->message, "/ch") == 0 ||
+                        strncmp(animation->message, "/ch ", 4) == 0)
                     {
                         static const uint64_t sell_p[11] = { 5, 15, 40, 120, 350, 1000, 3000, 9000, 25000, 75000, 200000 };
                         static const uint64_t q_rew[11] = { 40, 100, 250, 700, 2000, 6000, 18000, 50000, 150000, 400000, 1000000 };
@@ -1122,6 +1183,34 @@ case rr_serverbound_chat:
                             if (client->quest_target == 0) { client->quest_rarity = 0; client->quest_target = 5; client->quest_progress = 0; }
                             uint8_t r = client->quest_rarity < 11 ? client->quest_rarity : 0;
                             snprintf(animation->message, 64, "Quest: %u/%u %s (+%llu R)", client->quest_progress, client->quest_target, RR_RARITY_NAMES[r], (unsigned long long)q_rew[r]);
+                        } else if (strcmp(animation->message, "/ch") == 0) {
+                            int done = 0;
+                            for (int b = 0; b < 64; b++) if (client->ch_mask_lo & (1ULL << b)) done++;
+                            for (int b = 0; b < 36; b++) if (client->ch_mask_hi & (1ULL << b)) done++;
+                            snprintf(animation->message, 64, "Quests completed: %d / 100", done);
+                        } else if (strncmp(animation->message, "/ch ", 4) == 0) {
+                            int qid = 0;
+                            if (sscanf(animation->message + 4, "%d", &qid) == 1 && qid >= 1 && qid <= 100) {
+                                int bit = qid - 1;
+                                uint64_t already = (bit < 64) ? (client->ch_mask_lo & (1ULL << bit)) : (client->ch_mask_hi & (1ULL << (bit - 64)));
+                                if (already) {
+                                    snprintf(animation->message, 64, "Quest #%d already claimed!", qid);
+                                } else {
+                                    char hb[64] = {0};
+                                    if (!rr_eval_q100(client, qid, hb, sizeof(hb))) {
+                                        snprintf(animation->message, 64, "%s", hb);
+                                    } else {
+                                        if (bit < 64) client->ch_mask_lo |= (1ULL << bit);
+                                        else client->ch_mask_hi |= (1ULL << (bit - 64));
+                                        uint64_t rew = (uint64_t)(100 + qid * 50 + ((qid % 10 == 0) ? (qid * 100) : 0));
+                                        client->r_coins += rew;
+                                        rr_server_client_write_account(client);
+                                        snprintf(animation->message, 64, "Quest #%d claimed! +%llu R", qid, (unsigned long long)rew);
+                                    }
+                                }
+                            } else {
+                                snprintf(animation->message, 64, "Usage: /ch 1..100");
+                            }
                         } else if (strncmp(animation->message, "/pack ", 6) == 0) {
                             int pk = atoi(animation->message + 6);
                             if (pk == 1) {
@@ -1832,6 +1921,35 @@ static void server_tick(struct rr_server *this)
                 lws_callback_on_writable(client->socket_handle);
             if (!client->verified)
                 continue;
+            if (++client->play_subticks >= 25) {
+                client->play_subticks = 0;
+                client->play_seconds++;
+                if (client->player_info != NULL) {
+                    for (int qid = 1; qid <= 100; qid++) {
+                        int b = qid - 1;
+                        uint64_t dn = (b < 64) ? (client->ch_mask_lo & (1ULL << b)) : (client->ch_mask_hi & (1ULL << (b - 64)));
+                        uint64_t sn = (b < 64) ? (client->ch_notified_lo & (1ULL << b)) : (client->ch_notified_hi & (1ULL << (b - 64)));
+                        if (!dn && !sn && rr_eval_q100(client, qid, NULL, 0)) {
+                            if (b < 64) client->ch_notified_lo |= (1ULL << b);
+                            else client->ch_notified_hi |= (1ULL << (b - 64));
+                            if (this->simulation.animation_length < (sizeof(this->simulation.animations) / sizeof(this->simulation.animations[0]))) {
+                                struct rr_simulation_animation *an = &this->simulation.animations[this->simulation.animation_length++];
+                                memset(an, 0, sizeof(*an));
+                                an->type = rr_animation_type_chat;
+                                an->owner = client->player_info->parent_id;
+                                strcpy(an->name, "[Quest]");
+                                snprintf(an->message, 64, "Completed #%d! Type /ch %d to claim!", qid, qid);
+                            }
+                            rr_server_client_write_account(client);
+                            break;
+                        }
+                    }
+                }
+            }
+            if (++client->play_subticks >= 25) {
+                client->play_subticks = 0;
+                client->play_seconds++;
+            }
             if (client->player_info != NULL)
             {
                 if (rr_simulation_entity_alive(

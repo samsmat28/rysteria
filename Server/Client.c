@@ -155,7 +155,7 @@ void rr_server_autosave_disk(struct rr_server_client *client)
     snprintf(path, sizeof(path), "accounts/%s.auto", id);
     FILE *f = fopen(path, "wb");
     if (!f) return;
-    uint32_t magic = 0x52525332;
+    uint32_t magic = 0x52525334;
     fwrite(&magic, sizeof(magic), 1, f);
     fwrite(&client->experience, sizeof(client->experience), 1, f);
     fwrite(client->inventory, sizeof(client->inventory), 1, f);
@@ -168,6 +168,12 @@ void rr_server_autosave_disk(struct rr_server_client *client)
     fwrite(&client->quest_rarity, 1, 1, f);
     fwrite(&client->quest_target, sizeof(client->quest_target), 1, f);
     fwrite(&client->quest_progress, sizeof(client->quest_progress), 1, f);
+    fwrite(&client->ch_mask_lo, sizeof(client->ch_mask_lo), 1, f);
+    fwrite(&client->ch_mask_hi, sizeof(client->ch_mask_hi), 1, f);
+    fwrite(&client->play_seconds, 8, 1, f);
+    fwrite(&client->ch_notified_lo, 8, 1, f);
+    fwrite(&client->ch_notified_hi, 8, 1, f);
+    fwrite(&client->play_seconds, sizeof(client->play_seconds), 1, f);
     fwrite(&client->afk_challenge[7], sizeof(client->afk_challenge[7]), 1, f);
     fclose(f);
 }
@@ -184,7 +190,7 @@ void rr_server_autoload_disk(struct rr_server_client *client)
     FILE *f = fopen(path, "rb");
     if (!f) return;
     uint32_t magic = 0;
-    if (fread(&magic, sizeof(magic), 1, f) == 1 && (magic == 0x52525331 || magic == 0x52525332)) {
+    if (fread(&magic, sizeof(magic), 1, f) == 1 && (magic >= 0x52525331 && magic <= 0x52525334)) {
         fread(&client->experience, sizeof(client->experience), 1, f);
         fread(client->inventory, sizeof(client->inventory), 1, f);
         fread(client->mob_gallery, sizeof(client->mob_gallery), 1, f);
@@ -196,6 +202,13 @@ void rr_server_autoload_disk(struct rr_server_client *client)
         fread(&client->quest_rarity, 1, 1, f);
         fread(&client->quest_target, sizeof(client->quest_target), 1, f);
         fread(&client->quest_progress, sizeof(client->quest_progress), 1, f);
+        if (magic >= 0x52525335) {
+            fread(&client->ch_mask_lo, sizeof(client->ch_mask_lo), 1, f);
+            fread(&client->ch_mask_hi, sizeof(client->ch_mask_hi), 1, f);
+        }
+        if (magic >= 0x52525334) {
+            fread(&client->play_seconds, sizeof(client->play_seconds), 1, f);
+        }
         if (magic == 0x52525332) fread(&client->afk_challenge[7], sizeof(client->afk_challenge[7]), 1, f);
     }
     fclose(f);

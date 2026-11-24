@@ -54,9 +54,21 @@ struct rr_ui_element *rr_ui_account_toggle_button_init() {
     return this;
 }
 
-static void copy_btn_ev(struct rr_ui_element *this, struct rr_game *g) {
-    if (g->input_data->mouse_buttons_up_this_tick & 1) {
-        if (g->pressed != this) return;
+static void acc_win_ev(struct rr_ui_element *this, struct rr_game *g) {
+    if (g->menu_open != rr_game_menu_account) return;
+    if (!(g->input_data->mouse_buttons_up_this_tick & 1)) return;
+    float s = g->renderer->scale > 0.0f ? g->renderer->scale : 1.0f;
+    float cx = g->renderer->width * 0.5f;
+    float cy = g->renderer->height * 0.5f;
+    float tx = g->input_data->touches[0].touch_x;
+    float ty = g->input_data->touches[0].touch_y;
+    if (tx == 0.0f && ty == 0.0f) {
+        tx = g->input_data->mouse_x;
+        ty = g->input_data->mouse_y;
+    }
+    float mx = (tx - cx) / s;
+    float my = (ty - cy) / s;
+    if (mx >= -170.0f && mx <= 170.0f && my >= -50.0f && my <= 10.0f) {
         EM_ASM({
             const key = globalThis['localStorage'].getItem('rr_save_id') || ('RR-' + Math.random().toString(36).slice(2, 10).toUpperCase());
             globalThis['localStorage'].setItem('rr_save_id', key);
@@ -66,25 +78,8 @@ static void copy_btn_ev(struct rr_ui_element *this, struct rr_game *g) {
             }
             globalThis['prompt']('Ваш Код Сохранения (Ctrl+C чтобы скопировать):', key);
         });
-        snprintf(save_ui_msg, sizeof(save_ui_msg), "Save Code ready!");
-    }
-}
-
-static void copy_btn_rd(struct rr_ui_element *this, struct rr_game *g) {
-    struct rr_renderer *r = g->renderer;
-    rr_renderer_scale(r, r->scale);
-    rr_renderer_set_fill(r, (g->focused == this) ? 0xff3cb371 : 0xff2e8b57);
-    rr_renderer_set_stroke(r, 0xff1b5e20);
-    rr_renderer_set_line_width(r, 4);
-    rr_renderer_begin_path(r);
-    rr_renderer_round_rect(r, -this->abs_width/2, -this->abs_height/2, this->abs_width, this->abs_height, 10);
-    rr_renderer_fill(r); rr_renderer_stroke(r);
-    acc_txt(r, "COPY SAVE CODE", 0, 0, 16, 0xffffffff);
-}
-
-static void load_btn_ev(struct rr_ui_element *this, struct rr_game *g) {
-    if (g->input_data->mouse_buttons_up_this_tick & 1) {
-        if (g->pressed != this) return;
+        snprintf(save_ui_msg, sizeof(save_ui_msg), "Save Code copied!");
+    } else if (mx >= -170.0f && mx <= 170.0f && my >= 15.0f && my <= 75.0f) {
         EM_ASM({
             const code = globalThis['prompt']('Вставьте ваш Код Сохранения (Save Code):');
             if (code && code.trim()) {
@@ -95,18 +90,6 @@ static void load_btn_ev(struct rr_ui_element *this, struct rr_game *g) {
             }
         });
     }
-}
-
-static void load_btn_rd(struct rr_ui_element *this, struct rr_game *g) {
-    struct rr_renderer *r = g->renderer;
-    rr_renderer_scale(r, r->scale);
-    rr_renderer_set_fill(r, (g->focused == this) ? 0xfff39c12 : 0xffd98a1c);
-    rr_renderer_set_stroke(r, 0xff8e5b0e);
-    rr_renderer_set_line_width(r, 4);
-    rr_renderer_begin_path(r);
-    rr_renderer_round_rect(r, -this->abs_width/2, -this->abs_height/2, this->abs_width, this->abs_height, 10);
-    rr_renderer_fill(r); rr_renderer_stroke(r);
-    acc_txt(r, "LOAD BY SAVE CODE", 0, 0, 16, 0xffffffff);
 }
 
 static void acc_win_rd(struct rr_ui_element *this, struct rr_game *g) {
@@ -123,6 +106,19 @@ static void acc_win_rd(struct rr_ui_element *this, struct rr_game *g) {
 
     acc_txt(r, "PROGRESS SAVE & TRANSFER", 0, -112, 20, 0xff4fc3f7);
     acc_txt(r, "Progress saves automatically every action", 0, -78, 13, 0xffb3e5fc);
+
+    rr_renderer_set_fill(r, 0xff2e8b57);
+    rr_renderer_begin_path(r);
+    rr_renderer_round_rect(r, -165, -45, 330, 48, 10);
+    rr_renderer_fill(r);
+    acc_txt(r, "COPY SAVE CODE", 0, -21, 16, 0xffffffff);
+
+    rr_renderer_set_fill(r, 0xffd98a1c);
+    rr_renderer_begin_path(r);
+    rr_renderer_round_rect(r, -165, 20, 330, 48, 10);
+    rr_renderer_fill(r);
+    acc_txt(r, "LOAD BY SAVE CODE", 0, 44, 16, 0xffffffff);
+
     acc_txt(r, save_ui_msg, 0, 106, 13, 0xff7eef6d);
 }
 
@@ -133,25 +129,7 @@ struct rr_ui_element *rr_ui_account_container_init(struct rr_game *game) {
     this->abs_height = this->height = 280;
     this->animate = acc_anim;
     this->should_show = acc_show;
+    this->on_event = acc_win_ev;
     this->on_render = acc_win_rd;
-
-    struct rr_ui_element *copy_btn = rr_ui_element_init();
-    copy_btn->abs_width = copy_btn->width = 330;
-    copy_btn->abs_height = copy_btn->height = 48;
-    copy_btn->y = -21;
-    copy_btn->animate = acc_anim;
-    copy_btn->on_event = copy_btn_ev;
-    copy_btn->on_render = copy_btn_rd;
-    rr_ui_element_add_child(this, copy_btn);
-
-    struct rr_ui_element *load_btn = rr_ui_element_init();
-    load_btn->abs_width = load_btn->width = 330;
-    load_btn->abs_height = load_btn->height = 48;
-    load_btn->y = 44;
-    load_btn->animate = acc_anim;
-    load_btn->on_event = load_btn_ev;
-    load_btn->on_render = load_btn_rd;
-    rr_ui_element_add_child(this, load_btn);
-
     return this;
 }

@@ -72,6 +72,12 @@ struct rr_server_client
     uint8_t quest_rarity;
     uint16_t quest_target;
     uint16_t quest_progress;
+    uint64_t ch_mask_lo;
+    uint64_t ch_mask_hi;
+    uint64_t play_seconds;
+    uint8_t play_subticks;
+    uint64_t ch_notified_lo;
+    uint64_t ch_notified_hi;
     uint64_t pvp_points;
     float player_accel_x;
     float player_accel_y;
