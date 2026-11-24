@@ -60,7 +60,11 @@ void render_background(struct rr_component_player_info *player_info,
             rr_renderer_translate(renderer, newLeftX + GRID_SIZE / 2,
                                   currY + GRID_SIZE / 2);
             rr_renderer_scale(renderer, (GRID_SIZE + 2) / 256);
-                   if (this->selected_biome == rr_biome_id_pvp)
+                   if (this->selected_biome == rr_biome_id_nether || this->selected_biome == rr_biome_id_ocean || this->selected_biome == rr_biome_id_plains) {
+            uint32_t bg = (this->selected_biome == rr_biome_id_nether) ? 0xff3b1414 : ((this->selected_biome == rr_biome_id_ocean) ? 0xff154360 : 0xff3e8e41);
+            rr_renderer_set_fill(renderer, bg); rr_renderer_begin_path(renderer); rr_renderer_rect(renderer, -128, -128, 256, 256); rr_renderer_fill(renderer);
+        }
+        if (this->selected_biome == rr_biome_id_pvp)
         {
             // Базовый светло-коричневый пол Ant Hell
             rr_renderer_set_fill(renderer, 0xff9e744e);

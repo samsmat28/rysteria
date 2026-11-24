@@ -398,6 +398,15 @@ void rr_server_init(struct rr_server *this)
 #ifdef ESCAPE
     RR_GLOBAL_BIOME = rr_biome_id_garden;
 #endif
+#ifdef NETHER
+    RR_GLOBAL_BIOME = rr_biome_id_nether;
+#endif
+#ifdef OCEAN
+    RR_GLOBAL_BIOME = rr_biome_id_ocean;
+#endif
+#ifdef PLAINS
+    RR_GLOBAL_BIOME = rr_biome_id_plains;
+#endif
     rr_static_data_init();
     rr_simulation_init(&this->simulation);
     this->simulation.server = this;

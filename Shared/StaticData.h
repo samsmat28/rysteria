@@ -92,6 +92,9 @@ enum rr_biome_id
     rr_biome_id_pvp,
     rr_biome_id_garden,
     rr_biome_id_beehive,
+    rr_biome_id_nether,
+    rr_biome_id_ocean,
+    rr_biome_id_plains,
     rr_biome_id_max
 };
 
@@ -356,6 +359,9 @@ struct rr_maze_declaration
 RR_DECLARE_MAZE(HELL_CREEK, 160)
 RR_DECLARE_MAZE(BURROW, 4)
 RR_DECLARE_MAZE(PVP, 160)
+RR_DECLARE_MAZE(NETHER, 160)
+RR_DECLARE_MAZE(OCEAN, 160)
+RR_DECLARE_MAZE(PLAINS, 160)
 
 extern struct rr_maze_declaration RR_MAZES[rr_biome_id_max];
 

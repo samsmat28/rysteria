@@ -122,3 +122,15 @@ endif()
 if(ESCAPE)
     add_compile_definitions(ESCAPE)
 endif()
+
+if(NETHER)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DNETHER")
+endif()
+
+if(OCEAN)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DOCEAN")
+endif()
+
+if(PLAINS)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DPLAINS")
+endif()

@@ -41,6 +41,24 @@ uint32_t get_spawn_rarity(float difficulty)
 
 uint8_t get_spawn_id(uint8_t biome, struct rr_maze_grid *zone)
 {
+    if (biome == rr_biome_id_nether) {
+        float diff = zone ? zone->difficulty : 1.0f; double r = rr_frand();
+        if (diff <= 20.0f) return r < 0.45 ? rr_mob_id_fire_worker_ant : (r < 0.80 ? rr_mob_id_fire_soldier_ant : rr_mob_id_rock);
+        if (diff <= 48.0f) return r < 0.35 ? rr_mob_id_carnotaurus : (r < 0.75 ? rr_mob_id_fire_soldier_ant : rr_mob_id_queen_fire_ant);
+        return r < 0.35 ? rr_mob_id_volcano : (r < 0.68 ? rr_mob_id_titanoboa : rr_mob_id_meteor);
+    }
+    if (biome == rr_biome_id_ocean) {
+        float diff = zone ? zone->difficulty : 1.0f; double r = rr_frand();
+        if (diff <= 20.0f) return r < 0.40 ? rr_mob_id_dragonfly : (r < 0.75 ? rr_mob_id_compsognathus : rr_mob_id_fern);
+        if (diff <= 48.0f) return r < 0.45 ? rr_mob_id_spinosaurus : (r < 0.80 ? rr_mob_id_pteranodon : rr_mob_id_dilophosaurus);
+        return r < 0.60 ? rr_mob_id_mosasaurus : rr_mob_id_quetzalcoatlus;
+    }
+    if (biome == rr_biome_id_plains) {
+        float diff = zone ? zone->difficulty : 1.0f; double r = rr_frand();
+        if (diff <= 20.0f) return r < 0.35 ? rr_mob_id_ladybug : (r < 0.65 ? rr_mob_id_honeybee : (r < 0.85 ? rr_mob_id_fern : rr_mob_id_tree));
+        if (diff <= 48.0f) return r < 0.30 ? rr_mob_id_hornet : (r < 0.55 ? rr_mob_id_fat_bee : (r < 0.80 ? rr_mob_id_triceratops : rr_mob_id_stegosaurus));
+        return r < 0.45 ? rr_mob_id_brachiosaurus : (r < 0.80 ? rr_mob_id_ankylosaurus : rr_mob_id_beehive);
+    }
     if (biome == rr_biome_id_pvp)
     {
         long idx = zone - (const struct rr_maze_grid *)RR_MAZE_PVP;

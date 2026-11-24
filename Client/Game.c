@@ -502,6 +502,9 @@ void rr_game_init(struct rr_game *this)
                                     rr_ui_biome_button_init("Hell Creek", 0xff990000, rr_biome_id_hell_creek),
                                     rr_ui_biome_button_init("Ant Hell", 0xff8a5a36, rr_biome_id_pvp),
                             rr_ui_biome_button_init("Escape Room", 0xff6a1b9a, rr_biome_id_garden),
+rr_ui_biome_button_init("Nether", 0xffc0392b, rr_biome_id_nether),
+rr_ui_biome_button_init("Ocean", 0xff1f618d, rr_biome_id_ocean),
+rr_ui_biome_button_init("Plains", 0xff27ae60, rr_biome_id_plains),
                                     NULL
                                 ),
                                 rr_ui_h_container_init(rr_ui_container_init(), 0, 10,
@@ -828,7 +831,7 @@ void rr_game_init(struct rr_game *this)
 
     rr_assets_init(this);
     rr_game_cache_load(this);
-    if (this->selected_biome > rr_biome_id_garden ||
+    if (this->selected_biome >= rr_biome_id_max ||
         RR_BIOME_SERVERS[this->selected_biome].port == 0)
         this->selected_biome = 0;
     rr_dom_set_text("_0x4346", this->cache.nickname);
@@ -1989,7 +1992,7 @@ void rr_game_connect_socket(struct rr_game *this)
 
 void rr_game_select_biome(struct rr_game *this, uint8_t biome)
 {
-    if (biome > rr_biome_id_garden || RR_BIOME_SERVERS[biome].port == 0)
+    if (biome >= rr_biome_id_max || RR_BIOME_SERVERS[biome].port == 0)
         return;
     if (this->selected_biome == biome)
         return;
