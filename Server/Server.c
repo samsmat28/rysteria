@@ -395,6 +395,9 @@ void rr_server_init(struct rr_server *this)
 #ifdef PVP
     RR_GLOBAL_BIOME = rr_biome_id_pvp;
 #endif
+#ifdef ESCAPE
+    RR_GLOBAL_BIOME = rr_biome_id_garden;
+#endif
     rr_static_data_init();
     rr_simulation_init(&this->simulation);
     this->simulation.server = this;

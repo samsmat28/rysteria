@@ -118,3 +118,7 @@ if (NUSE_CURL)
 else()
     target_link_libraries(rrolf-server curl)
 endif()
+
+if(ESCAPE)
+    add_compile_definitions(ESCAPE)
+endif()
