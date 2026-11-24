@@ -1871,9 +1871,17 @@ static void server_tick(struct rr_server *this)
                                 an->type = rr_animation_type_chat;
                                 an->owner = client->player_info->parent_id;
                                 strcpy(an->name, "[Quest]");
-                                snprintf(an->message, 64, "Completed #%d! Type /ch %d to claim!", qid, qid);
+                                snprintf(an->message, 64, "Quest #%d done! Open SHOP & QUEST!", qid);
                             }
                             rr_server_client_write_account(client);
+                            for (int q2 = qid + 1; q2 <= 100; q2++) {
+                                int b2 = q2 - 1;
+                                uint64_t dn2 = (b2 < 64) ? (client->ch_mask_lo & (1ULL << b2)) : (client->ch_mask_hi & (1ULL << (b2 - 64)));
+                                if (!dn2 && rr_eval_q100(client, q2, NULL, 0)) {
+                                    if (b2 < 64) client->ch_notified_lo |= (1ULL << b2);
+                                    else client->ch_notified_hi |= (1ULL << (b2 - 64));
+                                }
+                            }
                             break;
                         }
                     }

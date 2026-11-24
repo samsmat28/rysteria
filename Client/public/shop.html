@@ -1,130 +1,36 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="UTF-8">
-<title>Rysteria — Лавка [R] и Квесты</title>
-<style>
-  body { margin:0; background:#1c140c; color:#fff; font-family:Ubuntu,sans-serif; }
-  .top { background:#2b1d10; border-bottom:3px solid #f5c542; padding:14px 24px; display:flex; justify-content:space-between; align-items:center; }
-  .wrap { max-width:920px; margin:20px auto; padding:0 16px; display:grid; grid-template-columns:1fr 1fr; gap:18px; }
-  .card { background:#26190d; border:2px solid #8b5a2b; border-radius:14px; padding:18px; }
-  .qcard { background:#162412; border:2px solid #7eef6d; border-radius:14px; padding:18px; grid-column:1 / -1; display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; }
-  .npc { width:60px; height:60px; border-radius:50%; background:#ffe763; border:4px solid #cfb73c; color:#1f1f1f; font-weight:700; font-size:20px; display:flex; align-items:center; justify-content:center; }
-  button { background:#d98a1c; color:#1a0f05; border:none; border-radius:8px; padding:9px 14px; font-weight:700; cursor:pointer; }
-  button:hover { filter:brightness(1.12); }
-  select { background:#1a1007; color:#fff; border:1px solid #8b5a2b; border-radius:8px; padding:8px 12px; width:100%; }
-  .grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; max-height:340px; overflow-y:auto; margin-top:10px; }
-  .item { background:#1c1208; border:1px solid #5c3a1a; border-radius:8px; padding:8px; display:flex; justify-content:space-between; align-items:center; font-size:13px; }
-  .promo { background:linear-gradient(90deg,#4a148c,#7b1fa2); border:2px solid #ea80fc; border-radius:10px; padding:12px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; }
-  #toast { max-width:920px; margin:12px auto 0; padding:12px 16px; background:#2b1d10; border-left:4px solid #ffd700; border-radius:6px; color:#ffe066; font-weight:700; }
-</style>
-</head>
-<body>
-<div class="top" style="flex-wrap:wrap;gap:10px;">
-  <div style="font-size:22px;font-weight:700;color:#ffd700;">🏠 Лавка Rysteria [R] & 100 Квестов</div>
-  <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-    <button id="saveBadge" style="background:#1b4f72;color:#b3e5fc;border:1px solid #4fc3f7;" onclick="copySave()">🔑 Save Code: ...</button>
-    <button onclick="copyCmd('/ch')">🏆 Прогресс (/ch)</button>
-    <button onclick="copyCmd('/balance')">💰 Баланс (/balance)</button>
-  </div>
-</div>
-<div id="toast">Нажми на любую кнопку — команда скопируется, просто вставь её в чат игры (Enter -> Ctrl+V -> Enter)!</div>
-<div class="wrap">
-  <div class="qcard">
-    <div style="display:flex;align-items:center;gap:14px;">
-      <div class="npc">◡‿◡</div>
-      <div>
-        <div style="font-size:18px;font-weight:700;color:#7eef6d;">Охотник Rysteria — Задания на R</div>
-        <div style="color:#eaffdf;margin-top:4px;">1) Узнай цель (/quest) → 2) Убей мобов нужной редкости → 3) Забери награду (/claim)</div>
-      </div>
-    </div>
-    <div style="display:flex;gap:8px;">
-      <button style="background:#3a6b2c;color:#fff;" onclick="copyCmd('/quest')">🔄 Узнать задание (/quest)</button>
-      <button style="background:#7eef6d;color:#10240b;" onclick="copyCmd('/claim')">💰 Забрать награду (/claim)</button>
-    </div>
-  </div>
-  
-  <div class="card" style="grid-column:1 / -1;border-color:#ea80fc;">
-    <h3 style="margin-top:0;color:#ea80fc;">🎁 Уникальные наборы и Сундук Удачи [R]</h3>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;">
-      <div class="promo" style="margin:0;background:linear-gradient(135deg,#1b5e20,#2e7d32);border-color:#81c784;">
-        <div><b>🦖 Набор Охотника</b><br><small>3 Epic лепестка (Claw, Bone, Amber)</small></div>
-        <button style="background:#a5d6a7;color:#0a260d;" onclick="copyCmd('/pack 1')">300 R</button>
-      </div>
-      <div class="promo" style="margin:0;background:linear-gradient(135deg,#e65100,#f57c00);border-color:#ffcc80;">
-        <div><b>🎲 Сундук Удачи</b><br><small>Случайный Dino (Legendary–Ultra)</small></div>
-        <button style="background:#ffe0b2;color:#331400;" onclick="copyCmd('/pack 2')">500 R</button>
-      </div>
-      <div class="promo" style="margin:0;background:linear-gradient(135deg,#4a148c,#880e4f);border-color:#f48fb1;">
-        <div><b>👑 Набор Бога</b><br><small>Mythic Crown + Mythic Relic</small></div>
-        <button style="background:#f8bbd0;color:#2b0014;" onclick="copyCmd('/pack 3')">5000 R</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <h3 style="margin-top:0;color:#ffd700;">🛒 Купить лепестки за R</h3>
-    <div class="promo">
-      <div><b>🦖 Уникальный Epic Relic</b><br><small>Спеццена: 100 R (стартовый баланс)</small></div>
-      <button style="background:#ea80fc;color:#1a0026;" onclick="copyCmd('/buy 62 3')">Купить (100 R)</button>
-    </div>
-    <select id="brar" onchange="renderBuy()"></select>
-    <div class="grid" id="blist"></div>
-  </div>
-  <div class="card">
-    <h3 style="margin-top:0;color:#7eef6d;">💰 Продать свои лепестки за R</h3>
-    <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px;">
-      <select id="spet" onchange="updSell()"></select>
-      <select id="srar" onchange="updSell()"></select>
-      <button id="sbtn" style="background:#2e8b57;color:#fff;padding:12px;font-size:15px;" onclick="copyCmd('/sell '+spet.value+' '+srar.value)">Продать за +5 R</button>
-    </div>
-  </div>
-
-  <div class="card" style="grid-column:1/-1;border-color:#4fc3f7;background:#111d29;">
-  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
-    <div>
-      <h3 style="margin:0;color:#4fc3f7;">🏆 100 Квестов Rysteria (/ch 1..100)</h3>
-      <small style="color:#b3e5fc;">При выполнении условия сервер сам напишет в чат! Нажми на квест для копирования <b>/ch N</b></small>
-    </div>
-    <div style="display:flex;gap:6px;flex-wrap:wrap;">
-      <button onclick="renderCh('all')">Все (100)</button>
-      <button onclick="renderCh('tm')">⏱️ 1-20 Время</button>
-      <button onclick="renderCh('xp')">⭐ 21-40 Опыт</button>
-      <button onclick="renderCh('mob')">💀 41-70 Редкие мобы</button>
-      <button onclick="renderCh('pet')">💎 71-90 Лепестки</button>
-      <button onclick="renderCh('allsp')">⚔️ 91-100 По 1000 всех</button>
-    </div>
-  </div>
-  <div class="grid" id="chlist" style="grid-template-columns:repeat(auto-fill,minmax(265px,1fr));max-height:430px;"></div>
-</div></div><script>
-const curSave = localStorage.getItem('rr_save_id') || localStorage.getItem('rivet_account_uuid') || 'Не задан';
-saveBadge.textContent = '🔑 Save Code: ' + curSave;
-function copySave(){ navigator.clipboard.writeText(curSave).catch(()=>{}); toast.textContent = '🔑 Скопирован Save Code: ' + curSave; }
-const TM_LBL = ["1 минуту","3 минуты","5 минут","10 минут","20 минут","30 минут","45 минут","1 час","2 часа","3 часа","5 часов","8 часов","12 часов","1 день (24ч)","3 дня","7 дней","14 дней","30 дней","60 дней","100 дней"];
-const XP_REQ =;
-const EM_REQ =;
-const LM_REQ =;
-const MM_REQ =;
-const UM_REQ =;
-function renderCh(f){
-  chlist.innerHTML = '';
-  for(let q=1; q<=100; q++){
-    let cat = q<=20?'tm':q<=40?'xp':q<=70?'mob':q<=90?'pet':'allsp';
-    if(f!=='all' && cat!==f) continue;
-    let boss = q%10===0, rew = 100 + q*50 + (boss?q*100:0), req = '';
-    if(q<=20) req = `Поиграть в онлайне суммарно: ${TM_LBL[q-1]}`;
-    else if(q<=40) req = `Прокачать цветок и набрать ${XP_REQ[q-21].toLocaleString()} XP`;
-    else if(q<=48) req = `Убить ${EM_REQ[q-41]} мобов редкости Epic`;
-    else if(q<=56) req = `Убить ${LM_REQ[q-49]} мобов редкости Legendary`;
-    else if(q<=63) req = `Убить ${MM_REQ[q-57]} мобов редкости Mythic`;
-    else if(q<=70) req = `Убить ${UM_REQ[q-64]} мобов редкости Ultra+`;
-    else if(q<=80) req = `Собрать в инвентаре ${(q-70)*3} лепестков Epic+`;
-    else if(q<=90) req = `Собрать в инвентаре ${q-80} лепестков Mythic+`;
-    else req = `Убить по ${(q-90)*100} мобов КАЖДОГО из 45 видов`;
-    chlist.innerHTML += `<div class="item" style="flex-direction:column;align-items:stretch;gap:5px;border-color:${boss?'#ffd700':'#284b63'}"><div style="display:flex;justify-content:space-between;align-items:center;"><b style="color:${boss?'#ffd700':'#7eef6d'}">${boss?'👑':'🎯'} Квест #${q}</b><button style="padding:4px 9px;" onclick="copyCmd('/ch ${q}')">+${rew.toLocaleString()} R</button></div><small style="color:#cbd5e1">${req}</small></div>`;
-  }
-}
-renderCh('all');
-</script>
-</body>
-</html>
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><title>Rysteria Shop</title><style>
+*{box-sizing:border-box}body{margin:0;background:#150f09;color:#fff;font-family:Ubuntu,sans-serif}.top{background:#2b1d10;border-bottom:3px solid #f5c542;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}.wrap{max-width:960px;margin:14px auto;padding:0 14px 30px;display:grid;grid-template-columns:1fr 1fr;gap:14px}.card{background:#23160c;border:2px solid #8b5a2b;border-radius:12px;padding:14px}.qcard{background:#142211;border:2px solid #7eef6d;border-radius:12px;padding:14px;grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}button{background:#d98a1c;color:#1a0f05;border:none;border-radius:8px;padding:8px 12px;font-weight:700;cursor:pointer}button:disabled{opacity:.45;cursor:default}select,input{background:#1a1007;color:#fff;border:1px solid #8b5a2b;border-radius:8px;padding:8px;width:100%}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;max-height:340px;overflow-y:auto;margin-top:8px}.item{background:#1b1108;border:1px solid #5c3a1a;border-radius:8px;padding:8px;display:flex;justify-content:space-between;align-items:center;font-size:13px;gap:6px}.promo{background:linear-gradient(90deg,#4a148c,#7b1fa2);border:2px solid #ea80fc;border-radius:10px;padding:10px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}.bar{max-width:960px;margin:10px auto 0;padding:9px 14px;background:#2b1d10;border-left:4px solid #ffd700;border-radius:6px;color:#ffe066;font-weight:700;display:flex;justify-content:space-between}.badge{padding:5px 10px;border-radius:8px;font-weight:700;font-size:13px}</style></head><body>
+<div class="top"><div style="font-size:19px;font-weight:700;color:#ffd700">🏠 Лавка Rysteria [R] & 100 Квестов</div><div style="display:flex;gap:8px;flex-wrap:wrap"><span id="cb" class="badge" style="background:#3b2716;color:#ffd700">⏳ Синхронизация...</span><span id="bb" class="badge" style="background:#1b4f72;color:#7eef6d">💰 0 R</span><button style="background:#27ae60;color:#fff" onclick="bc.postMessage({type:'sync'})">🔄 Обновить</button></div></div>
+<div class="bar"><span id="toast">Нажимай на кнопки — покупка, продажа и квесты срабатывают мгновенно!</span><span id="ti" style="color:#cbd5e1;font-size:12px">Онлайн: 0 мин</span></div>
+<div class="wrap"><div class="qcard"><div><b style="color:#7eef6d;font-size:16px">◡‿◡ Охотник Rysteria</b><div id="ht" style="margin-top:4px">Загрузка...</div></div><button id="hb" style="background:#7eef6d;color:#10240b" onclick="op(4,0,0)">Забрать</button></div>
+<div class="card" style="grid-column:1/-1;border-color:#ea80fc"><h3 style="margin:0 0 10px;color:#ea80fc">🎁 Наборы [R]</h3><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px">
+<div class="promo" style="margin:0;background:#1b5e20;border-color:#81c784"><div><b>🦖 Набор Охотника</b><br><small>Claw+Bone+Amber (Epic)</small></div><button onclick="pk(Array.of(47,48,49),3,300)">300 R</button></div>
+<div class="promo" style="margin:0;background:#e65100;border-color:#ffcc80"><div><b>🎲 Сундук Dino</b><br><small>Случайный Legendary</small></div><button onclick="lk()">500 R</button></div>
+<div class="promo" style="margin:0;background:#4a148c;border-color:#f48fb1"><div><b>👑 Набор Бога</b><br><small>Crown+Relic (Mythic)</small></div><button onclick="pk(Array.of(58,62),5,5000)">5000 R</button></div></div></div>
+<div class="card"><h3 style="margin:0 0 8px;color:#ffd700">🛒 Купить лепестки</h3><div class="promo"><div><b>🦖 Epic Relic</b><br><small>Спеццена: 100 R</small></div><button style="background:#ea80fc" onclick="op(1,62,3)">100 R</button></div><div style="display:flex;gap:6px"><select id="br" onchange="rb()"></select><input id="bs" placeholder="🔍 Поиск..." oninput="rb()"></div><div class="grid" id="bl"></div></div>
+<div class="card"><h3 style="margin:0 0 8px;color:#7eef6d">💰 Продать свои лепестки</h3><div class="grid" id="sl" style="max-height:400px"></div></div>
+<div class="card" style="grid-column:1/-1;border-color:#4fc3f7;background:#111d29"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:8px"><h3 style="margin:0;color:#4fc3f7">🏆 100 Квестов Rysteria</h3><div style="display:flex;gap:5px;flex-wrap:wrap"><button onclick="sc('all')">Все</button><button onclick="sc('tm')">⏱️ 1-20</button><button onclick="sc('xp')">⭐ 21-40</button><button onclick="sc('mob')">💀 41-70</button><button onclick="sc('pet')">💎 71-90</button><button onclick="sc('sp')">⚔️ 91-100</button></div></div><div class="grid" id="cl" style="grid-template-columns:repeat(auto-fill,minmax(265px,1fr));max-height:430px"></div></div></div>
+<script>
+const R=Array.of("Common","Uncommon","Rare","Epic","Legendary","Mythic","Ultra","Super","Omega","Hyper","Gods");
+const RC=Array.of("#7eef6d","#ffe65d","#4d52e3","#861fde","#de1f1f","#1fdbde","#ff2b75","#2bffa3","#4a4a4a","#ff9900","#fff");
+const SP=Array.of(5,15,40,120,350,1000,3000,9000,25000,75000,200000);
+const QR=Array.of(40,100,250,700,2000,6000,18000,50000,150000,400000,1000000);
+const P=Array.of("Basic","Light","Rock","Square","Rose","Stinger","Iris","Wing","Missile","Grapes","Cactus","Faster","Bubble","Pollen","Dandelion","Beetle Egg","Antennae","Heavy","Yin Yang","Web","Honey","Leaf","Salt","Rice","Corn","Sand","Pincer","Yucca","Magnet","Yggdrasil","Starfish","Pearl","Lightning","Jelly","Claw","Shell","Cutter","Dahlia","Uranium","Sponge","Soil","Fangs","Third Eye","Peas","Mysterious Stick","Clover","Claw (Dino)","Bone","Amber","Horn","Scale","Meteor","Fossil","Tusk","Feather","Volcano","Tar","Crown","Totem","Compass","Portal","Relic");
+const TM=Array.of("1 мин","3 мин","5 мин","10 мин","20 мин","30 мин","45 мин","1 ч","2 ч","3 ч","5 ч","8 ч","12 ч","1 д","3 д","7 д","14 д","30 д","60 д","100 д");
+const XP=Array.of(500,1200,2500,5000,10000,18000,30000,45000,65000,90000,120000,160000,210000,270000,350000,450000,570000,700000,850000,1000000);
+const EM=Array.of(5,15,30,60,100,200,350,500),LM=Array.of(3,10,20,40,75,125,200,300),MM=Array.of(1,5,15,30,60,100,150),UM=Array.of(1,3,10,20,40,70,100);
+let st={coins:"0",q_rar:0,q_tgt:5,q_prg:0,ch_lo:"0",ch_hi:"0",play_sec:"0",inv:Array.of()},cat='all';const bc=new BroadcastChannel('rysteria_shop');
+function op(o,a,b){bc.postMessage({type:'op',op:o,a1:a,a2:b});toast.textContent='⚡ Отправлено в игру...';setTimeout(()=>bc.postMessage({type:'sync'}),250);}
+function pk(ps,r,c){if(BigInt(st.coins||0)<BigInt(c))return toast.textContent='❌ Нужно '+c+' R';ps.forEach((p,i)=>setTimeout(()=>op(1,p,r),i*120));}
+function lk(){if(BigInt(st.coins||0)<500n)return toast.textContent='❌ Нужно 500 R';const a=Array.of(47,48,49,50,51,52,53,54,55,56,57,62);op(1,a.at(Math.floor(Math.random()*a.length)),4);}
+for(let i=0;i<8;i++)br.innerHTML+=`<option value="${i}" ${i===3?'selected':''}>${R.at(i)} (${(SP.at(i)*2).toLocaleString()} R)</option>`;
+function rb(){const r=+br.value,q=bs.value.trim().toLowerCase(),c=BigInt(st.coins||0);bl.innerHTML=P.map((n,i)=>{const p=i+1;if(q&&!n.toLowerCase().includes(q))return'';const cost=(p===62&&r===3)?100:SP.at(r)*2;return`<div class="item"><div><b style="color:${RC.at(r)}">${n}</b><br><small>${R.at(r)}</small></div><button ${c>=BigInt(cost)?'':'disabled'} onclick="op(1,${p},${r})">${cost.toLocaleString()} R</button></div>`;}).join('');}
+function rs(){sl.innerHTML=(st.inv&&st.inv.length)?st.inv.map(x=>`<div class="item"><div><b style="color:${RC.at(x.r)}">${P.at(x.p-1)||'#'+x.p}</b> <span style="color:#ffd700">x${x.c}</span><br><small>${R.at(x.r)}</small></div><button style="background:#2e8b57;color:#fff" onclick="op(2,${x.p},${x.r})">+${SP.at(x.r).toLocaleString()} R</button></div>`).join(''):'<div style="padding:10px;color:#aaa">Инвентарь пуст</div>';}
+function ic(q){const b=BigInt(q-1);return b<64n?((BigInt(st.ch_lo||0)>>b)&1n)===1n:((BigInt(st.ch_hi||0)>>(b-64n))&1n)===1n;}
+function sc(c){cat=c;rc();}
+function rc(){let h='';for(let q=1;q<=100;q++){const ct=q<=20?'tm':q<=40?'xp':q<=70?'mob':q<=90?'pet':'sp';if(cat!=='all'&&cat!==ct)continue;const bs=q%10===0,rw=100+q*50+(bs?q*100:0),d=ic(q),rq=q<=20?`Онлайн: ${TM.at(q-1)}`:q<=40?`Набрать ${XP.at(q-21).toLocaleString()} XP`:q<=48?`Убить ${EM.at(q-41)} Epic`:q<=56?`Убить ${LM.at(q-49)} Legendary`:q<=63?`Убить ${MM.at(q-57)} Mythic`:q<=70?`Убить ${UM.at(q-64)} Ultra+`:q<=80?`Иметь ${(q-70)*3} Epic+`:q<=90?`Иметь ${q-80} Mythic+`:`Убить по ${(q-90)*100} всех 45 мобов`;h+=`<div class="item" style="flex-direction:column;align-items:stretch;opacity:${d?.65:1}"><div style="display:flex;justify-content:space-between"><b style="color:${d?'#7eef6d':'#ffd700'}">${d?'✅':'🎯'} #${q}</b><button ${d?'disabled':''} onclick="op(3,${q},0)">${d?'Получено':'+'+rw.toLocaleString()+' R'}</button></div><small>${rq}</small></div>`;}cl.innerHTML=h;}
+function ap(s){st=s;cb.textContent='🟢 Подключено';cb.style.color='#7eef6d';bb.textContent=`💰 ${BigInt(st.coins||0).toLocaleString()} R`;ti.textContent=`Онлайн: ${Math.floor(Number(st.play_sec||0)/60)} мин`;const qr=st.q_rar<11?st.q_rar:0,ok=st.q_tgt>0&&st.q_prg>=st.q_tgt;ht.innerHTML=`Убить <b style="color:${RC.at(qr)}">${st.q_prg}/${st.q_tgt} ${R.at(qr)}</b> (+${QR.at(qr).toLocaleString()} R)`;hb.disabled=!ok;hb.textContent=ok?`Забрать +${QR.at(qr).toLocaleString()} R`:`В процессе (${st.q_prg}/${st.q_tgt})`;rb();rs();rc();}
+bc.onmessage=e=>{if(e.data&&e.data.type==='state'){ap(e.data.data);toast.textContent='✅ Обновлено!';}};
+try{const c=localStorage.getItem('rr_shop_state');if(c)ap(JSON.parse(c));else{rb();rs();rc();}}catch(e){rb();rs();rc();}
+bc.postMessage({type:'sync'});setInterval(()=>bc.postMessage({type:'sync'}),3000);
+</script></body></html>
