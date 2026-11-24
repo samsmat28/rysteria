@@ -55,6 +55,11 @@ extern uint8_t rr_auto_enter_portal;
 #include <Shared/cJSON.h>
 #include <Shared/pb.h>
 #include <Shared/MagicNumber.h>
+#include <stdint.h>
+uint64_t rr_ui_r_coins = 0, rr_ui_ch_lo = 0, rr_ui_ch_hi = 0, rr_ui_play_sec = 0;
+uint8_t rr_ui_q_rar = 0;
+uint16_t rr_ui_q_tgt = 0, rr_ui_q_prg = 0;
+
 
 static void rr_game_validate_loadout(struct rr_game *this)
 {
@@ -908,6 +913,15 @@ void rr_game_websocket_on_event_function(enum rr_websocket_event_type type,
         uint8_t h = proto_bug_read_uint8(&encoder, "header");
         switch (h)
         {
+        case 250:
+        {
+            rr_ui_r_coins = proto_bug_read_uint64(&encoder, "rcoins");
+            rr_ui_q_rar = proto_bug_read_uint8(&encoder, "q_rar");
+            rr_ui_q_tgt = proto_bug_read_uint16(&encoder, "q_tgt");
+            rr_ui_q_prg = proto_bug_read_uint16(&encoder, "q_prg");
+            rr_ui_play_sec = proto_bug_read_uint64(&encoder, "play_sec");
+            break;
+        }
         case rr_clientbound_update:
         {
             this->socket_error = 0;
@@ -2012,4 +2026,16 @@ void rr_rivet_lobby_on_find(char *s, char *token, uint16_t port, void *_game)
     sprintf(link, "ws%s://%s:%u\n", port == 443 ? "s" : "", s, port);
     memcpy(game->rivet_player_token, token, 400);
     rr_websocket_connect_to(&game->socket, link);
+}
+
+void rr_send_shop_op(struct rr_game *this, uint8_t op, uint8_t a1, uint8_t a2) {
+    if (!this) return;
+    struct proto_bug encoder;
+    proto_bug_init(&encoder, RR_OUTGOING_PACKET);
+    proto_bug_write_uint8(&encoder, this->socket.quick_verification, "qv");
+    proto_bug_write_uint8(&encoder, 250, "header");
+    proto_bug_write_uint8(&encoder, op, "op");
+    proto_bug_write_uint8(&encoder, a1, "a1");
+    proto_bug_write_uint8(&encoder, a2, "a2");
+    rr_websocket_send(&this->socket, encoder.current - encoder.start);
 }

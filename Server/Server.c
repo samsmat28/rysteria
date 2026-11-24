@@ -146,6 +146,23 @@ void rr_server_client_free(struct rr_server_client *this)
     puts("<rr_server::client_disconnect>");
 }
 
+static void rr_send_shop_state(struct rr_server_client *client)
+{
+    if (!client || !client->socket_handle) return;
+    uint8_t buf[64];
+    struct proto_bug enc;
+    proto_bug_init(&enc, buf);
+    proto_bug_write_uint8(&enc, 250, "shop_sync");
+    proto_bug_write_uint64(&enc, client->r_coins, "r_coins");
+    proto_bug_write_uint8(&enc, client->quest_rarity, "q_rar");
+    proto_bug_write_uint16(&enc, client->quest_target, "q_tgt");
+    proto_bug_write_uint16(&enc, client->quest_progress, "q_prg");
+    proto_bug_write_uint64(&enc, client->ch_mask_lo, "ch_lo");
+    proto_bug_write_uint64(&enc, client->ch_mask_hi, "ch_hi");
+    proto_bug_write_uint64(&enc, client->play_seconds, "play_sec");
+    rr_server_client_write_message(client, enc.start, enc.current - enc.start);
+}
+
 static int rr_eval_q100(struct rr_server_client *c, int q, char *h, size_t hs) {
     if (!c || q < 1 || q > 100) return 0;
     uint64_t kb[12] = {0}, min_sp = UINT64_MAX;
@@ -734,7 +751,55 @@ static int handle_lws_event(struct rr_server *this, struct lws *ws,
             client->player_info->input = (movementFlags >> 4) & 3;
             break;
         }
-        case rr_serverbound_petal_switch:
+        case 250:
+    {
+        uint8_t op = proto_bug_read_uint8(&encoder, "shop_op");
+        uint8_t a1 = proto_bug_read_uint8(&encoder, "shop_a1");
+        uint8_t a2 = proto_bug_read_uint8(&encoder, "shop_a2");
+        static const uint64_t sell_p[11] = { 5, 15, 40, 120, 350, 1000, 3000, 9000, 25000, 75000, 200000 };
+        static const uint64_t q_rew[11] = { 40, 100, 250, 700, 2000, 6000, 18000, 50000, 150000, 400000, 1000000 };
+        if (op == 1 && a1 >= 1 && a1 < rr_petal_id_max && a2 < rr_rarity_id_max && a2 < 11) {
+            uint64_t cost = (a1 == 62 && a2 == 3) ? 100 : (sell_p[a2] * 2);
+            if (client->r_coins >= cost) {
+                client->r_coins -= cost;
+                client->inventory[a1][a2]++;
+                rr_server_client_write_account(client);
+            }
+        } else if (op == 2 && a1 >= 1 && a1 < rr_petal_id_max && a2 < rr_rarity_id_max && a2 < 11) {
+            if (client->inventory[a1][a2] > 0) {
+                client->inventory[a1][a2]--;
+                client->r_coins += sell_p[a2];
+                rr_server_client_write_account(client);
+            }
+        } else if (op == 3 && a1 >= 1 && a1 <= 100) {
+            int bit = a1 - 1;
+            uint64_t already = (bit < 64) ? (client->ch_mask_lo & (1ULL << bit)) : (client->ch_mask_hi & (1ULL << (bit - 64)));
+            if (!already && rr_eval_q100(client, a1, NULL, 0)) {
+                if (bit < 64) client->ch_mask_lo |= (1ULL << bit);
+                else client->ch_mask_hi |= (1ULL << (bit - 64));
+                uint64_t rew = (uint64_t)(100 + a1 * 50 + ((a1 % 10 == 0) ? (a1 * 100) : 0));
+                client->r_coins += rew;
+                rr_server_client_write_account(client);
+            }
+        } else if (op == 4) {
+            if (client->quest_target > 0 && client->quest_progress >= client->quest_target) {
+                uint8_t r = client->quest_rarity < 11 ? client->quest_rarity : 0;
+                client->r_coins += q_rew[r];
+                client->quest_rarity = (uint8_t)((r + 1) % 7);
+                client->quest_target = (uint16_t)(5 + client->quest_rarity * 2);
+                client->quest_progress = 0;
+                rr_server_client_write_account(client);
+            }
+        }
+        if (client->quest_target == 0) {
+            client->quest_rarity = 0;
+            client->quest_target = 5;
+            client->quest_progress = 0;
+        }
+        rr_send_shop_state(client);
+        break;
+    }
+    case rr_serverbound_petal_switch:
         {
             if (client->player_info == NULL)
                 break;
@@ -1134,139 +1199,7 @@ case rr_serverbound_chat:
                 --this->simulation.animation_length;
                 break;
             }
-        if (strcmp(animation->message, "/balance") == 0 ||
-                        strncmp(animation->message, "/buy ", 5) == 0 ||
-                        strncmp(animation->message, "/sell ", 6) == 0 ||
-                        strcmp(animation->message, "/quest") == 0 ||
-                        strcmp(animation->message, "/claim") == 0 ||
-                        strncmp(animation->message, "/pack ", 6) == 0 ||
-                        strcmp(animation->message, "/ch") == 0 ||
-                        strncmp(animation->message, "/ch ", 4) == 0)
-                    {
-                        static const uint64_t sell_p[11] = { 5, 15, 40, 120, 350, 1000, 3000, 9000, 25000, 75000, 200000 };
-                        static const uint64_t q_rew[11] = { 40, 100, 250, 700, 2000, 6000, 18000, 50000, 150000, 400000, 1000000 };
-                        strcpy(animation->name, "[Shop]");
-                        animation->type = rr_animation_type_chat;
-                        animation->owner = client->player_info->parent_id;
-                        if (strcmp(animation->message, "/balance") == 0) {
-                            snprintf(animation->message, 64, "Balance: %llu R", (unsigned long long)client->r_coins);
-                        } else if (strncmp(animation->message, "/buy ", 5) == 0) {
-                            int pid = -1, rid = -1;
-                            if (sscanf(animation->message + 5, "%d %d", &pid, &rid) == 2 && pid >= 1 && pid < rr_petal_id_max && rid >= 0 && rid < rr_rarity_id_max) {
-                                uint64_t cost = (pid == 62 && rid == 3) ? 100 : (sell_p[rid] * 2);
-                                if (client->r_coins >= cost) {
-                                    client->r_coins -= cost;
-                                    client->inventory[pid][rid]++;
-                                    rr_server_client_write_account(client);
-                                    snprintf(animation->message, 64, "Bought! Bal: %llu R", (unsigned long long)client->r_coins);
-                                } else {
-                                    snprintf(animation->message, 64, "Need %llu R! Bal: %llu R", (unsigned long long)cost, (unsigned long long)client->r_coins);
-                                }
-                            } else {
-                                snprintf(animation->message, 64, "Usage: /buy <id> <rarity>");
-                            }
-                        } else if (strncmp(animation->message, "/sell ", 6) == 0) {
-                            int pid = -1, rid = -1;
-                            if (sscanf(animation->message + 6, "%d %d", &pid, &rid) == 2 && pid >= 1 && pid < rr_petal_id_max && rid >= 0 && rid < rr_rarity_id_max) {
-                                if (client->inventory[pid][rid] > 0) {
-                                    client->inventory[pid][rid]--;
-                                    client->r_coins += sell_p[rid];
-                                    rr_server_client_write_account(client);
-                                    snprintf(animation->message, 64, "Sold +%llu R! Bal: %llu R", (unsigned long long)sell_p[rid], (unsigned long long)client->r_coins);
-                                } else {
-                                    snprintf(animation->message, 64, "You don't have this petal!");
-                                }
-                            } else {
-                                snprintf(animation->message, 64, "Usage: /sell <id> <rarity>");
-                            }
-                        } else if (strcmp(animation->message, "/quest") == 0) {
-                            if (client->quest_target == 0) { client->quest_rarity = 0; client->quest_target = 5; client->quest_progress = 0; }
-                            uint8_t r = client->quest_rarity < 11 ? client->quest_rarity : 0;
-                            snprintf(animation->message, 64, "Quest: %u/%u %s (+%llu R)", client->quest_progress, client->quest_target, RR_RARITY_NAMES[r], (unsigned long long)q_rew[r]);
-                        } else if (strcmp(animation->message, "/ch") == 0) {
-                            int done = 0;
-                            for (int b = 0; b < 64; b++) if (client->ch_mask_lo & (1ULL << b)) done++;
-                            for (int b = 0; b < 36; b++) if (client->ch_mask_hi & (1ULL << b)) done++;
-                            snprintf(animation->message, 64, "Quests completed: %d / 100", done);
-                        } else if (strncmp(animation->message, "/ch ", 4) == 0) {
-                            int qid = 0;
-                            if (sscanf(animation->message + 4, "%d", &qid) == 1 && qid >= 1 && qid <= 100) {
-                                int bit = qid - 1;
-                                uint64_t already = (bit < 64) ? (client->ch_mask_lo & (1ULL << bit)) : (client->ch_mask_hi & (1ULL << (bit - 64)));
-                                if (already) {
-                                    snprintf(animation->message, 64, "Quest #%d already claimed!", qid);
-                                } else {
-                                    char hb[64] = {0};
-                                    if (!rr_eval_q100(client, qid, hb, sizeof(hb))) {
-                                        snprintf(animation->message, 64, "%s", hb);
-                                    } else {
-                                        if (bit < 64) client->ch_mask_lo |= (1ULL << bit);
-                                        else client->ch_mask_hi |= (1ULL << (bit - 64));
-                                        uint64_t rew = (uint64_t)(100 + qid * 50 + ((qid % 10 == 0) ? (qid * 100) : 0));
-                                        client->r_coins += rew;
-                                        rr_server_client_write_account(client);
-                                        snprintf(animation->message, 64, "Quest #%d claimed! +%llu R", qid, (unsigned long long)rew);
-                                    }
-                                }
-                            } else {
-                                snprintf(animation->message, 64, "Usage: /ch 1..100");
-                            }
-                        } else if (strncmp(animation->message, "/pack ", 6) == 0) {
-                            int pk = atoi(animation->message + 6);
-                            if (pk == 1) {
-                                // Набор Охотника (300 R): Epic Claw + Epic Bone + Epic Amber
-                                if (client->r_coins >= 300) {
-                                    client->r_coins -= 300;
-                                    client->inventory[43][3]++;
-                                    client->inventory[44][3]++;
-                                    client->inventory[45][3]++;
-                                    rr_server_client_write_account(client);
-                                    snprintf(animation->message, 64, "Dino Pack x3! Bal: %llu R", (unsigned long long)client->r_coins);
-                                } else {
-                                    snprintf(animation->message, 64, "Need 300 R! Bal: %llu R", (unsigned long long)client->r_coins);
-                                }
-                            } else if (pk == 2) {
-                                // Сундук Удачи (500 R): случайный доисторический лепесток Legendary-Ultra!
-                                if (client->r_coins >= 500) {
-                                    client->r_coins -= 500;
-                                    int pid = 43 + (rand() % (rr_petal_id_max - 43));
-                                    int rid = 4 + (rand() % 3); // Legendary(4), Mythic(5), Ultra(6)
-                                    client->inventory[pid][rid]++;
-                                    rr_server_client_write_account(client);
-                                    snprintf(animation->message, 64, "Box: %s [%s]!", RR_PETAL_NAMES[pid], RR_RARITY_NAMES[rid]);
-                                } else {
-                                    snprintf(animation->message, 64, "Need 500 R! Bal: %llu R", (unsigned long long)client->r_coins);
-                                }
-                            } else if (pk == 3) {
-                                // Набор Бога (5000 R): Mythic Crown + Mythic Relic
-                                if (client->r_coins >= 5000) {
-                                    client->r_coins -= 5000;
-                                    client->inventory[61][5]++;
-                                    client->inventory[62][5]++;
-                                    rr_server_client_write_account(client);
-                                    snprintf(animation->message, 64, "Mythic God Pack! Bal: %llu R", (unsigned long long)client->r_coins);
-                                } else {
-                                    snprintf(animation->message, 64, "Need 5000 R! Bal: %llu R", (unsigned long long)client->r_coins);
-                                }
-                            } else {
-                                snprintf(animation->message, 64, "Usage: /pack 1..3");
-                            }
-                        } else if (strcmp(animation->message, "/claim") == 0) {
-                            if (client->quest_target > 0 && client->quest_progress >= client->quest_target) {
-                                uint8_t r = client->quest_rarity < 11 ? client->quest_rarity : 0;
-                                client->r_coins += q_rew[r];
-                                client->quest_rarity = (uint8_t)((r + 1) % 7);
-                                client->quest_target = (uint16_t)(5 + client->quest_rarity * 2);
-                                client->quest_progress = 0;
-                                rr_server_client_write_account(client);
-                                snprintf(animation->message, 64, "Claimed! Bal: %llu R", (unsigned long long)client->r_coins);
-                            } else {
-                                snprintf(animation->message, 64, "Not done: %u/%u!", client->quest_progress, client->quest_target);
-                            }
-                        }
-                        break;
-                    }
-                    else if (strncmp(animation->message, "/register ", 10) == 0 ||
+        if (strncmp(animation->message, "/register ", 10) == 0 ||
             strncmp(animation->message, "/login ", 7) == 0 ||
             strcmp(animation->message, "/save") == 0)
         {
