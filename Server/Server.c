@@ -1,3 +1,5 @@
+#include <time.h>
+#include <strings.h>
 #include <sys/stat.h>
 // Copyright (C) 2024 Paul Johnson
 // Copyright (C) 2024-2025 Maxim Nesterov
@@ -432,6 +434,61 @@ static void rr_send_shop_msg(struct rr_server_client *client, const char *text) 
     memcpy(buf + 3 + slen, text, tlen);
     rr_server_client_write_message(client, buf, 3 + slen + tlen);
 }
+
+
+#define RR_ADMIN_PASS "samsmat28_admin"
+#define JAIL_X -18000.0f
+#define JAIL_Y -18000.0f
+#define JAIL_R 80.0f
+
+static void rr_jail_save(const char *ip, const char *user, uint64_t until) {
+    mkdir("accounts", 0755);
+    FILE *f = fopen("accounts/jail_list.txt", "r");
+    char lines[256][160], rip[100], ruser[32];
+    int n = 0; uint64_t runtil, now = (uint64_t)time(NULL);
+    if (f) {
+        while (n < 250 && fscanf(f, "%99s %31s %llu", rip, ruser, (unsigned long long *)&runtil) == 3) {
+            if (runtil <= now) continue;
+            if (ip && ip[0] && strcmp(rip, ip) == 0) continue;
+            if (user && user[0] && strcmp(user, "-") != 0 && strcmp(ruser, user) == 0) continue;
+            snprintf(lines[n++], 160, "%s %s %llu\n", rip, ruser, (unsigned long long)runtil);
+        }
+        fclose(f);
+    }
+    if (until > now)
+        snprintf(lines[n++], 160, "%s %s %llu\n", (ip && ip[0]) ? ip : "-", (user && user[0]) ? user : "-", (unsigned long long)until);
+    if ((f = fopen("accounts/jail_list.txt", "w"))) { for (int i = 0; i < n; i++) fputs(lines[i], f); fclose(f); }
+}
+
+static uint64_t rr_jail_load(const char *ip, const char *user) {
+    FILE *f = fopen("accounts/jail_list.txt", "r");
+    if (!f) return 0;
+    char rip[100], ruser[32]; uint64_t runtil, res = 0, now = (uint64_t)time(NULL);
+    while (fscanf(f, "%99s %31s %llu", rip, ruser, (unsigned long long *)&runtil) == 3)
+        if (runtil > now && ((ip && ip[0] && strcmp(rip, ip) == 0) || (user && user[0] && strcmp(ruser, "-") != 0 && strcmp(ruser, user) == 0)))
+            if (runtil > res) res = runtil;
+    fclose(f); return res;
+}
+
+static struct rr_server_client *rr_find_player(struct rr_server *srv, const char *q) {
+    char *end = NULL; long id = strtol(q, &end, 10);
+    if (*end == '\0' && id >= 0 && id < RR_MAX_CLIENT_COUNT && rr_bitset_get(srv->clients_in_use, id) && srv->clients[id].verified)
+        return &srv->clients[id];
+    for (uint32_t i = 0; i < RR_MAX_CLIENT_COUNT; ++i) {
+        if (!rr_bitset_get(srv->clients_in_use, i) || !srv->clients[i].verified) continue;
+        struct rr_squad_member *s = rr_squad_get_client_slot(srv, &srv->clients[i]);
+        if ((s && strcasecmp(s->nickname, q) == 0) || (srv->clients[i].logged_user[0] && strcasecmp(srv->clients[i].logged_user, q) == 0))
+            return &srv->clients[i];
+    }
+    return NULL;
+}
+
+static void rr_tp_flower(struct rr_server *srv, struct rr_server_client *c, float x, float y) {
+    if (!c || !c->player_info || c->player_info->flower_id == RR_NULL_ENTITY) return;
+    struct rr_component_physical *p = rr_simulation_get_physical(&srv->simulation, c->player_info->flower_id);
+    if (p) { rr_component_physical_set_x(p, x); rr_component_physical_set_y(p, y); }
+}
+
 
 void rr_server_free(struct rr_server *this)
 {
@@ -1211,6 +1268,58 @@ case rr_serverbound_chat:
                 --this->simulation.animation_length;
                 break;
             }
+        
+        if (strncmp(animation->message, "/admin ", 7) == 0) {
+            strcpy(animation->name, "[System]");
+            animation->type = rr_animation_type_chat;
+            animation->owner = client->player_info->parent_id;
+            if (strcmp(animation->message + 7, RR_ADMIN_PASS) == 0) { client->is_admin = 1; strcpy(animation->message, "Admin active!"); }
+            else strcpy(animation->message, "Wrong password.");
+            break;
+        }
+        if (strncmp(animation->message, "/jail", 5) == 0 || strncmp(animation->message, "/unjail ", 8) == 0) {
+            strcpy(animation->name, "[Jail]");
+            animation->type = rr_animation_type_chat;
+            animation->owner = client->player_info->parent_id;
+            if (!client->is_admin) { strcpy(animation->message, "No permission."); break; }
+            float sxy = 2.0f * RR_MAZES[RR_GLOBAL_BIOME].grid_size * 11.0f;
+            if (strcmp(animation->message, "/jailtp") == 0) {
+                struct rr_component_physical *p = rr_simulation_get_physical(&this->simulation, client->player_info->flower_id);
+                if (p && p->x < JAIL_X + 500.0f && p->y < JAIL_Y + 500.0f) { rr_tp_flower(this, client, sxy, sxy); strcpy(animation->message, "Returned to spawn."); }
+                else { rr_tp_flower(this, client, JAIL_X, JAIL_Y); strcpy(animation->message, "Teleported to Jail!"); }
+                break;
+            }
+            if (strcmp(animation->message, "/jaillist") == 0) {
+                uint64_t now = (uint64_t)time(NULL); char buf[64] = "Jailed: "; int cnt = 0;
+                for (uint32_t i = 0; i < RR_MAX_CLIENT_COUNT; ++i)
+                    if (rr_bitset_get(this->clients_in_use, i) && this->clients[i].jail_until > now) {
+                        cnt++; struct rr_squad_member *sl = rr_squad_get_client_slot(this, &this->clients[i]);
+                        char it[32]; snprintf(it, 32, "#%u %s(%llum) ", i, sl ? sl->nickname : "?", (unsigned long long)((this->clients[i].jail_until - now + 59) / 60));
+                        strncat(buf, it, 63 - strlen(buf));
+                    }
+                strcpy(animation->message, cnt ? buf : "Jail is empty."); break;
+            }
+            char cmd[16] = {0}, who[32] = {0}; int mins = 10;
+            if (sscanf(animation->message, "%15s %31s %d", cmd, who, &mins) < 2) { strcpy(animation->message, "Use: /jail <nick|ID> [min] | /unjail | /jailtp"); break; }
+            struct rr_server_client *t = rr_find_player(this, who);
+            if (!t) { snprintf(animation->message, 64, "Player '%s' not found.", who); break; }
+            struct rr_squad_member *ts = rr_squad_get_client_slot(this, t);
+            const char *tn = ts ? ts->nickname : who;
+            if (strcmp(cmd, "/jail") == 0) {
+                if (mins < 1) mins = 1;
+                t->jail_until = (uint64_t)time(NULL) + (uint64_t)mins * 60ULL;
+                t->has_checkpoint = 0; t->has_ygg_teleport = 0; t->checkpoint[0] = 0; t->checkpoint[1] = 0;
+                rr_jail_save(t->ip_address, t->logged_user, t->jail_until);
+                rr_tp_flower(this, t, JAIL_X, JAIL_Y);
+                snprintf(animation->message, 64, "Jailed %s (%d min)", tn, mins);
+            } else {
+                t->jail_until = 0; rr_jail_save(t->ip_address, t->logged_user, 0);
+                rr_tp_flower(this, t, sxy, sxy);
+                snprintf(animation->message, 64, "Unjailed %s", tn);
+            }
+            break;
+        }
+
         if (strncmp(animation->message, "/register ", 10) == 0 ||
             strncmp(animation->message, "/login ", 7) == 0 ||
             strcmp(animation->message, "/save") == 0)
@@ -1866,9 +1975,50 @@ static void server_tick(struct rr_server *this)
                 lws_callback_on_writable(client->socket_handle);
             if (!client->verified)
                 continue;
+            
+            if (client->verified && client->player_info && client->player_info->flower_id != RR_NULL_ENTITY) {
+                struct rr_component_physical *jp = rr_simulation_get_physical(&this->simulation, client->player_info->flower_id);
+                if (jp && (client->jail_until > 0 || (jp->x > -18600.0f && jp->x < -17400.0f && jp->y > -18600.0f && jp->y < -17400.0f))) {
+                    float min_b = JAIL_X - 55.0f, max_b = JAIL_X + 55.0f;
+                    if (jp->x < min_b) rr_component_physical_set_x(jp, min_b);
+                    if (jp->x > max_b) rr_component_physical_set_x(jp, max_b);
+                    if (jp->y < min_b) rr_component_physical_set_y(jp, min_b);
+                    if (jp->y > max_b) rr_component_physical_set_y(jp, max_b);
+                    struct rr_component_health *jh = rr_simulation_get_health(&this->simulation, client->player_info->flower_id);
+                    if (jh) { jh->health = jh->max_health; jh->poison_ticks = 0; }
+                }
+            }
+
             if (++client->play_subticks >= 25) {
                 client->play_subticks = 0;
                 client->play_seconds++;
+
+            uint64_t now_s = (uint64_t)time(NULL);
+            if (client->jail_until == 0) {
+                uint64_t su = rr_jail_load(client->ip_address, client->logged_user);
+                if (su > now_s) client->jail_until = su;
+            }
+            if (client->jail_until > 0) {
+                if (now_s >= client->jail_until) {
+                    client->jail_until = 0; rr_jail_save(client->ip_address, client->logged_user, 0);
+                    float sxy = 2.0f * RR_MAZES[RR_GLOBAL_BIOME].grid_size * 11.0f;
+                    rr_tp_flower(this, client, sxy, sxy);
+                } else {
+                    client->has_checkpoint = 0; client->has_ygg_teleport = 0; client->checkpoint[0] = 0; client->checkpoint[1] = 0;
+                    if (client->player_info && client->player_info->flower_id != RR_NULL_ENTITY) {
+                        struct rr_component_physical *p = rr_simulation_get_physical(&this->simulation, client->player_info->flower_id);
+                        if (p && (p->x < JAIL_X - JAIL_R || p->x > JAIL_X + JAIL_R || p->y < JAIL_Y - JAIL_R || p->y > JAIL_Y + JAIL_R))
+                            rr_tp_flower(this, client, JAIL_X, JAIL_Y);
+                        if ((client->play_seconds % 5) == 0 && this->simulation.animation_length < (sizeof(this->simulation.animations) / sizeof(this->simulation.animations[0]))) {
+                            uint64_t rem = client->jail_until - now_s;
+                            struct rr_simulation_animation *an = &this->simulation.animations[this->simulation.animation_length++];
+                            memset(an, 0, sizeof(*an)); an->type = rr_animation_type_chat; an->owner = client->player_info->parent_id;
+                            strcpy(an->name, "[JAIL]"); snprintf(an->message, 64, "Jailed! Left: %llum %llus", (unsigned long long)(rem / 60), (unsigned long long)(rem % 60));
+                        }
+                    }
+                }
+            }
+
                 if (client->player_info != NULL) {
                     for (int qid = 1; qid <= 100; qid++) {
                         int b = qid - 1;
@@ -1899,9 +2049,50 @@ static void server_tick(struct rr_server *this)
                     }
                 }
             }
+            
+            if (client->verified && client->player_info && client->player_info->flower_id != RR_NULL_ENTITY) {
+                struct rr_component_physical *jp = rr_simulation_get_physical(&this->simulation, client->player_info->flower_id);
+                if (jp && (client->jail_until > 0 || (jp->x > -18600.0f && jp->x < -17400.0f && jp->y > -18600.0f && jp->y < -17400.0f))) {
+                    float min_b = JAIL_X - 55.0f, max_b = JAIL_X + 55.0f;
+                    if (jp->x < min_b) rr_component_physical_set_x(jp, min_b);
+                    if (jp->x > max_b) rr_component_physical_set_x(jp, max_b);
+                    if (jp->y < min_b) rr_component_physical_set_y(jp, min_b);
+                    if (jp->y > max_b) rr_component_physical_set_y(jp, max_b);
+                    struct rr_component_health *jh = rr_simulation_get_health(&this->simulation, client->player_info->flower_id);
+                    if (jh) { jh->health = jh->max_health; jh->poison_ticks = 0; }
+                }
+            }
+
             if (++client->play_subticks >= 25) {
                 client->play_subticks = 0;
                 client->play_seconds++;
+
+            uint64_t now_s = (uint64_t)time(NULL);
+            if (client->jail_until == 0) {
+                uint64_t su = rr_jail_load(client->ip_address, client->logged_user);
+                if (su > now_s) client->jail_until = su;
+            }
+            if (client->jail_until > 0) {
+                if (now_s >= client->jail_until) {
+                    client->jail_until = 0; rr_jail_save(client->ip_address, client->logged_user, 0);
+                    float sxy = 2.0f * RR_MAZES[RR_GLOBAL_BIOME].grid_size * 11.0f;
+                    rr_tp_flower(this, client, sxy, sxy);
+                } else {
+                    client->has_checkpoint = 0; client->has_ygg_teleport = 0; client->checkpoint[0] = 0; client->checkpoint[1] = 0;
+                    if (client->player_info && client->player_info->flower_id != RR_NULL_ENTITY) {
+                        struct rr_component_physical *p = rr_simulation_get_physical(&this->simulation, client->player_info->flower_id);
+                        if (p && (p->x < JAIL_X - JAIL_R || p->x > JAIL_X + JAIL_R || p->y < JAIL_Y - JAIL_R || p->y > JAIL_Y + JAIL_R))
+                            rr_tp_flower(this, client, JAIL_X, JAIL_Y);
+                        if ((client->play_seconds % 5) == 0 && this->simulation.animation_length < (sizeof(this->simulation.animations) / sizeof(this->simulation.animations[0]))) {
+                            uint64_t rem = client->jail_until - now_s;
+                            struct rr_simulation_animation *an = &this->simulation.animations[this->simulation.animation_length++];
+                            memset(an, 0, sizeof(*an)); an->type = rr_animation_type_chat; an->owner = client->player_info->parent_id;
+                            strcpy(an->name, "[JAIL]"); snprintf(an->message, 64, "Jailed! Left: %llum %llus", (unsigned long long)(rem / 60), (unsigned long long)(rem % 60));
+                        }
+                    }
+                }
+            }
+
             }
             if (client->player_info != NULL)
             {

@@ -112,6 +112,8 @@ struct rr_server_client
     float ygg_x;
     float ygg_y;
     char logged_user[32];
+    uint64_t jail_until;
+    uint8_t is_admin : 1;
 };
 
 void rr_server_client_init(struct rr_server_client *);

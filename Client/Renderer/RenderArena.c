@@ -280,7 +280,7 @@ void render_background(struct rr_component_player_info *player_info,
     float grid_size = RR_MAZES[arena->biome].grid_size;
     uint32_t maze_dim = RR_MAZES[arena->biome].maze_dim;
     struct rr_maze_grid *grid = RR_MAZES[arena->biome].maze;
-       uint32_t wall_color = (arena->biome == rr_biome_id_pvp) ? 0xff1c0e06 : (arena->biome == rr_biome_id_plains ? 0xff4a443f : 0xff000000);
+       uint32_t wall_color = (arena->biome == rr_biome_id_pvp) ? 0xff1c0e06 : (arena->biome == rr_biome_id_plains ? 0xff6e4a2e : 0xff000000);
     rr_renderer_set_fill(renderer, wall_color);
     rr_renderer_set_global_alpha(renderer, (arena->biome == rr_biome_id_pvp || arena->biome == rr_biome_id_plains) ? 1.0f : 0.5f);
     int32_t nx = floorf(leftX / grid_size);
@@ -303,22 +303,56 @@ void render_background(struct rr_component_player_info *player_info,
                         rr_renderer_fill_rect(renderer, wx, wy, grid_size, grid_size);
                         if (arena->biome == rr_biome_id_plains) {
                             uint32_t h = (uint32_t)(nx * 73856093u ^ currY * 19349663u);
-                            rr_renderer_set_fill(renderer, 0xff5a534d);
-                            rr_renderer_fill_rect(renderer, wx + 60.0f, wy + 60.0f, grid_size - 120.0f, grid_size - 120.0f);
-                            rr_renderer_set_fill(renderer, (h & 1) ? 0xff3b3632 : 0xff686059);
-                            rr_renderer_set_stroke(renderer, 0xff2b2724);
-                            rr_renderer_set_line_width(renderer, 18.0f);
+                            rr_renderer_set_fill(renderer, 0xff52351e);
                             rr_renderer_begin_path(renderer);
-                            rr_renderer_arc(renderer, wx + 260.0f + (h % 450), wy + 260.0f + ((h >> 4) % 450), 150.0f + (h % 70));
+                            rr_renderer_arc(renderer, wx + 220.0f + (h % 220), wy + 240.0f + ((h >> 3) % 220), 65.0f + (h % 45));
+                            rr_renderer_arc(renderer, wx + 680.0f + ((h >> 6) % 180), wy + 310.0f + ((h >> 9) % 240), 50.0f + ((h >> 5) % 40));
+                            rr_renderer_arc(renderer, wx + 420.0f + ((h >> 11) % 260), wy + 720.0f + ((h >> 14) % 160), 75.0f + ((h >> 7) % 45));
+                            rr_renderer_arc(renderer, wx + 760.0f + ((h >> 16) % 120), wy + 760.0f + ((h >> 18) % 120), 38.0f + ((h >> 10) % 25));
                             rr_renderer_fill(renderer);
-                            rr_renderer_stroke(renderer);
-                            rr_renderer_set_fill(renderer, 0xff3a6b35);
-                            rr_renderer_begin_path(renderer);
-                            rr_renderer_arc(renderer, wx + 320.0f + ((h >> 8) % 400), wy + 320.0f + ((h >> 12) % 400), 85.0f);
-                            rr_renderer_fill(renderer);
+                            bool p_l = (nx > 0 && grid[currY * maze_dim + (nx - 1)].value == 1);
+                            bool p_r = (nx + 1 < (int32_t)maze_dim && grid[currY * maze_dim + (nx + 1)].value == 1);
+                            bool p_t = (currY > 0 && grid[(currY - 1) * maze_dim + nx].value == 1);
+                            bool p_b = (currY + 1 < (int32_t)maze_dim && grid[(currY + 1) * maze_dim + nx].value == 1);
+                            if (p_l) {
+                                float j1 = ((h & 7) - 3.5f) * 16.0f, j2 = (((h >> 3) & 7) - 3.5f) * 16.0f;
+                                rr_renderer_set_fill(renderer, 0xff6e4a2e); rr_renderer_set_stroke(renderer, 0xff3b2513); rr_renderer_set_line_width(renderer, 22.0f);
+                                rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, wx, wy);
+                                rr_renderer_line_to(renderer, wx - 42.0f + j1, wy + grid_size * 0.33f);
+                                rr_renderer_line_to(renderer, wx - 22.0f + j2, wy + grid_size * 0.67f);
+                                rr_renderer_line_to(renderer, wx, wy + grid_size);
+                                rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+                            }
+                            if (p_r) {
+                                float j1 = (((h >> 2) & 7) - 3.5f) * 16.0f, j2 = (((h >> 5) & 7) - 3.5f) * 16.0f;
+                                rr_renderer_set_fill(renderer, 0xff6e4a2e); rr_renderer_set_stroke(renderer, 0xff3b2513); rr_renderer_set_line_width(renderer, 22.0f);
+                                rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, wx + grid_size, wy);
+                                rr_renderer_line_to(renderer, wx + grid_size + 42.0f + j1, wy + grid_size * 0.33f);
+                                rr_renderer_line_to(renderer, wx + grid_size + 22.0f + j2, wy + grid_size * 0.67f);
+                                rr_renderer_line_to(renderer, wx + grid_size, wy + grid_size);
+                                rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+                            }
+                            if (p_t) {
+                                float j1 = (((h >> 4) & 7) - 3.5f) * 16.0f, j2 = (((h >> 7) & 7) - 3.5f) * 16.0f;
+                                rr_renderer_set_fill(renderer, 0xff6e4a2e); rr_renderer_set_stroke(renderer, 0xff3b2513); rr_renderer_set_line_width(renderer, 22.0f);
+                                rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, wx, wy);
+                                rr_renderer_line_to(renderer, wx + grid_size * 0.33f, wy - 42.0f + j1);
+                                rr_renderer_line_to(renderer, wx + grid_size * 0.67f, wy - 22.0f + j2);
+                                rr_renderer_line_to(renderer, wx + grid_size, wy);
+                                rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+                            }
+                            if (p_b) {
+                                float j1 = (((h >> 6) & 7) - 3.5f) * 16.0f, j2 = (((h >> 9) & 7) - 3.5f) * 16.0f;
+                                rr_renderer_set_fill(renderer, 0xff6e4a2e); rr_renderer_set_stroke(renderer, 0xff3b2513); rr_renderer_set_line_width(renderer, 22.0f);
+                                rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, wx, wy + grid_size);
+                                rr_renderer_line_to(renderer, wx + grid_size * 0.33f, wy + grid_size + 42.0f + j1);
+                                rr_renderer_line_to(renderer, wx + grid_size * 0.67f, wy + grid_size + 22.0f + j2);
+                                rr_renderer_line_to(renderer, wx + grid_size, wy + grid_size);
+                                rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+                            }
                         }
                     }
-                else
+                    else
                 {
                     uint8_t left = (tile >> 1) & 1;
                     uint8_t top = tile & 1;
@@ -337,7 +371,7 @@ void render_background(struct rr_component_player_info *player_info,
                                             (currY + top) * grid_size,
                                             grid_size, start_angle,
                                             start_angle + M_PI / 2, 0);
-                    rr_renderer_fill(renderer);
+                    rr_renderer_fill(renderer); if (arena->biome == rr_biome_id_plains) { rr_renderer_set_stroke(renderer, 0xff3b2513); rr_renderer_set_line_width(renderer, 22.0f); rr_renderer_stroke(renderer); } if (arena->biome == rr_biome_id_plains) { rr_renderer_set_stroke(renderer, 0xff3b2513); rr_renderer_set_line_width(renderer, 30.0f); rr_renderer_stroke(renderer); }
                 }
             }
 
@@ -503,6 +537,77 @@ void rr_component_arena_render(EntityIdx entity, struct rr_game *this,
             rr_renderer_fill(this->renderer);
             rr_renderer_stroke(this->renderer);
         }
+    }
+    
+    // === JAIL COMPLEX RENDER (Gray Block -> Green Yard + Red Button) ===
+    {
+        // 1. Gray concrete prison building (-18320 .. -17920, -18240 .. -17760)
+        rr_renderer_set_fill(this->renderer, 0xff2c3036);
+        rr_renderer_begin_path(this->renderer);
+        rr_renderer_move_to(this->renderer, -18320.0f, -18240.0f);
+        rr_renderer_line_to(this->renderer, -17920.0f, -18240.0f);
+        rr_renderer_line_to(this->renderer, -17920.0f, -17760.0f);
+        rr_renderer_line_to(this->renderer, -18320.0f, -17760.0f);
+        rr_renderer_fill(this->renderer);
+
+        // 2. Green grass prison yard (-17920 .. -17200, -18240 .. -17760)
+        rr_renderer_set_fill(this->renderer, 0xff2f6b32);
+        rr_renderer_begin_path(this->renderer);
+        rr_renderer_move_to(this->renderer, -17920.0f, -18240.0f);
+        rr_renderer_line_to(this->renderer, -17200.0f, -18240.0f);
+        rr_renderer_line_to(this->renderer, -17200.0f, -17760.0f);
+        rr_renderer_line_to(this->renderer, -17920.0f, -17760.0f);
+        rr_renderer_fill(this->renderer);
+
+        // Threshold strip between gray floor and green yard
+        rr_renderer_set_stroke(this->renderer, 0xff8c949e);
+        rr_renderer_set_line_width(this->renderer, 10.0f);
+        rr_renderer_begin_path(this->renderer);
+        rr_renderer_move_to(this->renderer, -17920.0f, -18240.0f);
+        rr_renderer_line_to(this->renderer, -17920.0f, -17760.0f);
+        rr_renderer_stroke(this->renderer);
+
+        // 3. Cell 160x160 around (-18160, -18000) with iron bars
+        float cx = -18160.0f, cy = -18000.0f, cr = 80.0f;
+        rr_renderer_set_fill(this->renderer, 0xff202328);
+        rr_renderer_begin_path(this->renderer);
+        rr_renderer_move_to(this->renderer, cx - cr, cy - cr);
+        rr_renderer_line_to(this->renderer, cx + cr, cy - cr);
+        rr_renderer_line_to(this->renderer, cx + cr, cy + cr);
+        rr_renderer_line_to(this->renderer, cx - cr, cy + cr);
+        rr_renderer_fill(this->renderer);
+        rr_renderer_set_stroke(this->renderer, 0x889aa5b4);
+        rr_renderer_set_line_width(this->renderer, 5.0f);
+        for (float bx = cx - cr + 20.0f; bx < cx + cr; bx += 20.0f) {
+            rr_renderer_begin_path(this->renderer);
+            rr_renderer_move_to(this->renderer, bx, cy - cr);
+            rr_renderer_line_to(this->renderer, bx, cy + cr);
+            rr_renderer_stroke(this->renderer);
+        }
+
+        // 4. Red Escape Button in the green yard (-17300, -18000)
+        rr_renderer_set_fill(this->renderer, 0xff42474f);
+        rr_renderer_begin_path(this->renderer);
+        rr_renderer_arc(this->renderer, -17300.0f, -18000.0f, 52.0f);
+        rr_renderer_fill(this->renderer);
+        rr_renderer_set_fill(this->renderer, 0xffe62e2e);
+        rr_renderer_set_stroke(this->renderer, 0xffff8888);
+        rr_renderer_set_line_width(this->renderer, 5.0f);
+        rr_renderer_begin_path(this->renderer);
+        rr_renderer_arc(this->renderer, -17300.0f, -18000.0f, 36.0f);
+        rr_renderer_fill(this->renderer);
+        rr_renderer_stroke(this->renderer);
+
+        // 5. Outer prison perimeter wall
+        rr_renderer_set_stroke(this->renderer, 0xff555961);
+        rr_renderer_set_line_width(this->renderer, 24.0f);
+        rr_renderer_begin_path(this->renderer);
+        rr_renderer_move_to(this->renderer, -18320.0f, -18240.0f);
+        rr_renderer_line_to(this->renderer, -17200.0f, -18240.0f);
+        rr_renderer_line_to(this->renderer, -17200.0f, -17760.0f);
+        rr_renderer_line_to(this->renderer, -18320.0f, -17760.0f);
+        rr_renderer_line_to(this->renderer, -18320.0f, -18240.0f);
+        rr_renderer_stroke(this->renderer);
     }
     rr_renderer_context_state_free(this->renderer, &state2);
 }
