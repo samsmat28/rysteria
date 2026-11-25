@@ -147,6 +147,20 @@ static void minimap_on_render(struct rr_ui_element *this, struct rr_game *game)
     renderer->state.filter.amount = 0.2;
     rr_renderer_set_stroke(renderer, 0xffff00ff);
     renderer->state.filter.amount = 0;
+    if (arena->biome == rr_biome_id_plains) {
+        struct rr_maze_declaration const *mdecl = &RR_MAZES[arena->biome];
+        for (uint32_t ci = 0; ci < mdecl->checkpoint_count; ++ci) {
+            float mx = this->abs_width * (mdecl->checkpoints[ci].spawn_x / 160.0f - 0.5f);
+            float my = this->abs_height * (mdecl->checkpoints[ci].spawn_y / 160.0f - 0.5f);
+            rr_renderer_set_fill(renderer, 0xffffaa22);
+            rr_renderer_set_stroke(renderer, 0xff111111);
+            rr_renderer_set_line_width(renderer, 1.5f);
+            rr_renderer_begin_path(renderer);
+            rr_renderer_arc(renderer, mx, my, 4.0f);
+            rr_renderer_fill(renderer);
+            rr_renderer_stroke(renderer);
+        }
+    }
     for (uint32_t i = RR_SQUAD_MEMBER_COUNT; i > 0; --i)
     {
         if (game->player_infos[i - 1] == RR_NULL_ENTITY)

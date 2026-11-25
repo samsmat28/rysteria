@@ -114,7 +114,20 @@ struct rr_petal_data RR_PETAL_DATA[rr_petal_id_max] = {
     {rr_petal_id_sail, rr_rarity_id_common, defensive, 15.0f, 9.0f, 0.0f, 30, 0, {1,1,1,1,1,1,1,1,1,1,1}},
     {rr_petal_id_ash, rr_rarity_id_common, defensive, 12.0f, 14.0f, 0.0f, 28, 0, {3,3,3,3,3,3,3,3,3,3,3}},
     {rr_petal_id_crown, rr_rarity_id_common, defensive, 30.0f, 25.0f, 12.0f, 50, 0, {1,1,1,1,1,1,1,1,1,1,1}},
-    {rr_petal_id_relic, rr_rarity_id_common, offensive, 32.0f, 38.0f, 8.0f, 48, 0, {1,1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_relic, rr_rarity_id_common, offensive, 32.0f, 38.0f, 8.0f, 48, 0, {1,1,1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_grasshopper_egg, rr_rarity_id_common, defensive, 1.0f, 75.0f, 10.0f, 25, 80, {3,3,3,2,2,2,1,1,1,1,1,1}},
+    {rr_petal_id_bumblebee_egg, rr_rarity_id_common, defensive, 1.0f, 95.0f, 11.0f, 35, 110, {3,3,3,2,2,2,1,1,1,1,1,1}},
+    {rr_petal_id_dragonfly_egg, rr_rarity_id_common, defensive, 1.0f, 80.0f, 10.0f, 30, 90, {3,3,3,2,2,2,1,1,1,1,1,1}},
+    {rr_petal_id_mantis_egg, rr_rarity_id_common, defensive, 1.0f, 110.0f, 11.0f, 40, 120, {3,3,3,2,2,2,1,1,1,1,1,1}},
+    {rr_petal_id_wolf_spider_egg, rr_rarity_id_common, defensive, 1.0f, 105.0f, 11.0f, 38, 110, {3,3,3,2,2,2,1,1,1,1,1,1}},
+    {rr_petal_id_royal_egg, rr_rarity_id_common, defensive, 1.0f, 150.0f, 13.0f, 60, 160, {2,2,2,2,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_triple_stinger, rr_rarity_id_common, offensive, 27.0f, 12.0f, 7.0f, 44, 0, {1,1,1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_proboscis, rr_rarity_id_common, offensive, 10.0f, 15.0f, 7.0f, 36, 0, {1,1,1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_lantern, rr_rarity_id_common, offensive, 14.0f, 18.0f, 9.0f, 50, 0, {1,1,1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_snail_shell, rr_rarity_id_common, defensive, 8.0f, 60.0f, 12.0f, 70, 0, {1,1,1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_rolled_shell, rr_rarity_id_common, offensive, 20.0f, 25.0f, 10.0f, 40, 0, {1,1,1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_antler, rr_rarity_id_common, offensive, 24.0f, 35.0f, 11.0f, 56, 0, {1,1,1,1,1,1,1,1,1,1,1,1}},
+    {rr_petal_id_horn, rr_rarity_id_common, offensive, 26.0f, 50.0f, 11.0f, 60, 0, {1,1,1,1,1,1,1,1,1,1,1,1}},
 };    
 
 char const *RR_PETAL_NAMES[rr_petal_id_max] = {
@@ -122,7 +135,7 @@ char const *RR_PETAL_NAMES[rr_petal_id_max] = {
     "Peas",     "Leaf",      "Egg",       "Magnet", "Uranium",  "Feather", "Azalea",
     "Bone",     "Web",       "Seed",      "Gravel", "Club",     "Crest",   "Droplet",
     "Beak",     "Lightning", "Third Eye", "Nest",   "Fireball", "Meat",    "Bubble",
-    "Meteor",   "Mandible",  "Wax",       "Sand",   "Mint",     "Rose",     "Rock", "Grass", "Rice", "Clover", "Light", "Yucca", "Triangle", "Corn", "Yggdrasil", "Claw", "Fang", "Tooth", "Horn", "Thagomizer", "Scythe", "Magma", "Obsidian", "Plate", "Scale", "Amber", "Branch", "Pearl", "Tail", "Frill", "Venom", "Sail", "Ash", "Crown", "Relic"
+    "Meteor",   "Mandible",  "Wax",       "Sand",   "Mint",     "Rose",     "Rock", "Grass", "Rice", "Clover", "Light", "Yucca", "Triangle", "Corn", "Yggdrasil", "Claw", "Fang", "Tooth", "Horn", "Thagomizer", "Scythe", "Magma", "Obsidian", "Plate", "Scale", "Amber", "Branch", "Pearl", "Tail", "Frill", "Venom", "Sail", "Ash", "Crown", "Relic", "Grasshopper Egg", "Bumblebee Egg", "Dragonfly Egg", "Mantis Egg", "Wolf Spider Egg", "Royal Egg", "Triple Stinger", "Proboscis", "Lantern", "Snail Shell", "Rolled Shell", "Antler", "Horn"
 };
     
 char const *RR_PETAL_DESCRIPTIONS[rr_petal_id_max] = {
@@ -160,7 +173,20 @@ char const *RR_PETAL_DESCRIPTIONS[rr_petal_id_max] = {
     "Very fine",
     "Remember to feed your pets"
      "Its healing properties are amazing",
-    "Extremely heavy and durable"
+    "Extremely heavy and durable",
+    "Hatches a Grasshopper.",
+    "Hatches a Bumblebee.",
+    "Hatches a Dragonfly.",
+    "Hatches a Praying Mantis.",
+    "Hatches a Wolf Spider.",
+    "Hatches a Queen Hornet.",
+    "Triple venomous stinger.",
+    "Heals you when hitting mobs.",
+    "Glowing firefly lantern.",
+    "Heavy protective snail shell.",
+    "Hard rolling shell.",
+    "Heavy stag beetle antler.",
+    "Piercing rhino beetle horn."
 };
 
 struct rr_mob_data RR_MOB_DATA[rr_mob_id_max] = {
@@ -179,7 +205,7 @@ struct rr_mob_data RR_MOB_DATA[rr_mob_id_max] = {
     {rr_mob_id_edmontosaurus,      rr_rarity_id_common, rr_rarity_id_gods,  50, 15, 30.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max,     {{rr_petal_id_bone,    0.01},{rr_petal_id_fossil,     0.1},{rr_petal_id_third_eye, 0.05}}},
     {rr_mob_id_ant,                rr_rarity_id_common, rr_rarity_id_gods,  10, 10, 20.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_pellet,   0.1},{rr_petal_id_leaf,       0.1},{rr_petal_id_mandible,  0.05}}},
     {rr_mob_id_hornet,             rr_rarity_id_common, rr_rarity_id_gods,  28, 25, 25.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_stinger,  0.1},{rr_petal_id_crest,     0.05}}},
-    {rr_mob_id_dragonfly,          rr_rarity_id_common, rr_rarity_id_gods,  20, 10, 25.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_pellet,   0.1},{rr_petal_id_magnet,    0.05}}},
+    {rr_mob_id_dragonfly, rr_rarity_id_common, rr_rarity_id_gods, 65, 18, 24.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_dragonfly_egg, 0.35}}},
     {rr_mob_id_honeybee,           rr_rarity_id_common, rr_rarity_id_gods,  12, 25, 22.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_wax,     0.05},{rr_petal_id_stinger,   0.05}}},
     {rr_mob_id_beehive,            rr_rarity_id_common, rr_rarity_id_gods,   0,  0, 45.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_wax,     0.05},{rr_petal_id_azalea,    0.05}}},
     {rr_mob_id_spider,             rr_rarity_id_common, rr_rarity_id_gods,  20, 25, 25.0f, rr_rarity_id_common, rr_rarity_id_max,    rr_rarity_id_max,     {{rr_petal_id_web,      0.1},{rr_petal_id_third_eye, 0.01}}},
@@ -210,7 +236,19 @@ struct rr_mob_data RR_MOB_DATA[rr_mob_id_max] = {
     {rr_mob_id_therizinosaurus, rr_rarity_id_common, rr_rarity_id_gods, 180, 42, 44.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_scythe, 0.45},{rr_petal_id_feather, 0.4}}},
     {rr_mob_id_mosasaurus, rr_rarity_id_common, rr_rarity_id_gods, 260, 45, 56.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_pearl, 0.45},{rr_petal_id_scale, 0.45}}},
     {rr_mob_id_volcano, rr_rarity_id_common, rr_rarity_id_gods, 500, 35, 64.0f, rr_rarity_id_max, rr_rarity_id_max, rr_rarity_id_max, {{rr_petal_id_magma, 0.5},{rr_petal_id_obsidian, 0.45}}},
-    {rr_mob_id_titanoboa, rr_rarity_id_common, rr_rarity_id_gods, 1600, 55, 72.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_crown, 0.65},{rr_petal_id_relic, 0.65}}},
+    {rr_mob_id_titanoboa, rr_rarity_id_common, rr_rarity_id_gods, 1600, 55, 72.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_relic, 0.25}}},
+    {rr_mob_id_grasshopper, rr_rarity_id_common, rr_rarity_id_gods, 45, 12, 20.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_grasshopper_egg, 0.35}}},
+    {rr_mob_id_bumblebee, rr_rarity_id_common, rr_rarity_id_gods, 95, 16, 38.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_bumblebee_egg, 0.35}}},
+    {rr_mob_id_mantis, rr_rarity_id_common, rr_rarity_id_gods, 120, 32, 36.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_mantis_egg, 0.35}}},
+    {rr_mob_id_wolf_spider, rr_rarity_id_common, rr_rarity_id_gods, 110, 24, 42.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_wolf_spider_egg, 0.35}}},
+    {rr_mob_id_queen_hornet, rr_rarity_id_common, rr_rarity_id_gods, 320, 35, 68.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_royal_egg, 0.45}}},
+    {rr_mob_id_wasp, rr_rarity_id_common, rr_rarity_id_gods, 55, 15, 22.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_triple_stinger, 0.35}}},
+    {rr_mob_id_mosquito, rr_rarity_id_common, rr_rarity_id_gods, 40, 11, 18.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_proboscis, 0.35}}},
+    {rr_mob_id_firefly, rr_rarity_id_common, rr_rarity_id_gods, 50, 14, 20.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_lantern, 0.35}}},
+    {rr_mob_id_snail, rr_rarity_id_common, rr_rarity_id_gods, 140, 10, 32.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_snail_shell, 0.35}}},
+    {rr_mob_id_pill_bug, rr_rarity_id_common, rr_rarity_id_gods, 80, 18, 24.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_rolled_shell, 0.35}}},
+    {rr_mob_id_stag_beetle, rr_rarity_id_common, rr_rarity_id_gods, 150, 26, 38.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_antler, 0.35}}},
+    {rr_mob_id_rhino_beetle, rr_rarity_id_common, rr_rarity_id_gods, 180, 28, 42.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_rhino_horn, 0.35}}},
 };
 
 char const *RR_MOB_NAMES[rr_mob_id_max] = {
@@ -218,7 +256,7 @@ char const *RR_MOB_NAMES[rr_mob_id_max] = {
 "Pachycephalosaurus","Ornithomimus","Ankylosaurus","Meteor",
 "Quetzalcoatlus","Edmontosaurus","Ant","Hornet","Dragonfly",
 "Honeybee","Beehive","Spider","House Centipede","Lanternfly",
-"Fat Bee","Ladybug","Rock", "Worker Ant", "Soldier Ant", "Fire Worker Ant", "Fire Soldier Ant", "Termite Worker", "Termite Soldier", "Worm", "Ant Egg", "Fire Ant Egg", "Termite Egg", "Queen Ant", "Queen Fire Ant", "Queen Termite", "Compsognathus", "Stegosaurus", "Dilophosaurus", "Spinosaurus", "Carnotaurus", "Brachiosaurus", "Therizinosaurus", "Mosasaurus", "Volcano", "Titanoboa"
+"Fat Bee","Ladybug","Rock", "Worker Ant", "Soldier Ant", "Fire Worker Ant", "Fire Soldier Ant", "Termite Worker", "Termite Soldier", "Worm", "Ant Egg", "Fire Ant Egg", "Termite Egg", "Queen Ant", "Queen Fire Ant", "Queen Termite", "Compsognathus", "Stegosaurus", "Dilophosaurus", "Spinosaurus", "Carnotaurus", "Brachiosaurus", "Therizinosaurus", "Mosasaurus", "Volcano", "Titanoboa", "Grasshopper", "Bumblebee", "Praying Mantis", "Wolf Spider", "Queen Hornet", "Wasp", "Mosquito", "Firefly", "Snail", "Pill Bug", "Stag Beetle", "Rhino Beetle"
 };
 
 uint32_t RR_MOB_DIFFICULTY_COEFFICIENTS[rr_mob_id_max] = {
@@ -1190,7 +1228,7 @@ struct rr_maze_declaration RR_MAZES[rr_biome_id_max] = {
     {MAZE_ENTRY(BURROW, 512), 0},
     {MAZE_ENTRY(NETHER, 2048), 7, {{24,24,4,4,28,28,1},{80,28,4,4,84,32,15},{124,44,4,4,128,48,30},{40,88,4,4,44,92,45},{100,92,4,4,104,96,60},{44,128,4,4,48,132,75},{112,128,4,4,116,132,90}}},
     {MAZE_ENTRY(OCEAN, 2048), 7, {{76,24,4,4,80,28,1},{32,52,4,4,36,56,15},{120,52,4,4,124,56,30},{76,80,4,4,80,84,45},{32,112,4,4,36,116,60},{120,112,4,4,124,116,75},{76,132,4,4,80,136,90}}},
-    {MAZE_ENTRY(PLAINS, 2048), 6, {{48,9,4,4,50,11,15},{28,28,4,4,30,30,30},{9,48,4,4,11,50,45},{67,28,4,4,69,30,60},{48,48,4,4,50,50,75},{28,67,4,4,30,69,90}}},
+    {MAZE_ENTRY(PLAINS, 2048), 6, {{97,19,6,6,100,22,15},{57,57,6,6,60,60,30},{19,97,6,6,22,100,45},{135,57,6,6,138,60,60},{97,97,6,6,100,100,75},{57,135,6,6,60,138,90}}},
 };
 
 struct rr_biome_server RR_BIOME_SERVERS[rr_biome_id_max] = {{"default",1234,"hc"},{"pvp",1235,"ant"},{NULL,0,NULL},{NULL,0,NULL},{NULL,0,NULL},{NULL,0,NULL},{"plains",1236,"pln"}};

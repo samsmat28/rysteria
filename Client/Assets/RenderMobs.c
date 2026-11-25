@@ -345,7 +345,73 @@ void rr_renderer_draw_mob(struct rr_renderer *renderer, uint8_t id,
         rr_renderer_set_fill(renderer, 0xff4a3525); rr_renderer_set_stroke(renderer, 0xff2b1d12); rr_renderer_set_line_width(renderer, 5.0f);
         rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 58.0f); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
         rr_renderer_set_fill(renderer, 0xffff5400); rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 24.0f); rr_renderer_fill(renderer); break;
-    case rr_mob_id_titanoboa:
+    case rr_mob_id_grasshopper:
+            rr_renderer_scale(renderer, 0.25f);
+            rr_renderer_set_stroke(renderer, 0xff1b5e20); rr_renderer_set_line_width(renderer, 10);
+            rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, -20, 20); rr_renderer_line_to(renderer, -75, 70); rr_renderer_line_to(renderer, -95, 35); rr_renderer_stroke(renderer);
+            rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, -20, -20); rr_renderer_line_to(renderer, -75, -70); rr_renderer_line_to(renderer, -95, -35); rr_renderer_stroke(renderer);
+            rr_renderer_set_fill(renderer, 0xff4caf50);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, -35, 0, 58); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+            rr_renderer_set_fill(renderer, 0xff66bb6a);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 42, 0, 44); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+            break;
+        case rr_mob_id_bumblebee:
+            rr_renderer_scale(renderer, 1.35f);
+            render_sprite(renderer, 15, 0, flags);
+            break;
+        case rr_mob_id_mantis:
+            rr_renderer_scale(renderer, 0.25f);
+            rr_renderer_set_stroke(renderer, 0xff1b5e20); rr_renderer_set_line_width(renderer, 12);
+            rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, 35, 25); rr_renderer_line_to(renderer, 95, 65); rr_renderer_line_to(renderer, 120, 20); rr_renderer_stroke(renderer);
+            rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, 35, -25); rr_renderer_line_to(renderer, 95, -65); rr_renderer_line_to(renderer, 120, -20); rr_renderer_stroke(renderer);
+            rr_renderer_set_fill(renderer, 0xff76ff03);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, -45, 0, 62); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+            rr_renderer_set_fill(renderer, 0xff64dd17);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 45, 0, 46); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+            break;
+        case rr_mob_id_wolf_spider:
+            rr_renderer_scale(renderer, 1.35f);
+            render_sprite(renderer, 17, 0, flags);
+            break;
+        case rr_mob_id_queen_hornet:
+            rr_renderer_scale(renderer, 1.85f);
+            render_sprite(renderer, 13, 0, flags);
+            break;
+        case rr_mob_id_wasp:
+            rr_renderer_scale(renderer, 1.15f); render_sprite(renderer, 13, 0, flags); break;
+        case rr_mob_id_mosquito:
+            rr_renderer_scale(renderer, 0.25f);
+            rr_renderer_set_stroke(renderer, 0xff212121); rr_renderer_set_fill(renderer, 0xff616161); rr_renderer_set_line_width(renderer, 8);
+            rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, 30, 0); rr_renderer_line_to(renderer, 95, 0); rr_renderer_stroke(renderer);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 42); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+        case rr_mob_id_firefly:
+            rr_renderer_scale(renderer, 0.25f);
+            rr_renderer_set_stroke(renderer, 0xff3e2723); rr_renderer_set_fill(renderer, 0xff5d4037); rr_renderer_set_line_width(renderer, 9);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 18, 0, 40); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+            rr_renderer_set_fill(renderer, 0xff76ff03);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, -28, 0, 42); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+        case rr_mob_id_snail:
+            rr_renderer_scale(renderer, 0.25f);
+            rr_renderer_set_stroke(renderer, 0xff4e342e); rr_renderer_set_fill(renderer, 0xffd7ccc8); rr_renderer_set_line_width(renderer, 10);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 35, 0, 42); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+            rr_renderer_set_fill(renderer, 0xff8d6e63);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, -15, 0, 75); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+        case rr_mob_id_pill_bug:
+            rr_renderer_scale(renderer, 0.25f);
+            rr_renderer_set_stroke(renderer, 0xff263238); rr_renderer_set_fill(renderer, 0xff607d8b); rr_renderer_set_line_width(renderer, 11);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 68); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+        case rr_mob_id_stag_beetle:
+            rr_renderer_scale(renderer, 0.25f);
+            rr_renderer_set_stroke(renderer, 0xff1a0d00); rr_renderer_set_fill(renderer, 0xff4e260e); rr_renderer_set_line_width(renderer, 14);
+            rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, 60, 28); rr_renderer_line_to(renderer, 135, 50); rr_renderer_line_to(renderer, 150, 15); rr_renderer_stroke(renderer);
+            rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, 60, -28); rr_renderer_line_to(renderer, 135, -50); rr_renderer_line_to(renderer, 150, -15); rr_renderer_stroke(renderer);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 95); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+        case rr_mob_id_rhino_beetle:
+            rr_renderer_scale(renderer, 0.25f);
+            rr_renderer_set_stroke(renderer, 0xff101820); rr_renderer_set_fill(renderer, 0xff37474f); rr_renderer_set_line_width(renderer, 15);
+            rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, 75, 0); rr_renderer_line_to(renderer, 155, 0); rr_renderer_stroke(renderer);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 105); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+        case rr_mob_id_titanoboa:
         rr_renderer_set_fill(renderer, 0xff2d6a4f); rr_renderer_set_stroke(renderer, 0xff081c15); rr_renderer_set_line_width(renderer, 6.0f);
         rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, -22, 0, 44.0f); rr_renderer_arc(renderer, 22, 0, 38.0f); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
         rr_renderer_set_fill(renderer, 0xffffd60a); rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 38, -10, 6.0f); rr_renderer_arc(renderer, 38, 10, 6.0f); rr_renderer_fill(renderer); break;

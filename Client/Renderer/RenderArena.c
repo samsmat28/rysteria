@@ -472,5 +472,19 @@ void rr_component_arena_render(EntityIdx entity, struct rr_game *this,
     }
 
 
+        if (arena->biome == rr_biome_id_plains) {
+        struct rr_maze_declaration const *mdecl = &RR_MAZES[arena->biome];
+        for (uint32_t ci = 0; ci < mdecl->checkpoint_count; ++ci) {
+            float cx = mdecl->checkpoints[ci].spawn_x * mdecl->grid_size;
+            float cy = mdecl->checkpoints[ci].spawn_y * mdecl->grid_size;
+            rr_renderer_set_fill(this->renderer, 0x55ffaa22);
+            rr_renderer_set_stroke(this->renderer, 0xffffaa22);
+            rr_renderer_set_line_width(this->renderer, 16.0f);
+            rr_renderer_begin_path(this->renderer);
+            rr_renderer_arc(this->renderer, cx, cy, 180.0f);
+            rr_renderer_fill(this->renderer);
+            rr_renderer_stroke(this->renderer);
+        }
+    }
     rr_renderer_context_state_free(this->renderer, &state2);
 }

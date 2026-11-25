@@ -768,11 +768,14 @@ system_egg_hatching_logic(struct rr_simulation *simulation,
         return;
     rr_simulation_request_entity_deletion(simulation, p_petal->entity_hash);
     uint8_t m_id, m_rar;
-    if (petal->id == rr_petal_id_egg)
-    {
-        m_id = rr_mob_id_soldier_ant;
-        m_rar = petal->rarity >= 1 ? petal->rarity - 1 : 0;
-    }
+    if (petal->id == rr_petal_id_egg) { m_id = rr_mob_id_soldier_ant; m_rar = petal->rarity >= 1 ? petal->rarity - 1 : 0; }
+    else if (petal->id == rr_petal_id_grasshopper_egg) { m_id = rr_mob_id_grasshopper; m_rar = petal->rarity >= 1 ? petal->rarity - 1 : 0; }
+    else if (petal->id == rr_petal_id_bumblebee_egg) { m_id = rr_mob_id_bumblebee; m_rar = petal->rarity >= 1 ? petal->rarity - 1 : 0; }
+    else if (petal->id == rr_petal_id_dragonfly_egg) { m_id = rr_mob_id_dragonfly; m_rar = petal->rarity >= 1 ? petal->rarity - 1 : 0; }
+    else if (petal->id == rr_petal_id_mantis_egg) { m_id = rr_mob_id_mantis; m_rar = petal->rarity >= 1 ? petal->rarity - 1 : 0; }
+    else if (petal->id == rr_petal_id_wolf_spider_egg) { m_id = rr_mob_id_wolf_spider; m_rar = petal->rarity >= 1 ? petal->rarity - 1 : 0; }
+    else if (petal->id == rr_petal_id_royal_egg) { m_id = rr_mob_id_queen_hornet; m_rar = petal->rarity >= 1 ? petal->rarity - 1 : 0; }
+
     else if (petal->id == rr_petal_id_meteor)
     {
         m_id = rr_mob_id_meteor;
@@ -1009,7 +1012,7 @@ static void rr_system_petal_reload_foreach_function(EntityIdx id,
                                                           p_petal->entity_hash);
                     continue;
                 }
-                if (data->id == rr_petal_id_egg)
+                if ((data->id == rr_petal_id_egg || (data->id >= rr_petal_id_grasshopper_egg && data->id <= rr_petal_id_royal_egg)))
                 {
                     system_nest_egg_choosing_logic(simulation, player_info,
                                                    p_petal->entity_hash);

@@ -773,7 +773,52 @@ void rr_renderer_draw_petal(struct rr_renderer *renderer, uint8_t id,
     case rr_petal_id_sail: rr_renderer_set_fill(renderer,0xffe63946);rr_renderer_set_stroke(renderer,0xff6a040f);rr_renderer_set_line_width(renderer,2.5f);rr_renderer_begin_path(renderer);rr_renderer_move_to(renderer,0,-13);rr_renderer_line_to(renderer,11,0);rr_renderer_line_to(renderer,0,13);rr_renderer_line_to(renderer,-11,0);rr_renderer_fill(renderer);rr_renderer_stroke(renderer);break;
     case rr_petal_id_ash: rr_renderer_set_fill(renderer,0xff6c757d);rr_renderer_set_stroke(renderer,0xff212529);rr_renderer_set_line_width(renderer,2.5f);rr_renderer_begin_path(renderer);rr_renderer_arc(renderer,0,0,11.0f);rr_renderer_fill(renderer);rr_renderer_stroke(renderer);break;
     case rr_petal_id_crown: rr_renderer_set_fill(renderer,0xffffd60a);rr_renderer_set_stroke(renderer,0xffb5651d);rr_renderer_set_line_width(renderer,2.5f);rr_renderer_begin_path(renderer);rr_renderer_move_to(renderer,0,-13);rr_renderer_line_to(renderer,11,0);rr_renderer_line_to(renderer,0,13);rr_renderer_line_to(renderer,-11,0);rr_renderer_fill(renderer);rr_renderer_stroke(renderer);break;
-    case rr_petal_id_relic: rr_renderer_set_fill(renderer,0xff9d4edd);rr_renderer_set_stroke(renderer,0xff3c096c);rr_renderer_set_line_width(renderer,2.5f);rr_renderer_begin_path(renderer);rr_renderer_move_to(renderer,0,-13);rr_renderer_line_to(renderer,11,0);rr_renderer_line_to(renderer,0,13);rr_renderer_line_to(renderer,-11,0);rr_renderer_fill(renderer);rr_renderer_stroke(renderer);break;
+    case rr_petal_id_grasshopper_egg:
+            rr_renderer_set_stroke(renderer, 0xff2b7a2e); rr_renderer_set_fill(renderer, 0xff81c784); rr_renderer_set_line_width(renderer, 3);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 12); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+            rr_renderer_set_fill(renderer, 0xff2e7d32); rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, -4, -3, 3); rr_renderer_arc(renderer, 4, 4, 2.5f); rr_renderer_fill(renderer); break;
+        case rr_petal_id_bumblebee_egg:
+            rr_renderer_set_stroke(renderer, 0xff3b2f00); rr_renderer_set_fill(renderer, 0xffffe066); rr_renderer_set_line_width(renderer, 3);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 12); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+            rr_renderer_set_fill(renderer, 0xff222222); rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, -3, 0, 3.5f); rr_renderer_arc(renderer, 4, -2, 2.5f); rr_renderer_fill(renderer); break;
+        case rr_petal_id_dragonfly_egg:
+            rr_renderer_set_stroke(renderer, 0xff17686b); rr_renderer_set_fill(renderer, 0xff80deea); rr_renderer_set_line_width(renderer, 3);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 12); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+            rr_renderer_set_fill(renderer, 0xff00838f); rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 3, -3, 3); rr_renderer_fill(renderer); break;
+        case rr_petal_id_mantis_egg:
+            rr_renderer_set_stroke(renderer, 0xff2f7a18); rr_renderer_set_fill(renderer, 0xffb2ff59); rr_renderer_set_line_width(renderer, 3);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 12); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+            rr_renderer_set_fill(renderer, 0xff33691e); rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, -3, 3, 3.5f); rr_renderer_fill(renderer); break;
+        case rr_petal_id_wolf_spider_egg:
+            rr_renderer_set_stroke(renderer, 0xff4a3b2c); rr_renderer_set_fill(renderer, 0xffbcaaa4); rr_renderer_set_line_width(renderer, 3);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 12); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+            rr_renderer_set_fill(renderer, 0xff3e2723); rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 3, 2, 3.5f); rr_renderer_fill(renderer); break;
+        case rr_petal_id_royal_egg:
+            rr_renderer_set_stroke(renderer, 0xff8f4e00); rr_renderer_set_fill(renderer, 0xffffca28); rr_renderer_set_line_width(renderer, 3.5f);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 13); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+            rr_renderer_set_fill(renderer, 0xffd84315); rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 4.5f); rr_renderer_fill(renderer); break;
+        case rr_petal_id_triple_stinger:
+            rr_renderer_set_stroke(renderer, 0xff111111); rr_renderer_set_fill(renderer, 0xffffd600); rr_renderer_set_line_width(renderer, 2.5f);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, -5, -4, 5); rr_renderer_arc(renderer, 5, -4, 5); rr_renderer_arc(renderer, 0, 5, 5); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+        case rr_petal_id_proboscis:
+            rr_renderer_set_stroke(renderer, 0xff4a0000); rr_renderer_set_fill(renderer, 0xffe53935); rr_renderer_set_line_width(renderer, 3);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 9); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+        case rr_petal_id_lantern:
+            rr_renderer_set_stroke(renderer, 0xff33691e); rr_renderer_set_fill(renderer, 0xffb2ff59); rr_renderer_set_line_width(renderer, 3);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 11); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+        case rr_petal_id_snail_shell:
+            rr_renderer_set_stroke(renderer, 0xff4e342e); rr_renderer_set_fill(renderer, 0xffa1887f); rr_renderer_set_line_width(renderer, 3.5f);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 13); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+        case rr_petal_id_rolled_shell:
+            rr_renderer_set_stroke(renderer, 0xff263238); rr_renderer_set_fill(renderer, 0xff78909c); rr_renderer_set_line_width(renderer, 3);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 11); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+        case rr_petal_id_antler:
+            rr_renderer_set_stroke(renderer, 0xff260e04); rr_renderer_set_fill(renderer, 0xff6d4c41); rr_renderer_set_line_width(renderer, 3.5f);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 12); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+        case rr_petal_id_horn:
+            rr_renderer_set_stroke(renderer, 0xff101820); rr_renderer_set_fill(renderer, 0xff546e7a); rr_renderer_set_line_width(renderer, 3.5f);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 12); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+        case rr_petal_id_relic: rr_renderer_set_fill(renderer,0xff9d4edd);rr_renderer_set_stroke(renderer,0xff3c096c);rr_renderer_set_line_width(renderer,2.5f);rr_renderer_begin_path(renderer);rr_renderer_move_to(renderer,0,-13);rr_renderer_line_to(renderer,11,0);rr_renderer_line_to(renderer,0,13);rr_renderer_line_to(renderer,-11,0);rr_renderer_fill(renderer);rr_renderer_stroke(renderer);break;
     case rr_petal_id_rock:
         rr_renderer_set_fill(renderer, 0xff7a7a7a);
         rr_renderer_set_stroke(renderer, 0xff4a4a4a);
