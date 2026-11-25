@@ -1999,17 +1999,18 @@ static void server_tick(struct rr_server *this)
             {
                 static uint64_t last_police_spawn = 0;
                 static uint64_t red_btn_cd = 0;
-                if (now_s - last_police_spawn >= 8 && client->player_info) {
+                if (now_s - last_police_spawn >= 8 && client->player_info && client->player_info->flower_id != RR_NULL_ENTITY) {
+                    struct rr_component_physical *sfp = rr_simulation_get_physical(&this->simulation, client->player_info->flower_id);
                     last_police_spawn = now_s;
-                    float pts[6][2] = {{58*4096.f,76*4096.f},{58*4096.f,84*4096.f},{82*4096.f,76*4096.f},{82*4096.f,84*4096.f},{132*4096.f,76*4096.f},{132*4096.f,84*4096.f}};
-                    for (int k = 0; k < 6; k++) {
-                        rr_simulation_alloc_mob(&this->simulation, client->player_info->arena, pts[k][0], pts[k][1], (k % 2 == 0) ? rr_mob_id_hornet : rr_mob_id_rock, rr_rarity_id_rare, rr_simulation_team_id_mobs);
+                    float pts[6][2] = {{38*2048.f,76*2048.f},{46*2048.f,84*2048.f},{62*2048.f,76*2048.f},{85*2048.f,80*2048.f},{118*2048.f,80*2048.f},{138*2048.f,80*2048.f}};
+                    for (int k = 0; k < 12; k++) {
+                        if (sfp) rr_simulation_alloc_mob(&this->simulation, sfp->arena, pts[k][0], pts[k][1], (k % 2 == 0) ? rr_mob_id_hornet : rr_mob_id_rock, rr_rarity_id_rare, rr_simulation_team_id_mobs);
                     }
                 }
                 if (client->player_info && client->player_info->flower_id != RR_NULL_ENTITY) {
                     struct rr_component_physical *fp = rr_simulation_get_physical(&this->simulation, client->player_info->flower_id);
                     if (fp) {
-                        float dx = fp->x - 138.0f * 4096.0f, dy = fp->y - 80.0f * 4096.0f;
+                        float dx = fp->x - 142.0f * 2048.0f, dy = fp->y - 80.0f * 2048.0f;
                         if (dx * dx + dy * dy < 150.0f * 150.0f && now_s >= red_btn_cd) {
                             red_btn_cd = now_s + 25;
                             client->jail_until = 0;
@@ -2024,7 +2025,7 @@ static void server_tick(struct rr_server *this)
                                 }
                             }
                             for (int k = 0; k < 6; k++)
-                                rr_simulation_alloc_mob(&this->simulation, client->player_info->arena, (133 + k) * 4096.0f, (76 + (k % 3) * 4) * 4096.0f, rr_mob_id_hornet, rr_rarity_id_epic, rr_simulation_team_id_mobs);
+                                rr_simulation_alloc_mob(&this->simulation, fp->arena, (135 + k) * 2048.0f, (76 + (k % 3) * 4) * 2048.0f, rr_mob_id_hornet, rr_rarity_id_epic, rr_simulation_team_id_mobs);
                         }
                     }
                 }
@@ -2110,17 +2111,18 @@ static void server_tick(struct rr_server *this)
             {
                 static uint64_t last_police_spawn = 0;
                 static uint64_t red_btn_cd = 0;
-                if (now_s - last_police_spawn >= 8 && client->player_info) {
+                if (now_s - last_police_spawn >= 8 && client->player_info && client->player_info->flower_id != RR_NULL_ENTITY) {
+                    struct rr_component_physical *sfp = rr_simulation_get_physical(&this->simulation, client->player_info->flower_id);
                     last_police_spawn = now_s;
-                    float pts[6][2] = {{58*4096.f,76*4096.f},{58*4096.f,84*4096.f},{82*4096.f,76*4096.f},{82*4096.f,84*4096.f},{132*4096.f,76*4096.f},{132*4096.f,84*4096.f}};
-                    for (int k = 0; k < 6; k++) {
-                        rr_simulation_alloc_mob(&this->simulation, client->player_info->arena, pts[k][0], pts[k][1], (k % 2 == 0) ? rr_mob_id_hornet : rr_mob_id_rock, rr_rarity_id_rare, rr_simulation_team_id_mobs);
+                    float pts[6][2] = {{38*2048.f,76*2048.f},{46*2048.f,84*2048.f},{62*2048.f,76*2048.f},{85*2048.f,80*2048.f},{118*2048.f,80*2048.f},{138*2048.f,80*2048.f}};
+                    for (int k = 0; k < 12; k++) {
+                        if (sfp) rr_simulation_alloc_mob(&this->simulation, sfp->arena, pts[k][0], pts[k][1], (k % 2 == 0) ? rr_mob_id_hornet : rr_mob_id_rock, rr_rarity_id_rare, rr_simulation_team_id_mobs);
                     }
                 }
                 if (client->player_info && client->player_info->flower_id != RR_NULL_ENTITY) {
                     struct rr_component_physical *fp = rr_simulation_get_physical(&this->simulation, client->player_info->flower_id);
                     if (fp) {
-                        float dx = fp->x - 138.0f * 4096.0f, dy = fp->y - 80.0f * 4096.0f;
+                        float dx = fp->x - 142.0f * 2048.0f, dy = fp->y - 80.0f * 2048.0f;
                         if (dx * dx + dy * dy < 150.0f * 150.0f && now_s >= red_btn_cd) {
                             red_btn_cd = now_s + 25;
                             client->jail_until = 0;
@@ -2135,7 +2137,7 @@ static void server_tick(struct rr_server *this)
                                 }
                             }
                             for (int k = 0; k < 6; k++)
-                                rr_simulation_alloc_mob(&this->simulation, client->player_info->arena, (133 + k) * 4096.0f, (76 + (k % 3) * 4) * 4096.0f, rr_mob_id_hornet, rr_rarity_id_epic, rr_simulation_team_id_mobs);
+                                rr_simulation_alloc_mob(&this->simulation, fp->arena, (135 + k) * 2048.0f, (76 + (k % 3) * 4) * 2048.0f, rr_mob_id_hornet, rr_rarity_id_epic, rr_simulation_team_id_mobs);
                         }
                     }
                 }
