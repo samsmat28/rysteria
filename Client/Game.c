@@ -1705,10 +1705,22 @@ void rr_game_tick(struct rr_game *this, float delta)
                 rr_renderer_translate(this->renderer, newLeftX + GRID_SIZE / 2,
                                       currY + GRID_SIZE / 2);
                 rr_renderer_scale(this->renderer, (GRID_SIZE + 2) / 256);
-                if (this->selected_biome == rr_biome_id_hell_creek ||
-                    this->selected_biome == rr_biome_id_pvp)
-                    rr_renderer_draw_tile_hell_creek(this->renderer,
-                                                     tile_index);
+                if (this->selected_biome == rr_biome_id_ocean) {
+            rr_renderer_set_fill(this->renderer, 0xff1b769c);
+            rr_renderer_begin_path(this->renderer);
+            rr_renderer_rect(this->renderer, -128, -128, 256, 256);
+            rr_renderer_fill(this->renderer);
+            rr_renderer_set_fill(this->renderer, 0xff145978);
+            rr_renderer_begin_path(this->renderer);
+            rr_renderer_arc(this->renderer, ((tile_index * 73) % 160) - 80.0f, ((tile_index * 41) % 160) - 80.0f, 16.0f + (tile_index % 10));
+            rr_renderer_fill(this->renderer);
+            rr_renderer_set_fill(this->renderer, 0xff49b6d6);
+            rr_renderer_begin_path(this->renderer);
+            rr_renderer_arc(this->renderer, ((tile_index * 113) % 150) - 75.0f, ((tile_index * 89) % 150) - 75.0f, 5.0f + (tile_index % 4));
+            rr_renderer_fill(this->renderer);
+        } else if (this->selected_biome == rr_biome_id_hell_creek ||
+            this->selected_biome == rr_biome_id_pvp)
+            rr_renderer_draw_tile_hell_creek(this->renderer, tile_index);
                 else
                     rr_renderer_draw_tile_garden(this->renderer, tile_index);
                 rr_renderer_context_state_free(this->renderer, &state);

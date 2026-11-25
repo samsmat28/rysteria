@@ -6,5 +6,5 @@ C_DEFINES =
 
 C_INCLUDES = -I/workspaces/rysteria/Server/..
 
-C_FLAGS =  -DRR_SERVER=1 -DNDEBUG -O3 -ffast-math -gdwarf-4 -DOCEAN
+C_FLAGS =  -DRR_SERVER=1 -Wno-excess-initializers -DNDEBUG -O3 -ffast-math -gdwarf-4 -DOCEAN
 

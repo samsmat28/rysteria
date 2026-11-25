@@ -60,36 +60,61 @@ void render_background(struct rr_component_player_info *player_info,
             rr_renderer_translate(renderer, newLeftX + GRID_SIZE / 2,
                                   currY + GRID_SIZE / 2);
             rr_renderer_scale(renderer, (GRID_SIZE + 2) / 256);
-                   if (this->selected_biome == rr_biome_id_garden || this->selected_biome == rr_biome_id_nether || this->selected_biome == rr_biome_id_ocean || this->selected_biome == rr_biome_id_plains) {
-            uint32_t bg = (this->selected_biome == rr_biome_id_garden) ? 0xff2c333d : ((this->selected_biome == rr_biome_id_nether) ? 0xff3b1414 : ((this->selected_biome == rr_biome_id_ocean) ? 0xff2685a8 : 0xff3e8e41));
+                   if (this->selected_biome == rr_biome_id_garden || this->selected_biome == rr_biome_id_nether || this->selected_biome == rr_biome_id_plains) {
+            uint32_t bg = (this->selected_biome == rr_biome_id_garden) ? 0xff2c333d : ((this->selected_biome == rr_biome_id_nether) ? 0xff3b1414 : ((this->selected_biome == rr_biome_id_ocean) ? 0xff1b769c : 0xff3e8e41));
             rr_renderer_set_fill(renderer, bg); rr_renderer_begin_path(renderer); rr_renderer_rect(renderer, -128, -128, 256, 256); rr_renderer_fill(renderer);
         }
         if (this->selected_biome == rr_biome_id_ocean)
         {
             uint32_t h = rr_get_hash(((uint32_t)((newLeftX + 8192) / GRID_SIZE) * 73856093u) ^ ((uint32_t)((currY + 8192) / GRID_SIZE) * 19349663u));
-            rr_renderer_set_fill(renderer, 0xff2685a8);
+            rr_renderer_set_fill(renderer, 0xff1b769c);
             rr_renderer_begin_path(renderer);
             rr_renderer_rect(renderer, -128, -128, 256, 256);
             rr_renderer_fill(renderer);
-            rr_renderer_set_fill(renderer, 0xff1e7091);
+            // Мягкая песчаная отмель на дне
+            if ((h % 100) < 55) {
+                float sx = (float)((int)((h >> 3) % 140) - 70);
+                float sy = (float)((int)((h >> 11) % 140) - 70);
+                rr_renderer_set_fill(renderer, 0xff17678a);
+                rr_renderer_begin_path(renderer);
+                rr_renderer_arc(renderer, sx, sy, 28.0f + (float)((h >> 19) % 22));
+                rr_renderer_fill(renderer);
+            }
+            // Морские камешки и ракушки
+            rr_renderer_set_fill(renderer, 0xff145978);
             for (int i = 0; i < 4; i++) {
                 uint32_t sh = rr_get_hash(h + (uint32_t)(i * 101));
                 float px = (float)((int)(sh % 210) - 105);
                 float py = (float)((int)((sh >> 8) % 210) - 105);
                 rr_renderer_begin_path(renderer);
-                rr_renderer_arc(renderer, px, py, 2.2f + (float)((sh >> 16) % 3));
+                rr_renderer_arc(renderer, px, py, 3.0f + (float)((sh >> 16) % 4));
                 rr_renderer_fill(renderer);
             }
-            if ((h % 100) < 45) {
-                float sx = (float)((int)((h >> 4) % 170) - 85);
-                float sy = (float)((int)((h >> 12) % 170) - 85);
-                rr_renderer_set_fill(renderer, 0xff47a8bd);
+            // Морская звезда или коралловая веточка (на 25% тайлов)
+            if (((h >> 5) % 100) < 25) {
+                float cx = (float)((int)((h >> 7) % 160) - 80);
+                float cy = (float)((int)((h >> 15) % 160) - 80);
+                rr_renderer_set_stroke(renderer, 0xffe06d53);
+                rr_renderer_set_line_width(renderer, 3.0f);
+                for (int k = 0; k < 5; k++) {
+                    float a = k * 1.2566f;
+                    rr_renderer_begin_path(renderer);
+                    rr_renderer_move_to(renderer, cx, cy);
+                    rr_renderer_line_to(renderer, cx + 9.0f * cosf(a), cy + 9.0f * sinf(a));
+                    rr_renderer_stroke(renderer);
+                }
+            }
+            // Пузырьки воды
+            if ((h % 100) < 40) {
+                float bx = (float)((int)((h >> 4) % 170) - 85);
+                float by = (float)((int)((h >> 12) % 170) - 85);
+                rr_renderer_set_fill(renderer, 0xff49b6d6);
                 rr_renderer_begin_path(renderer);
-                rr_renderer_arc(renderer, sx, sy, 4.0f + (float)((h >> 20) % 4));
+                rr_renderer_arc(renderer, bx, by, 4.0f + (float)((h >> 20) % 4));
                 rr_renderer_fill(renderer);
             }
         }
-        if (this->selected_biome == rr_biome_id_pvp)
+        else if (this->selected_biome == rr_biome_id_pvp)
         {
             // Базовый светло-коричневый пол Ant Hell
             rr_renderer_set_fill(renderer, 0xff9e744e);
@@ -159,7 +184,7 @@ void render_background(struct rr_component_player_info *player_info,
                 rr_renderer_stroke(renderer);
             }
         }
-        if (this->selected_biome == rr_biome_id_pvp)
+        else if (this->selected_biome == rr_biome_id_pvp)
         {
             // Уникальный хеш для каждого тайла, чтобы узор не повторялся каждые 3 клетки
             uint32_t h = rr_get_hash(((uint32_t)((newLeftX + 8192) / GRID_SIZE) * 73856093u) ^ ((uint32_t)((currY + 8192) / GRID_SIZE) * 19349663u));
@@ -327,6 +352,21 @@ void render_background(struct rr_component_player_info *player_info,
                         float wy = currY * grid_size;
                         rr_renderer_set_fill(renderer, wall_color);
                         rr_renderer_fill_rect(renderer, wx, wy, grid_size, grid_size);
+                        if (arena->biome == rr_biome_id_ocean) {
+                            uint32_t h = (uint32_t)(nx * 73856093u ^ currY * 19349663u);
+                            rr_renderer_set_fill(renderer, 0xff082436);
+                            rr_renderer_begin_path(renderer);
+                            rr_renderer_arc(renderer, wx + 250.0f + (h % 200), wy + 260.0f + ((h >> 3) % 200), 85.0f + (h % 45));
+                            rr_renderer_arc(renderer, wx + 660.0f + ((h >> 6) % 180), wy + 640.0f + ((h >> 9) % 200), 75.0f + ((h >> 5) % 40));
+                            rr_renderer_fill(renderer);
+                            // Яркие коралловые кусты и анемоны на рифе
+                            uint32_t c_col = ((h >> 2) % 3 == 0) ? 0xfff472b6 : (((h >> 2) % 3 == 1) ? 0xfffb7185 : 0xff2dd4bf);
+                            rr_renderer_set_fill(renderer, c_col);
+                            rr_renderer_begin_path(renderer);
+                            rr_renderer_arc(renderer, wx + 320.0f + ((h >> 4) % 360), wy + 310.0f + ((h >> 8) % 360), 42.0f + (h % 24));
+                            rr_renderer_arc(renderer, wx + 365.0f + ((h >> 4) % 360), wy + 335.0f + ((h >> 8) % 360), 28.0f + ((h >> 3) % 18));
+                            rr_renderer_fill(renderer);
+                        }
                         if (arena->biome == rr_biome_id_plains) {
                             uint32_t h = (uint32_t)(nx * 73856093u ^ currY * 19349663u);
                             rr_renderer_set_fill(renderer, 0xff52351e);

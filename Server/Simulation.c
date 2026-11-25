@@ -391,7 +391,7 @@ static int tick_grid(struct rr_simulation *this, struct rr_maze_grid *grid,
     }
     else if (grid->spawn_timer >= spawn_at)
     {
-        spawn_mob(this, grid_x, grid_y);
+        if (RR_GLOBAL_BIOME != rr_biome_id_ocean) spawn_mob(this, grid_x, grid_y);
         return 1;
     }
     else

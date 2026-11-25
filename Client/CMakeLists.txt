@@ -19,6 +19,7 @@ set(CMAKE_SYSTEM_NAME Generic)
 cmake_minimum_required(VERSION 3.16)
 
 project(rrolf-client)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-excess-initializers")
 include_directories(..)
 
 set(SRCS
