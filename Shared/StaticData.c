@@ -255,15 +255,14 @@ struct rr_mob_data RR_MOB_DATA[rr_mob_id_max] = {
     {rr_mob_id_snail, rr_rarity_id_common, rr_rarity_id_gods, 140, 10, 32.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_snail_shell, 0.35}}},
     {rr_mob_id_pill_bug, rr_rarity_id_common, rr_rarity_id_gods, 80, 18, 24.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_rolled_shell, 0.35}}},
     {rr_mob_id_stag_beetle, rr_rarity_id_common, rr_rarity_id_gods, 150, 26, 38.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_antler, 0.35}}},
-    {rr_mob_id_rhino_beetle, rr_rarity_id_common, rr_rarity_id_gods, 180, 28, 42.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {
-    {rr_petal_id_rhino_horn, rr_rarity_id_common, offensive, 26.0f, 50.0f, 11.0f, 60, 0, {1,1,1,1,1,1,1,1,1,1,1,1}},
-    {rr_petal_id_pollen_cloud, rr_rarity_id_common, offensive, 10.0f, 15.0f, 10.0f, 40, 0, {1,1,1,1,1,1,1,1,1,1,1,1}},
-    {rr_petal_id_dandelion_seed, rr_rarity_id_common, offensive, 18.0f, 14.0f, 8.0f, 48, 0, {1,1,1,1,1,1,1,1,1,1,1,1}},
-    {rr_petal_id_cocoon, rr_rarity_id_common, defensive, 5.0f, 35.0f, 11.0f, 90, 0, {1,1,1,1,1,1,1,1,1,1,1,1}},
-    {rr_petal_id_fertile_soil, rr_rarity_id_common, defensive, 8.0f, 22.0f, 10.0f, 60, 0, {1,1,1,1,1,1,1,1,1,1,1,1}},
-    {rr_petal_id_sonic_wing, rr_rarity_id_common, offensive, 14.0f, 16.0f, 9.0f, 44, 0, {1,1,1,1,1,1,1,1,1,1,1,1}},
-    {rr_petal_id_honeydew, rr_rarity_id_common, defensive, 4.0f, 12.0f, 8.0f, 50, 0, {1,1,1,1,1,1,1,1,1,1,1,1}},
-    {rr_petal_id_meadow_segment, rr_rarity_id_common, offensive, 18.0f, 24.0f, 10.0f, 40, 0, {1,1,1,1,1,1,1,1,1,1,1,1}},
+    {rr_mob_id_rhino_beetle, rr_rarity_id_common, rr_rarity_id_gods, 180, 28, 42.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_rhino_horn, 0.35}}},
+    {rr_mob_id_butterfly, rr_rarity_id_common, rr_rarity_id_gods, 45, 8, 24.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_pollen_cloud, 0.35}}},
+    {rr_mob_id_dandelion, rr_rarity_id_common, rr_rarity_id_gods, 240, 16, 48.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_dandelion_seed, 0.45}}},
+    {rr_mob_id_caterpillar, rr_rarity_id_common, rr_rarity_id_gods, 75, 10, 24.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_cocoon, 0.35}}},
+    {rr_mob_id_earthworm, rr_rarity_id_common, rr_rarity_id_gods, 70, 12, 22.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_fertile_soil, 0.35}}},
+    {rr_mob_id_cricket, rr_rarity_id_common, rr_rarity_id_gods, 50, 12, 22.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_sonic_wing, 0.35}}},
+    {rr_mob_id_aphid, rr_rarity_id_common, rr_rarity_id_gods, 25, 6, 16.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_honeydew, 0.35}}},
+    {rr_mob_id_meadow_centipede, rr_rarity_id_common, rr_rarity_id_gods, 160, 20, 34.0f, rr_rarity_id_common, rr_rarity_id_common, rr_rarity_id_max, {{rr_petal_id_meadow_segment, 0.35}}},
 };
 
 char const *RR_MOB_NAMES[rr_mob_id_max] = {

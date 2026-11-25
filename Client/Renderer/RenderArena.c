@@ -280,9 +280,9 @@ void render_background(struct rr_component_player_info *player_info,
     float grid_size = RR_MAZES[arena->biome].grid_size;
     uint32_t maze_dim = RR_MAZES[arena->biome].maze_dim;
     struct rr_maze_grid *grid = RR_MAZES[arena->biome].maze;
-       uint32_t wall_color = (arena->biome == rr_biome_id_pvp) ? 0xff1c0e06 : (arena->biome == rr_biome_id_plains ? 0xff123814 : 0xff000000);
+       uint32_t wall_color = (arena->biome == rr_biome_id_pvp) ? 0xff1c0e06 : (arena->biome == rr_biome_id_plains ? 0xff4a443f : 0xff000000);
     rr_renderer_set_fill(renderer, wall_color);
-    rr_renderer_set_global_alpha(renderer, (arena->biome == rr_biome_id_pvp) ? 0.88f : 0.5f);
+    rr_renderer_set_global_alpha(renderer, (arena->biome == rr_biome_id_pvp || arena->biome == rr_biome_id_plains) ? 1.0f : 0.5f);
     int32_t nx = floorf(leftX / grid_size);
     int32_t ny = floorf(topY / grid_size);
     for (; nx < rightX / grid_size; ++nx)
@@ -296,10 +296,28 @@ void render_background(struct rr_component_player_info *player_info,
             if (tile != 1)
             {
                 rr_renderer_begin_path(renderer);
-                if (tile == 0)
-                    rr_renderer_fill_rect(renderer, nx * grid_size,
-                                          currY * grid_size, grid_size,
-                                          grid_size);
+                if (tile == 0) {
+                        float wx = nx * grid_size;
+                        float wy = currY * grid_size;
+                        rr_renderer_set_fill(renderer, wall_color);
+                        rr_renderer_fill_rect(renderer, wx, wy, grid_size, grid_size);
+                        if (arena->biome == rr_biome_id_plains) {
+                            uint32_t h = (uint32_t)(nx * 73856093u ^ currY * 19349663u);
+                            rr_renderer_set_fill(renderer, 0xff5a534d);
+                            rr_renderer_fill_rect(renderer, wx + 60.0f, wy + 60.0f, grid_size - 120.0f, grid_size - 120.0f);
+                            rr_renderer_set_fill(renderer, (h & 1) ? 0xff3b3632 : 0xff686059);
+                            rr_renderer_set_stroke(renderer, 0xff2b2724);
+                            rr_renderer_set_line_width(renderer, 18.0f);
+                            rr_renderer_begin_path(renderer);
+                            rr_renderer_arc(renderer, wx + 260.0f + (h % 450), wy + 260.0f + ((h >> 4) % 450), 150.0f + (h % 70));
+                            rr_renderer_fill(renderer);
+                            rr_renderer_stroke(renderer);
+                            rr_renderer_set_fill(renderer, 0xff3a6b35);
+                            rr_renderer_begin_path(renderer);
+                            rr_renderer_arc(renderer, wx + 320.0f + ((h >> 8) % 400), wy + 320.0f + ((h >> 12) % 400), 85.0f);
+                            rr_renderer_fill(renderer);
+                        }
+                    }
                 else
                 {
                     uint8_t left = (tile >> 1) & 1;
