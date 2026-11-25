@@ -194,6 +194,13 @@ enum rr_petal_id
     rr_petal_id_rolled_shell,
     rr_petal_id_antler,
     rr_petal_id_rhino_horn,
+    rr_petal_id_pollen_cloud,
+    rr_petal_id_dandelion_seed,
+    rr_petal_id_cocoon,
+    rr_petal_id_fertile_soil,
+    rr_petal_id_sonic_wing,
+    rr_petal_id_honeydew,
+    rr_petal_id_meadow_segment,
     rr_petal_id_max,
 };
 
@@ -258,6 +265,13 @@ enum rr_mob_id
     rr_mob_id_pill_bug,
     rr_mob_id_stag_beetle,
     rr_mob_id_rhino_beetle,
+    rr_mob_id_butterfly,
+    rr_mob_id_dandelion,
+    rr_mob_id_caterpillar,
+    rr_mob_id_earthworm,
+    rr_mob_id_cricket,
+    rr_mob_id_aphid,
+    rr_mob_id_meadow_centipede,
     rr_mob_id_max,
 };
 

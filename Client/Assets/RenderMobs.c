@@ -346,7 +346,7 @@ void rr_renderer_draw_mob(struct rr_renderer *renderer, uint8_t id,
         rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 58.0f); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
         rr_renderer_set_fill(renderer, 0xffff5400); rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 24.0f); rr_renderer_fill(renderer); break;
     case rr_mob_id_grasshopper:
-            rr_renderer_scale(renderer, 0.25f);
+            
             rr_renderer_set_stroke(renderer, 0xff1b5e20); rr_renderer_set_line_width(renderer, 10);
             rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, -20, 20); rr_renderer_line_to(renderer, -75, 70); rr_renderer_line_to(renderer, -95, 35); rr_renderer_stroke(renderer);
             rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, -20, -20); rr_renderer_line_to(renderer, -75, -70); rr_renderer_line_to(renderer, -95, -35); rr_renderer_stroke(renderer);
@@ -360,7 +360,7 @@ void rr_renderer_draw_mob(struct rr_renderer *renderer, uint8_t id,
             render_sprite(renderer, 15, 0, flags);
             break;
         case rr_mob_id_mantis:
-            rr_renderer_scale(renderer, 0.25f);
+            
             rr_renderer_set_stroke(renderer, 0xff1b5e20); rr_renderer_set_line_width(renderer, 12);
             rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, 35, 25); rr_renderer_line_to(renderer, 95, 65); rr_renderer_line_to(renderer, 120, 20); rr_renderer_stroke(renderer);
             rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, 35, -25); rr_renderer_line_to(renderer, 95, -65); rr_renderer_line_to(renderer, 120, -20); rr_renderer_stroke(renderer);
@@ -380,37 +380,60 @@ void rr_renderer_draw_mob(struct rr_renderer *renderer, uint8_t id,
         case rr_mob_id_wasp:
             rr_renderer_scale(renderer, 1.15f); render_sprite(renderer, 13, 0, flags); break;
         case rr_mob_id_mosquito:
-            rr_renderer_scale(renderer, 0.25f);
+            
             rr_renderer_set_stroke(renderer, 0xff212121); rr_renderer_set_fill(renderer, 0xff616161); rr_renderer_set_line_width(renderer, 8);
             rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, 30, 0); rr_renderer_line_to(renderer, 95, 0); rr_renderer_stroke(renderer);
             rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 42); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
         case rr_mob_id_firefly:
-            rr_renderer_scale(renderer, 0.25f);
+            
             rr_renderer_set_stroke(renderer, 0xff3e2723); rr_renderer_set_fill(renderer, 0xff5d4037); rr_renderer_set_line_width(renderer, 9);
             rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 18, 0, 40); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
             rr_renderer_set_fill(renderer, 0xff76ff03);
             rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, -28, 0, 42); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
         case rr_mob_id_snail:
-            rr_renderer_scale(renderer, 0.25f);
+            
             rr_renderer_set_stroke(renderer, 0xff4e342e); rr_renderer_set_fill(renderer, 0xffd7ccc8); rr_renderer_set_line_width(renderer, 10);
             rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 35, 0, 42); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
             rr_renderer_set_fill(renderer, 0xff8d6e63);
             rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, -15, 0, 75); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
         case rr_mob_id_pill_bug:
-            rr_renderer_scale(renderer, 0.25f);
+            
             rr_renderer_set_stroke(renderer, 0xff263238); rr_renderer_set_fill(renderer, 0xff607d8b); rr_renderer_set_line_width(renderer, 11);
             rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 68); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
         case rr_mob_id_stag_beetle:
-            rr_renderer_scale(renderer, 0.25f);
+            
             rr_renderer_set_stroke(renderer, 0xff1a0d00); rr_renderer_set_fill(renderer, 0xff4e260e); rr_renderer_set_line_width(renderer, 14);
             rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, 60, 28); rr_renderer_line_to(renderer, 135, 50); rr_renderer_line_to(renderer, 150, 15); rr_renderer_stroke(renderer);
             rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, 60, -28); rr_renderer_line_to(renderer, 135, -50); rr_renderer_line_to(renderer, 150, -15); rr_renderer_stroke(renderer);
             rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 95); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
         case rr_mob_id_rhino_beetle:
-            rr_renderer_scale(renderer, 0.25f);
+            
             rr_renderer_set_stroke(renderer, 0xff101820); rr_renderer_set_fill(renderer, 0xff37474f); rr_renderer_set_line_width(renderer, 15);
             rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, 75, 0); rr_renderer_line_to(renderer, 155, 0); rr_renderer_stroke(renderer);
             rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 105); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+        case rr_mob_id_butterfly:
+            rr_renderer_set_stroke(renderer, 0xffad1457); rr_renderer_set_fill(renderer, 0xfff48fb1); rr_renderer_set_line_width(renderer, 3.5f);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, -8, -14, 16); rr_renderer_arc(renderer, -8, 14, 16); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+            rr_renderer_set_fill(renderer, 0xff3e2723); rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 4, 0, 10); rr_renderer_fill(renderer); break;
+        case rr_mob_id_dandelion:
+            rr_renderer_set_stroke(renderer, 0xffcfd8dc); rr_renderer_set_fill(renderer, 0xffffffff); rr_renderer_set_line_width(renderer, 5.0f);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 46); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+            rr_renderer_set_fill(renderer, 0xffffd54f); rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 18); rr_renderer_fill(renderer); break;
+        case rr_mob_id_caterpillar:
+            rr_renderer_set_stroke(renderer, 0xff2e7d32); rr_renderer_set_fill(renderer, 0xff81c784); rr_renderer_set_line_width(renderer, 3.5f);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, -18, 0, 14); rr_renderer_arc(renderer, 0, 0, 15); rr_renderer_arc(renderer, 18, 0, 14); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+        case rr_mob_id_earthworm:
+            rr_renderer_set_stroke(renderer, 0xff880e4f); rr_renderer_set_fill(renderer, 0xfff06292); rr_renderer_set_line_width(renderer, 3.5f);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, -16, 4, 12); rr_renderer_arc(renderer, 0, -4, 12); rr_renderer_arc(renderer, 16, 4, 12); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+        case rr_mob_id_cricket:
+            rr_renderer_set_stroke(renderer, 0xff3e2723); rr_renderer_set_fill(renderer, 0xff795548); rr_renderer_set_line_width(renderer, 3.5f);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, -8, 0, 16); rr_renderer_arc(renderer, 10, 0, 12); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+        case rr_mob_id_aphid:
+            rr_renderer_set_stroke(renderer, 0xff558b2f); rr_renderer_set_fill(renderer, 0xffaed581); rr_renderer_set_line_width(renderer, 3.0f);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 14); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+        case rr_mob_id_meadow_centipede:
+            rr_renderer_set_stroke(renderer, 0xffbf360c); rr_renderer_set_fill(renderer, 0xffff7043); rr_renderer_set_line_width(renderer, 4.0f);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, -24, 0, 18); rr_renderer_arc(renderer, 0, 0, 20); rr_renderer_arc(renderer, 24, 0, 18); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
         case rr_mob_id_titanoboa:
         rr_renderer_set_fill(renderer, 0xff2d6a4f); rr_renderer_set_stroke(renderer, 0xff081c15); rr_renderer_set_line_width(renderer, 6.0f);
         rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, -22, 0, 44.0f); rr_renderer_arc(renderer, 22, 0, 38.0f); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);

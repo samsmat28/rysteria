@@ -53,15 +53,15 @@ void rr_component_health_render(EntityIdx entity, struct rr_game *game,
         if (!rr_simulation_has_centipede(simulation, entity) ||
             rr_simulation_get_centipede(simulation, entity)->is_head)
         {
-            length += mob->rarity * 5;
+            length = 75.0f + mob->rarity * 8.0f;
             // mob rarity
-            rr_renderer_translate(renderer, length, 7);
-            rr_renderer_draw_rarity_name(renderer, mob->rarity, 14, -1, 1);
+            rr_renderer_translate(renderer, length, 14);
+            rr_renderer_draw_rarity_name(renderer, mob->rarity, 20, -1, 1);
 
             // mob name
-            rr_renderer_translate(renderer, -2 * length, -14);
-            rr_renderer_draw_mob_name(renderer, mob->id, 12, 1, -1);
-            rr_renderer_translate(renderer, length, 7);
+            rr_renderer_translate(renderer, -2 * length, -28);
+            rr_renderer_draw_mob_name(renderer, mob->id, 22, 1, -1);
+            rr_renderer_translate(renderer, length, 14);
         }
     }
     else if (rr_simulation_has_flower(simulation, entity) &&
@@ -88,7 +88,7 @@ void rr_component_health_render(EntityIdx entity, struct rr_game *game,
     // the health bar
     rr_renderer_set_line_cap(renderer, 1);
     rr_renderer_set_stroke(renderer, 0xff222222);
-    rr_renderer_set_line_width(renderer, 10);
+    rr_renderer_set_line_width(renderer, 16);
     rr_renderer_begin_path(renderer);
     rr_renderer_move_to(renderer, -length, 0);
     rr_renderer_line_to(renderer, length, 0);
@@ -101,7 +101,7 @@ void rr_component_health_render(EntityIdx entity, struct rr_game *game,
         rr_fclamp(10 * health->lerp_prev_health / health->max_health, 0, 1) *
             state.global_alpha);
     rr_renderer_set_stroke(renderer, 0xffdd3434);
-    rr_renderer_set_line_width(renderer, 5);
+    rr_renderer_set_line_width(renderer, 10);
     rr_renderer_begin_path(renderer);
     rr_renderer_move_to(renderer, -length, 0);
     rr_renderer_line_to(

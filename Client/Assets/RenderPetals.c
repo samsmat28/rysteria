@@ -815,8 +815,29 @@ void rr_renderer_draw_petal(struct rr_renderer *renderer, uint8_t id,
         case rr_petal_id_antler:
             rr_renderer_set_stroke(renderer, 0xff260e04); rr_renderer_set_fill(renderer, 0xff6d4c41); rr_renderer_set_line_width(renderer, 3.5f);
             rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 12); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
-        case rr_petal_id_horn:
+        case rr_petal_id_rhino_horn:
             rr_renderer_set_stroke(renderer, 0xff101820); rr_renderer_set_fill(renderer, 0xff546e7a); rr_renderer_set_line_width(renderer, 3.5f);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 12); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+        case rr_petal_id_pollen_cloud:
+            rr_renderer_set_stroke(renderer, 0xfffbc02d); rr_renderer_set_fill(renderer, 0xfffff59d); rr_renderer_set_line_width(renderer, 3);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 11); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+        case rr_petal_id_dandelion_seed:
+            rr_renderer_set_stroke(renderer, 0xffb0bec5); rr_renderer_set_fill(renderer, 0xffffffff); rr_renderer_set_line_width(renderer, 3);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 10); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+        case rr_petal_id_cocoon:
+            rr_renderer_set_stroke(renderer, 0xff558b2f); rr_renderer_set_fill(renderer, 0xffc5e1a5); rr_renderer_set_line_width(renderer, 3.5f);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 12); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+        case rr_petal_id_fertile_soil:
+            rr_renderer_set_stroke(renderer, 0xff3e2723); rr_renderer_set_fill(renderer, 0xff6d4c41); rr_renderer_set_line_width(renderer, 3.5f);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 12); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+        case rr_petal_id_sonic_wing:
+            rr_renderer_set_stroke(renderer, 0xff00838f); rr_renderer_set_fill(renderer, 0xff80deea); rr_renderer_set_line_width(renderer, 3);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 11); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+        case rr_petal_id_honeydew:
+            rr_renderer_set_stroke(renderer, 0xfff57f17); rr_renderer_set_fill(renderer, 0xffffe082); rr_renderer_set_line_width(renderer, 3);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 10); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
+        case rr_petal_id_meadow_segment:
+            rr_renderer_set_stroke(renderer, 0xffbf360c); rr_renderer_set_fill(renderer, 0xffff8a65); rr_renderer_set_line_width(renderer, 3.5f);
             rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, 12); rr_renderer_fill(renderer); rr_renderer_stroke(renderer); break;
         case rr_petal_id_relic: rr_renderer_set_fill(renderer,0xff9d4edd);rr_renderer_set_stroke(renderer,0xff3c096c);rr_renderer_set_line_width(renderer,2.5f);rr_renderer_begin_path(renderer);rr_renderer_move_to(renderer,0,-13);rr_renderer_line_to(renderer,11,0);rr_renderer_line_to(renderer,0,13);rr_renderer_line_to(renderer,-11,0);rr_renderer_fill(renderer);rr_renderer_stroke(renderer);break;
     case rr_petal_id_rock:

@@ -55,9 +55,31 @@ uint8_t get_spawn_id(uint8_t biome, struct rr_maze_grid *zone)
     }
     if (biome == rr_biome_id_plains) {
         float diff = zone ? zone->difficulty : 1.0f; double r = rr_frand();
-        if (diff <= 20.0f) return r < 0.25 ? rr_mob_id_grasshopper : (r < 0.45 ? rr_mob_id_mosquito : (r < 0.65 ? rr_mob_id_snail : (r < 0.85 ? rr_mob_id_pill_bug : rr_mob_id_bumblebee)));
-        if (diff <= 48.0f) return r < 0.20 ? rr_mob_id_wasp : (r < 0.40 ? rr_mob_id_firefly : (r < 0.60 ? rr_mob_id_dragonfly : (r < 0.80 ? rr_mob_id_wolf_spider : rr_mob_id_pill_bug)));
-        return r < 0.20 ? rr_mob_id_stag_beetle : (r < 0.40 ? rr_mob_id_rhino_beetle : (r < 0.62 ? rr_mob_id_mantis : (r < 0.84 ? rr_mob_id_wasp : rr_mob_id_queen_hornet)));
+        if (diff <= 20.0f) {
+            if (r < 0.15) return rr_mob_id_aphid;
+            if (r < 0.30) return rr_mob_id_grasshopper;
+            if (r < 0.44) return rr_mob_id_cricket;
+            if (r < 0.58) return rr_mob_id_butterfly;
+            if (r < 0.72) return rr_mob_id_earthworm;
+            if (r < 0.86) return rr_mob_id_caterpillar;
+            return rr_mob_id_snail;
+        }
+        if (diff <= 48.0f) {
+            if (r < 0.14) return rr_mob_id_mosquito;
+            if (r < 0.28) return rr_mob_id_firefly;
+            if (r < 0.42) return rr_mob_id_wasp;
+            if (r < 0.56) return rr_mob_id_dragonfly;
+            if (r < 0.70) return rr_mob_id_bumblebee;
+            if (r < 0.85) return rr_mob_id_pill_bug;
+            return rr_mob_id_wolf_spider;
+        }
+        if (r < 0.16) return rr_mob_id_mantis;
+        if (r < 0.32) return rr_mob_id_stag_beetle;
+        if (r < 0.48) return rr_mob_id_rhino_beetle;
+        if (r < 0.64) return rr_mob_id_meadow_centipede;
+        if (r < 0.80) return rr_mob_id_wolf_spider;
+        if (r < 0.92) return rr_mob_id_dandelion;
+        return rr_mob_id_queen_hornet;
     }
     if (biome == rr_biome_id_pvp)
     {
