@@ -1872,7 +1872,6 @@ struct rr_leaderboard_sort_entry
     uint8_t client_index;
     uint64_t points;
 };
-#endif
 
 static void server_tick(struct rr_server *this)
 {

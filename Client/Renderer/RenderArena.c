@@ -61,8 +61,33 @@ void render_background(struct rr_component_player_info *player_info,
                                   currY + GRID_SIZE / 2);
             rr_renderer_scale(renderer, (GRID_SIZE + 2) / 256);
                    if (this->selected_biome == rr_biome_id_garden || this->selected_biome == rr_biome_id_nether || this->selected_biome == rr_biome_id_ocean || this->selected_biome == rr_biome_id_plains) {
-            uint32_t bg = (this->selected_biome == rr_biome_id_garden) ? 0xff2c333d : ((this->selected_biome == rr_biome_id_nether) ? 0xff3b1414 : ((this->selected_biome == rr_biome_id_ocean) ? 0xff154360 : 0xff3e8e41));
+            uint32_t bg = (this->selected_biome == rr_biome_id_garden) ? 0xff2c333d : ((this->selected_biome == rr_biome_id_nether) ? 0xff3b1414 : ((this->selected_biome == rr_biome_id_ocean) ? 0xff2685a8 : 0xff3e8e41));
             rr_renderer_set_fill(renderer, bg); rr_renderer_begin_path(renderer); rr_renderer_rect(renderer, -128, -128, 256, 256); rr_renderer_fill(renderer);
+        }
+        if (this->selected_biome == rr_biome_id_ocean)
+        {
+            uint32_t h = rr_get_hash(((uint32_t)((newLeftX + 8192) / GRID_SIZE) * 73856093u) ^ ((uint32_t)((currY + 8192) / GRID_SIZE) * 19349663u));
+            rr_renderer_set_fill(renderer, 0xff2685a8);
+            rr_renderer_begin_path(renderer);
+            rr_renderer_rect(renderer, -128, -128, 256, 256);
+            rr_renderer_fill(renderer);
+            rr_renderer_set_fill(renderer, 0xff1e7091);
+            for (int i = 0; i < 4; i++) {
+                uint32_t sh = rr_get_hash(h + (uint32_t)(i * 101));
+                float px = (float)((int)(sh % 210) - 105);
+                float py = (float)((int)((sh >> 8) % 210) - 105);
+                rr_renderer_begin_path(renderer);
+                rr_renderer_arc(renderer, px, py, 2.2f + (float)((sh >> 16) % 3));
+                rr_renderer_fill(renderer);
+            }
+            if ((h % 100) < 45) {
+                float sx = (float)((int)((h >> 4) % 170) - 85);
+                float sy = (float)((int)((h >> 12) % 170) - 85);
+                rr_renderer_set_fill(renderer, 0xff47a8bd);
+                rr_renderer_begin_path(renderer);
+                rr_renderer_arc(renderer, sx, sy, 4.0f + (float)((h >> 20) % 4));
+                rr_renderer_fill(renderer);
+            }
         }
         if (this->selected_biome == rr_biome_id_pvp)
         {
@@ -280,9 +305,9 @@ void render_background(struct rr_component_player_info *player_info,
     float grid_size = RR_MAZES[arena->biome].grid_size;
     uint32_t maze_dim = RR_MAZES[arena->biome].maze_dim;
     struct rr_maze_grid *grid = RR_MAZES[arena->biome].maze;
-       uint32_t wall_color = (arena->biome == rr_biome_id_garden) ? 0xff3b4048 : ((arena->biome == rr_biome_id_pvp) ? 0xff1c0e06 : (arena->biome == rr_biome_id_plains ? 0xff6e4a2e : 0xff000000));
+       uint32_t wall_color = (arena->biome == rr_biome_id_ocean) ? 0xff0d354d : ((arena->biome == rr_biome_id_garden) ? 0xff3b4048 : ((arena->biome == rr_biome_id_pvp) ? 0xff1c0e06 : (arena->biome == rr_biome_id_plains ? 0xff6e4a2e : 0xff000000)));
     rr_renderer_set_fill(renderer, wall_color);
-    rr_renderer_set_global_alpha(renderer, (arena->biome == rr_biome_id_pvp || arena->biome == rr_biome_id_plains || arena->biome == rr_biome_id_garden) ? 1.0f : 0.5f);
+    rr_renderer_set_global_alpha(renderer, (arena->biome == rr_biome_id_pvp || arena->biome == rr_biome_id_plains || arena->biome == rr_biome_id_garden || arena->biome == rr_biome_id_ocean) ? 1.0f : 0.5f);
     int32_t nx = floorf(leftX / grid_size);
     int32_t ny = floorf(topY / grid_size);
     for (; nx < rightX / grid_size; ++nx)
