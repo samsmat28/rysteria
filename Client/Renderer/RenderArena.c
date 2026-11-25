@@ -61,7 +61,7 @@ void render_background(struct rr_component_player_info *player_info,
                                   currY + GRID_SIZE / 2);
             rr_renderer_scale(renderer, (GRID_SIZE + 2) / 256);
                    if (this->selected_biome == rr_biome_id_garden || this->selected_biome == rr_biome_id_nether || this->selected_biome == rr_biome_id_ocean || this->selected_biome == rr_biome_id_plains) {
-            uint32_t bg = (this->selected_biome == rr_biome_id_nether) ? 0xff3b1414 : ((this->selected_biome == rr_biome_id_ocean) ? 0xff154360 : 0xff3e8e41);
+            uint32_t bg = (this->selected_biome == rr_biome_id_garden) ? 0xff2c333d : ((this->selected_biome == rr_biome_id_nether) ? 0xff3b1414 : ((this->selected_biome == rr_biome_id_ocean) ? 0xff154360 : 0xff3e8e41));
             rr_renderer_set_fill(renderer, bg); rr_renderer_begin_path(renderer); rr_renderer_rect(renderer, -128, -128, 256, 256); rr_renderer_fill(renderer);
         }
         if (this->selected_biome == rr_biome_id_pvp)
@@ -293,10 +293,7 @@ void render_background(struct rr_component_player_info *player_info,
                 (nx < 0 || currY < 0 || nx >= maze_dim || currY >= maze_dim)
                     ? 0
                     : grid[currY * maze_dim + nx].value;
-            if (arena->biome == rr_biome_id_garden && tile == 1) {
-            rr_renderer_set_fill(renderer, (nx < 160) ? 0xff2e323b : 0xff2f6b32);
-            rr_renderer_fill_rect(renderer, nx * grid_size, currY * grid_size, grid_size + 1.0f, grid_size + 1.0f);
-        }
+            
         if (tile != 1)
             {
                 rr_renderer_begin_path(renderer);
@@ -614,7 +611,7 @@ void rr_component_arena_render(EntityIdx entity, struct rr_game *this,
         rr_renderer_stroke(this->renderer);
     }
     if (arena->biome == rr_biome_id_garden) {
-        float bx = 138.0f * 2.0f * 2048.0f, by = 80.0f * 2.0f * 2048.0f;
+        float bx = 74.0f * 2.0f * 2048.0f, by = 40.0f * 2.0f * 2048.0f;
         rr_renderer_set_fill(this->renderer, 0xff42474f);
         rr_renderer_begin_path(this->renderer); rr_renderer_arc(this->renderer, bx, by, 240.0f); rr_renderer_fill(this->renderer);
         rr_renderer_set_fill(this->renderer, 0xffe62e2e); rr_renderer_set_stroke(this->renderer, 0xffff9999); rr_renderer_set_line_width(this->renderer, 16.0f);

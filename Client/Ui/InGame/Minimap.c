@@ -111,12 +111,6 @@ static void minimap_on_render(struct rr_ui_element *this, struct rr_game *game)
     rr_renderer_draw_image(renderer, &minimap);
     rr_renderer_scale(renderer, minimap.width / this->abs_width);
     rr_renderer_set_line_width(renderer, 2);
-    if (arena->biome == rr_biome_id_garden) {
-        rr_renderer_set_fill(renderer, 0xffef4444);
-        rr_renderer_begin_path(renderer);
-        rr_renderer_arc(renderer, this->abs_width * (57.0f / 64.0f - 0.5f), this->abs_height * (32.0f / 64.0f - 0.5f), 4.5f);
-        rr_renderer_fill(renderer);
-    }
     if (arena->biome == rr_biome_id_pvp)
     {
         rr_renderer_set_fill(renderer, 0xffff0000);

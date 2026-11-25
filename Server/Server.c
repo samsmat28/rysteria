@@ -394,6 +394,9 @@ void rr_server_init(struct rr_server *this)
 #ifndef RIVET_BUILD
     // RR_GLOBAL_BIOME = rr_biome_id_garden;
 #endif
+#if defined(JAIL) || defined(ESCAPE)
+    RR_GLOBAL_BIOME = rr_biome_id_garden;
+#endif
 #ifdef PVP
     RR_GLOBAL_BIOME = rr_biome_id_pvp;
 #endif
@@ -1864,8 +1867,6 @@ void *thread_func(void *arg)
 }
 
 static void lws_log(int level, char const *log) { printf("%d %s", level, log); }
-
-#ifdef PVP
 struct rr_leaderboard_sort_entry
 {
     uint8_t client_index;
@@ -1879,6 +1880,9 @@ static void server_tick(struct rr_server *this)
         return;
     rr_simulation_tick(&this->simulation);
 
+#if defined(JAIL) || defined(ESCAPE)
+    RR_GLOBAL_BIOME = rr_biome_id_garden;
+#endif
 #ifdef PVP
     uint8_t lb_top_n = 0;
     struct rr_leaderboard_sort_entry lb_sorted[RR_MAX_CLIENT_COUNT];
@@ -2280,6 +2284,9 @@ static void server_tick(struct rr_server *this)
             }
             rr_server_client_write_message(client, encoder.start,
                                            encoder.current - encoder.start);
+#if defined(JAIL) || defined(ESCAPE)
+    RR_GLOBAL_BIOME = rr_biome_id_garden;
+#endif
 #ifdef PVP
             struct proto_bug lb_encoder;
             proto_bug_init(&lb_encoder, outgoing_message);
