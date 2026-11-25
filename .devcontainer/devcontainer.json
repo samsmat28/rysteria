@@ -6,7 +6,8 @@
         "Client": "cmake -S Client -B Client/build -DWASM_BUILD=1",
         "Default Server": "cmake -S Server -B Server/build-default",
         "PvP Server": "cmake -S Server -B Server/build-pvp -DPVP=1",
-        "Master Server": "npm install --prefix MasterServer"
+        "Master Server": "npm install --prefix MasterServer",
+        "Plains Server": "cmake -S Server -B Server/build-plains -DPLAINS=1"
     },
     "portsAttributes": {
         "8080": {

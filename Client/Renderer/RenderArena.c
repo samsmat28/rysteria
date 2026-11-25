@@ -280,7 +280,7 @@ void render_background(struct rr_component_player_info *player_info,
     float grid_size = RR_MAZES[arena->biome].grid_size;
     uint32_t maze_dim = RR_MAZES[arena->biome].maze_dim;
     struct rr_maze_grid *grid = RR_MAZES[arena->biome].maze;
-       uint32_t wall_color = (arena->biome == rr_biome_id_pvp) ? 0xff1c0e06 : 0xff000000;
+       uint32_t wall_color = (arena->biome == rr_biome_id_pvp) ? 0xff1c0e06 : (arena->biome == rr_biome_id_plains ? 0xff123814 : 0xff000000);
     rr_renderer_set_fill(renderer, wall_color);
     rr_renderer_set_global_alpha(renderer, (arena->biome == rr_biome_id_pvp) ? 0.88f : 0.5f);
     int32_t nx = floorf(leftX / grid_size);

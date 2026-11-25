@@ -49,8 +49,8 @@ static uint8_t previous_biome = 255;
                         (renderer)->state.filter.amount =                      \
                             (difficulty >= 4 && difficulty <= 8) ||            \
                             difficulty == 12 ? 0.3 : 0.5;                      \
-                    rr_renderer_set_fill(                                      \
-                        renderer, RR_RARITY_COLORS[difficulty / 2]);           \
+                    rr_renderer_set_fill( \
+                        renderer, RR_RARITY_COLORS[difficulty / 2]); \
                     rr_renderer_begin_path(renderer);                          \
                     rr_renderer_fill_rect(renderer, x *s, y *s, s, s);         \
                 }                                                              \
@@ -74,8 +74,8 @@ static uint8_t previous_biome = 255;
                         (renderer)->state.filter.amount =                      \
                             (difficulty >= 4 && difficulty <= 8) ||            \
                             difficulty == 12 ? 0.3 : 0.5;                      \
-                    rr_renderer_set_fill(                                      \
-                        renderer, RR_RARITY_COLORS[difficulty / 2]);           \
+                    rr_renderer_set_fill( \
+                        renderer, RR_RARITY_COLORS[difficulty / 2]); \
                     rr_renderer_begin_path(renderer);                          \
                     rr_renderer_move_to(renderer, (x + inverse ^ left) * s,    \
                                         (y + inverse ^ top) * s);              \
@@ -104,7 +104,7 @@ static void minimap_on_render(struct rr_ui_element *this, struct rr_game *game)
         rr_simulation_get_arena(game->simulation, game->player_info->arena);
     float grid_size = RR_MAZES[arena->biome].grid_size;
     uint32_t maze_dim = RR_MAZES[arena->biome].maze_dim;
-    struct rr_maze_grid *grid = RR_MAZES[arena->biome].maze;
+        struct rr_maze_grid *grid = RR_MAZES[arena->biome].maze;
     DRAW_MINIMAP(&minimap, grid);
     rr_renderer_scale(renderer, renderer->scale);
     rr_renderer_scale(renderer, this->abs_width / minimap.width);

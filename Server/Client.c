@@ -69,11 +69,11 @@ void rr_server_client_create_flower(struct rr_server_client *this)
     uint8_t checkpoint = this->checkpoint[RR_GLOBAL_BIOME];
     rr_component_physical_set_x(
         physical,
-        2 * decl->grid_size * (decl->checkpoints[checkpoint].spawn_x +
+        2 * decl->grid_size * (((RR_GLOBAL_BIOME == rr_biome_id_plains) ? 11.0f : decl->checkpoints[checkpoint].spawn_x) +
                                rr_frand()));
     rr_component_physical_set_y(
         physical,
-        2 * decl->grid_size * (decl->checkpoints[checkpoint].spawn_y +
+        2 * decl->grid_size * (((RR_GLOBAL_BIOME == rr_biome_id_plains) ? 11.0f : decl->checkpoints[checkpoint].spawn_y) +
                                rr_frand()));
     struct rr_binary_encoder encoder;
     rr_binary_encoder_init(&encoder, outgoing_message);

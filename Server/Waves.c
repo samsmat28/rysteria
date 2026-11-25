@@ -54,10 +54,28 @@ uint8_t get_spawn_id(uint8_t biome, struct rr_maze_grid *zone)
         return r < 0.60 ? rr_mob_id_mosasaurus : rr_mob_id_quetzalcoatlus;
     }
     if (biome == rr_biome_id_plains) {
-        float diff = zone ? zone->difficulty : 1.0f; double r = rr_frand();
-        if (diff <= 20.0f) return r < 0.35 ? rr_mob_id_ladybug : (r < 0.65 ? rr_mob_id_honeybee : (r < 0.85 ? rr_mob_id_fern : rr_mob_id_tree));
-        if (diff <= 48.0f) return r < 0.30 ? rr_mob_id_hornet : (r < 0.55 ? rr_mob_id_fat_bee : (r < 0.80 ? rr_mob_id_triceratops : rr_mob_id_stegosaurus));
-        return r < 0.45 ? rr_mob_id_brachiosaurus : (r < 0.80 ? rr_mob_id_ankylosaurus : rr_mob_id_beehive);
+        float diff = zone ? zone->difficulty : 1.0f;
+        double r = rr_frand();
+        if (diff <= 20.0f) {
+            if (r < 0.35) return rr_mob_id_ladybug;
+            if (r < 0.65) return rr_mob_id_honeybee;
+            if (r < 0.85) return rr_mob_id_worker_ant;
+            return rr_mob_id_spider;
+        }
+        if (diff <= 48.0f) {
+            if (r < 0.25) return rr_mob_id_ladybug;
+            if (r < 0.50) return rr_mob_id_honeybee;
+            if (r < 0.72) return rr_mob_id_hornet;
+            if (r < 0.88) return rr_mob_id_spider;
+            return rr_mob_id_soldier_ant;
+        }
+        if (r < 0.20) return rr_mob_id_ladybug;
+        if (r < 0.38) return rr_mob_id_honeybee;
+        if (r < 0.58) return rr_mob_id_hornet;
+        if (r < 0.76) return rr_mob_id_spider;
+        if (r < 0.90) return rr_mob_id_soldier_ant;
+        if (r < 0.96) return rr_mob_id_ant_egg;
+        return rr_mob_id_queen_ant;
     }
     if (biome == rr_biome_id_pvp)
     {
