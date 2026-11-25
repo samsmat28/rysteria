@@ -1245,7 +1245,7 @@ struct rr_maze_declaration RR_MAZES[rr_biome_id_max] = {
     {MAZE_ENTRY(PLAINS, 2048), 6, {{97,19,6,6,100,22,15},{57,57,6,6,60,60,30},{19,97,6,6,22,100,45},{135,57,6,6,138,60,60},{97,97,6,6,100,100,75},{57,135,6,6,60,138,90}}},
 };
 
-struct rr_biome_server RR_BIOME_SERVERS[rr_biome_id_max] = {{"default",1234,"hc"},{"pvp",1235,"ant"},{NULL,0,NULL},{NULL,0,NULL},{NULL,0,NULL},{NULL,0,NULL},{"plains",1236,"pln"}};
+struct rr_biome_server RR_BIOME_SERVERS[rr_biome_id_max] = {{"default",1234,"hc"},{"pvp",1235,"ant"},{"jail",1237,"jail"},{NULL,0,NULL},{NULL,0,NULL},{NULL,0,NULL},{"plains",1236,"pln"}};
 
 uint8_t RR_GLOBAL_BIOME = rr_biome_id_hell_creek;
 

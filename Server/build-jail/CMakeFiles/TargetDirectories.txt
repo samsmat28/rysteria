@@ -1,0 +1,3 @@
+/workspaces/rysteria/Server/build-jail/CMakeFiles/rrolf-server.dir
+/workspaces/rysteria/Server/build-jail/CMakeFiles/edit_cache.dir
+/workspaces/rysteria/Server/build-jail/CMakeFiles/rebuild_cache.dir
