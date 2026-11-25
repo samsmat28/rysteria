@@ -35,7 +35,7 @@ static uint8_t previous_biome = 255;
     if (arena->biome != previous_biome)                                        \
     {                                                                          \
         previous_biome = arena->biome;                                         \
-        float s = floorf(this->abs_width / maze_dim);                          \
+        float s = this->abs_width / (float)maze_dim;                          \
         rr_renderer_set_dimensions(renderer, s *maze_dim, s *maze_dim);        \
         (renderer)->state.filter.color = 0xffffffff;                           \
         for (int32_t x = 0; x < maze_dim; ++x)                                 \
@@ -111,6 +111,12 @@ static void minimap_on_render(struct rr_ui_element *this, struct rr_game *game)
     rr_renderer_draw_image(renderer, &minimap);
     rr_renderer_scale(renderer, minimap.width / this->abs_width);
     rr_renderer_set_line_width(renderer, 2);
+    if (arena->biome == rr_biome_id_garden) {
+        rr_renderer_set_fill(renderer, 0xffef4444);
+        rr_renderer_begin_path(renderer);
+        rr_renderer_arc(renderer, this->abs_width * (57.0f / 64.0f - 0.5f), this->abs_height * (32.0f / 64.0f - 0.5f), 4.5f);
+        rr_renderer_fill(renderer);
+    }
     if (arena->biome == rr_biome_id_pvp)
     {
         rr_renderer_set_fill(renderer, 0xffff0000);
@@ -147,7 +153,7 @@ static void minimap_on_render(struct rr_ui_element *this, struct rr_game *game)
     renderer->state.filter.amount = 0.2;
     rr_renderer_set_stroke(renderer, 0xffff00ff);
     renderer->state.filter.amount = 0;
-    if (arena->biome == rr_biome_id_plains) {
+    if ((arena->biome == rr_biome_id_plains || arena->biome == rr_biome_id_garden) || arena->biome == rr_biome_id_garden) {
         struct rr_maze_declaration const *mdecl = &RR_MAZES[arena->biome];
         for (uint32_t ci = 0; ci < mdecl->checkpoint_count; ++ci) {
             float mx = this->abs_width * (mdecl->checkpoints[ci].spawn_x / 160.0f - 0.5f);

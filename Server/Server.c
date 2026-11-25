@@ -1994,6 +1994,43 @@ static void server_tick(struct rr_server *this)
                 client->play_seconds++;
 
             uint64_t now_s = (uint64_t)time(NULL);
+
+#ifdef ESCAPE
+            {
+                static uint64_t last_police_spawn = 0;
+                static uint64_t red_btn_cd = 0;
+                if (now_s - last_police_spawn >= 8 && client->player_info) {
+                    last_police_spawn = now_s;
+                    float pts[6][2] = {{58*4096.f,76*4096.f},{58*4096.f,84*4096.f},{82*4096.f,76*4096.f},{82*4096.f,84*4096.f},{132*4096.f,76*4096.f},{132*4096.f,84*4096.f}};
+                    for (int k = 0; k < 6; k++) {
+                        rr_simulation_alloc_mob(&this->simulation, client->player_info->arena, pts[k][0], pts[k][1], (k % 2 == 0) ? rr_mob_id_hornet : rr_mob_id_rock, rr_rarity_id_rare, rr_simulation_team_id_mobs);
+                    }
+                }
+                if (client->player_info && client->player_info->flower_id != RR_NULL_ENTITY) {
+                    struct rr_component_physical *fp = rr_simulation_get_physical(&this->simulation, client->player_info->flower_id);
+                    if (fp) {
+                        float dx = fp->x - 138.0f * 4096.0f, dy = fp->y - 80.0f * 4096.0f;
+                        if (dx * dx + dy * dy < 150.0f * 150.0f && now_s >= red_btn_cd) {
+                            red_btn_cd = now_s + 25;
+                            client->jail_until = 0;
+                            rr_jail_save(client->ip_address, client->logged_user, 0);
+                            struct rr_squad_member *ms = rr_squad_get_client_slot(this, client);
+                            for (uint32_t i = 0; i < RR_MAX_CLIENT_COUNT; ++i) {
+                                if (!rr_bitset_get(this->clients_in_use, i) || !this->clients[i].player_info) continue;
+                                if (this->simulation.animation_length < (sizeof(this->simulation.animations) / sizeof(this->simulation.animations[0]))) {
+                                    struct rr_simulation_animation *an = &this->simulation.animations[this->simulation.animation_length++];
+                                    memset(an, 0, sizeof(*an)); an->type = rr_animation_type_chat; an->owner = this->clients[i].player_info->parent_id;
+                                    strcpy(an->name, "[RIOT ALARM]"); snprintf(an->message, 64, "%s hit the RED BUTTON! ESCAPE!", ms ? ms->nickname : "Prisoner");
+                                }
+                            }
+                            for (int k = 0; k < 6; k++)
+                                rr_simulation_alloc_mob(&this->simulation, client->player_info->arena, (133 + k) * 4096.0f, (76 + (k % 3) * 4) * 4096.0f, rr_mob_id_hornet, rr_rarity_id_epic, rr_simulation_team_id_mobs);
+                        }
+                    }
+                }
+            }
+#endif
+
             if (client->jail_until == 0) {
                 uint64_t su = rr_jail_load(client->ip_address, client->logged_user);
                 if (su > now_s) client->jail_until = su;
@@ -2068,6 +2105,43 @@ static void server_tick(struct rr_server *this)
                 client->play_seconds++;
 
             uint64_t now_s = (uint64_t)time(NULL);
+
+#ifdef ESCAPE
+            {
+                static uint64_t last_police_spawn = 0;
+                static uint64_t red_btn_cd = 0;
+                if (now_s - last_police_spawn >= 8 && client->player_info) {
+                    last_police_spawn = now_s;
+                    float pts[6][2] = {{58*4096.f,76*4096.f},{58*4096.f,84*4096.f},{82*4096.f,76*4096.f},{82*4096.f,84*4096.f},{132*4096.f,76*4096.f},{132*4096.f,84*4096.f}};
+                    for (int k = 0; k < 6; k++) {
+                        rr_simulation_alloc_mob(&this->simulation, client->player_info->arena, pts[k][0], pts[k][1], (k % 2 == 0) ? rr_mob_id_hornet : rr_mob_id_rock, rr_rarity_id_rare, rr_simulation_team_id_mobs);
+                    }
+                }
+                if (client->player_info && client->player_info->flower_id != RR_NULL_ENTITY) {
+                    struct rr_component_physical *fp = rr_simulation_get_physical(&this->simulation, client->player_info->flower_id);
+                    if (fp) {
+                        float dx = fp->x - 138.0f * 4096.0f, dy = fp->y - 80.0f * 4096.0f;
+                        if (dx * dx + dy * dy < 150.0f * 150.0f && now_s >= red_btn_cd) {
+                            red_btn_cd = now_s + 25;
+                            client->jail_until = 0;
+                            rr_jail_save(client->ip_address, client->logged_user, 0);
+                            struct rr_squad_member *ms = rr_squad_get_client_slot(this, client);
+                            for (uint32_t i = 0; i < RR_MAX_CLIENT_COUNT; ++i) {
+                                if (!rr_bitset_get(this->clients_in_use, i) || !this->clients[i].player_info) continue;
+                                if (this->simulation.animation_length < (sizeof(this->simulation.animations) / sizeof(this->simulation.animations[0]))) {
+                                    struct rr_simulation_animation *an = &this->simulation.animations[this->simulation.animation_length++];
+                                    memset(an, 0, sizeof(*an)); an->type = rr_animation_type_chat; an->owner = this->clients[i].player_info->parent_id;
+                                    strcpy(an->name, "[RIOT ALARM]"); snprintf(an->message, 64, "%s hit the RED BUTTON! ESCAPE!", ms ? ms->nickname : "Prisoner");
+                                }
+                            }
+                            for (int k = 0; k < 6; k++)
+                                rr_simulation_alloc_mob(&this->simulation, client->player_info->arena, (133 + k) * 4096.0f, (76 + (k % 3) * 4) * 4096.0f, rr_mob_id_hornet, rr_rarity_id_epic, rr_simulation_team_id_mobs);
+                        }
+                    }
+                }
+            }
+#endif
+
             if (client->jail_until == 0) {
                 uint64_t su = rr_jail_load(client->ip_address, client->logged_user);
                 if (su > now_s) client->jail_until = su;

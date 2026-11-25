@@ -32,6 +32,57 @@ void rr_component_mob_render(EntityIdx entity, struct rr_game *game,
     struct rr_component_physical *physical =
         rr_simulation_get_physical(simulation, entity);
     struct rr_component_mob *mob = rr_simulation_get_mob(simulation, entity);
+        struct rr_component_physical *j_phys = physical;
+    struct rr_component_arena *j_arena = j_phys ? rr_simulation_get_arena(simulation, game->player_info ? game->player_info->arena : RR_NULL_ENTITY) : NULL;
+    if (j_arena && j_arena->biome == rr_biome_id_garden && j_phys) {
+        float r = j_phys->radius > 10.0f ? j_phys->radius : 32.0f;
+        struct rr_renderer_context_state jst;
+        rr_renderer_context_state_init(renderer, &jst);
+        rr_renderer_translate(renderer, j_phys->x, j_phys->y);
+        bool is_cage = (mob->id == rr_mob_id_rock || mob->id == rr_mob_id_mantis || mob->id == rr_mob_id_ladybug || mob->id == rr_mob_id_dandelion);
+        if (is_cage) {
+            rr_renderer_set_fill(renderer, 0xff22252a);
+            rr_renderer_set_stroke(renderer, 0xff6b7280);
+            rr_renderer_set_line_width(renderer, 6.0f);
+            rr_renderer_fill_rect(renderer, -r, -r, r * 2.0f, r * 2.0f);
+            rr_renderer_stroke_rect(renderer, -r, -r, r * 2.0f, r * 2.0f);
+            rr_renderer_set_stroke(renderer, 0xff9ca3af);
+            rr_renderer_set_line_width(renderer, 4.0f);
+            for (float bx = -r * 0.6f; bx <= r * 0.65f; bx += r * 0.4f) {
+                rr_renderer_begin_path(renderer);
+                rr_renderer_move_to(renderer, bx, -r);
+                rr_renderer_line_to(renderer, bx, r);
+                rr_renderer_stroke(renderer);
+            }
+            rr_renderer_set_fill(renderer, 0xffef4444);
+            rr_renderer_begin_path(renderer);
+            rr_renderer_arc(renderer, 0.0f, 0.0f, r * 0.25f);
+            rr_renderer_fill(renderer);
+        } else {
+            rr_renderer_rotate(renderer, j_phys->angle);
+            rr_renderer_set_fill(renderer, 0xff111827);
+            rr_renderer_fill_rect(renderer, -r * 0.9f, -r * 0.85f, r * 0.5f, r * 0.25f);
+            rr_renderer_fill_rect(renderer, r * 0.4f, -r * 0.85f, r * 0.5f, r * 0.25f);
+            rr_renderer_fill_rect(renderer, -r * 0.9f, r * 0.6f, r * 0.5f, r * 0.25f);
+            rr_renderer_fill_rect(renderer, r * 0.4f, r * 0.6f, r * 0.5f, r * 0.25f);
+            rr_renderer_set_fill(renderer, 0xff1d4ed8);
+            rr_renderer_set_stroke(renderer, 0xff0f172a);
+            rr_renderer_set_line_width(renderer, 4.0f);
+            rr_renderer_fill_rect(renderer, -r * 1.25f, -r * 0.68f, r * 2.5f, r * 1.36f);
+            rr_renderer_stroke_rect(renderer, -r * 1.25f, -r * 0.68f, r * 2.5f, r * 1.36f);
+            rr_renderer_set_fill(renderer, 0xfff8fafc);
+            rr_renderer_fill_rect(renderer, -r * 0.55f, -r * 0.62f, r * 1.1f, r * 1.24f);
+            int blink = ((int)(j_phys->x + j_phys->y) / 40) & 1;
+            rr_renderer_set_fill(renderer, blink ? 0xffef4444 : 0xff3b82f6);
+            rr_renderer_fill_rect(renderer, -r * 0.18f, -r * 0.45f, r * 0.36f, r * 0.42f);
+            rr_renderer_set_fill(renderer, blink ? 0xff3b82f6 : 0xffef4444);
+            rr_renderer_fill_rect(renderer, -r * 0.18f, r * 0.03f, r * 0.36f, r * 0.42f);
+        }
+        rr_renderer_context_state_free(renderer, &jst);
+        return;
+    }
+
+
     uint8_t is_friendly =
         mob->player_spawned &&
         game->player_info != NULL &&

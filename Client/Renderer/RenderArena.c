@@ -280,9 +280,9 @@ void render_background(struct rr_component_player_info *player_info,
     float grid_size = RR_MAZES[arena->biome].grid_size;
     uint32_t maze_dim = RR_MAZES[arena->biome].maze_dim;
     struct rr_maze_grid *grid = RR_MAZES[arena->biome].maze;
-       uint32_t wall_color = (arena->biome == rr_biome_id_pvp) ? 0xff1c0e06 : (arena->biome == rr_biome_id_plains ? 0xff6e4a2e : 0xff000000);
+       uint32_t wall_color = (arena->biome == rr_biome_id_garden) ? 0xff3b4048 : ((arena->biome == rr_biome_id_pvp) ? 0xff1c0e06 : (arena->biome == rr_biome_id_plains ? 0xff6e4a2e : 0xff000000));
     rr_renderer_set_fill(renderer, wall_color);
-    rr_renderer_set_global_alpha(renderer, (arena->biome == rr_biome_id_pvp || arena->biome == rr_biome_id_plains) ? 1.0f : 0.5f);
+    rr_renderer_set_global_alpha(renderer, (arena->biome == rr_biome_id_pvp || arena->biome == rr_biome_id_plains || arena->biome == rr_biome_id_garden) ? 1.0f : 0.5f);
     int32_t nx = floorf(leftX / grid_size);
     int32_t ny = floorf(topY / grid_size);
     for (; nx < rightX / grid_size; ++nx)
@@ -293,7 +293,11 @@ void render_background(struct rr_component_player_info *player_info,
                 (nx < 0 || currY < 0 || nx >= maze_dim || currY >= maze_dim)
                     ? 0
                     : grid[currY * maze_dim + nx].value;
-            if (tile != 1)
+            if (arena->biome == rr_biome_id_garden && tile == 1) {
+            rr_renderer_set_fill(renderer, (nx < 160) ? 0xff2e323b : 0xff2f6b32);
+            rr_renderer_fill_rect(renderer, nx * grid_size, currY * grid_size, grid_size + 1.0f, grid_size + 1.0f);
+        }
+        if (tile != 1)
             {
                 rr_renderer_begin_path(renderer);
                 if (tile == 0) {
@@ -608,6 +612,13 @@ void rr_component_arena_render(EntityIdx entity, struct rr_game *this,
         rr_renderer_line_to(this->renderer, -18320.0f, -17760.0f);
         rr_renderer_line_to(this->renderer, -18320.0f, -18240.0f);
         rr_renderer_stroke(this->renderer);
+    }
+    if (arena->biome == rr_biome_id_garden) {
+        float bx = 138.0f * 2.0f * 2048.0f, by = 80.0f * 2.0f * 2048.0f;
+        rr_renderer_set_fill(this->renderer, 0xff42474f);
+        rr_renderer_begin_path(this->renderer); rr_renderer_arc(this->renderer, bx, by, 240.0f); rr_renderer_fill(this->renderer);
+        rr_renderer_set_fill(this->renderer, 0xffe62e2e); rr_renderer_set_stroke(this->renderer, 0xffff9999); rr_renderer_set_line_width(this->renderer, 16.0f);
+        rr_renderer_begin_path(this->renderer); rr_renderer_arc(this->renderer, bx, by, 160.0f); rr_renderer_fill(this->renderer); rr_renderer_stroke(this->renderer);
     }
     rr_renderer_context_state_free(this->renderer, &state2);
 }
