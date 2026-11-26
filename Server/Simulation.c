@@ -383,6 +383,7 @@ static int tick_grid(struct rr_simulation *this, struct rr_maze_grid *grid,
     float spawn_at = base_modifier * difficulty_modifier * overload_modifier /
                      (player_modifier);
     spawn_at *= (RR_GLOBAL_BIOME == rr_biome_id_ocean) ? 4.4f : 2.2f;
+    spawn_at /= 3.0f;
     if (grid->player_count == 0)
     {
         grid->overload_factor =

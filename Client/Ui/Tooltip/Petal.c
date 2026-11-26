@@ -112,7 +112,7 @@ static void get_pickup_range(struct rr_ui_element *this, struct rr_game *game)
 static void get_speed_increase(struct rr_ui_element *this, struct rr_game *game)
 {
     calculate_diminish_factor
-    sprintf(extra, "%.1f%%", (5 + 2.5f * rarity) * diminish_factor);
+    sprintf(extra, "%.1f%%", (50 + 25.0f * rarity) * diminish_factor);
 }
 
 static void get_damage_reduction(struct rr_ui_element *this,
