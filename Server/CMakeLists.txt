@@ -72,7 +72,8 @@ set(SRCS
 )
 
 set(CMAKE_C_COMPILER "clang")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DRR_SERVER=1 -Wno-excess-initializers")
+add_compile_definitions(RR_SERVER=1)
+add_compile_options(-Wno-excess-initializers)
 
 # release by default
 if(DEBUG_BUILD)

@@ -382,7 +382,7 @@ static int tick_grid(struct rr_simulation *this, struct rr_maze_grid *grid,
     float base_modifier = (max_points) / (max_points - grid->grid_points);
     float spawn_at = base_modifier * difficulty_modifier * overload_modifier /
                      (player_modifier);
-    spawn_at *= 2.2f;
+    spawn_at *= (RR_GLOBAL_BIOME == rr_biome_id_ocean) ? 4.4f : 2.2f;
     if (grid->player_count == 0)
     {
         grid->overload_factor =
@@ -391,7 +391,7 @@ static int tick_grid(struct rr_simulation *this, struct rr_maze_grid *grid,
     }
     else if (grid->spawn_timer >= spawn_at)
     {
-        if (RR_GLOBAL_BIOME != rr_biome_id_ocean) spawn_mob(this, grid_x, grid_y);
+        spawn_mob(this, grid_x, grid_y);
         return 1;
     }
     else

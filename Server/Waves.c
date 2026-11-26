@@ -48,10 +48,59 @@ uint8_t get_spawn_id(uint8_t biome, struct rr_maze_grid *zone)
         return r < 0.35 ? rr_mob_id_volcano : (r < 0.68 ? rr_mob_id_titanoboa : rr_mob_id_meteor);
     }
     if (biome == rr_biome_id_ocean) {
-        float diff = zone ? zone->difficulty : 1.0f; double r = rr_frand();
-        if (diff <= 20.0f) return r < 0.40 ? rr_mob_id_dragonfly : (r < 0.75 ? rr_mob_id_compsognathus : rr_mob_id_fern);
-        if (diff <= 48.0f) return r < 0.45 ? rr_mob_id_spinosaurus : (r < 0.80 ? rr_mob_id_pteranodon : rr_mob_id_dilophosaurus);
-        return r < 0.60 ? rr_mob_id_mosasaurus : rr_mob_id_quetzalcoatlus;
+        float difficulty = zone ? zone->difficulty : 1.0f; double r = rr_frand();
+        if (difficulty <= 10.0f) {
+            if (r < 0.14f) return rr_mob_id_bubble;
+            if (r < 0.29f) return rr_mob_id_crab;
+            if (r < 0.43f) return rr_mob_id_jellyfish;
+            if (r < 0.57f) return rr_mob_id_starfish;
+            if (r < 0.71f) return rr_mob_id_shell;
+            if (r < 0.86f) return rr_mob_id_clownfish;
+            return rr_mob_id_seahorse;
+        }
+        else if (difficulty <= 18.0f) {
+            if (r < 0.33f) return rr_mob_id_pufferfish;
+            if (r < 0.67f) return rr_mob_id_hermit_crab;
+            return rr_mob_id_coral_golem;
+        }
+        else if (difficulty <= 26.0f) {
+            if (r < 0.33f) return rr_mob_id_moray_eel;
+            if (r < 0.67f) return rr_mob_id_stingray;
+            return rr_mob_id_sea_turtle;
+        }
+        else if (difficulty <= 34.0f) {
+            if (r < 0.33f) return rr_mob_id_octopus;
+            if (r < 0.67f) return rr_mob_id_swordfish;
+            return rr_mob_id_electric_eel;
+        }
+        else if (difficulty <= 42.0f) {
+            if (r < 0.5f) return rr_mob_id_anglerfish;
+            return rr_mob_id_nautilus;
+        }
+        else if (difficulty <= 50.0f) {
+            if (r < 0.5f) return rr_mob_id_great_white;
+            return rr_mob_id_king_crab;
+        }
+        else if (difficulty <= 58.0f) {
+            if (r < 0.5f) return rr_mob_id_megalodon;
+            return rr_mob_id_kraken_spawn;
+        }
+        else if (difficulty <= 65.0f) {
+            if (r < 0.5f) return rr_mob_id_trident_guardian;
+            return rr_mob_id_void_ray;
+        }
+        else if (difficulty <= 70.0f) {
+            if (r < 0.5f) return rr_mob_id_storm_kraken;
+            return rr_mob_id_omega_shark;
+        }
+        else if (difficulty <= 74.0f) {
+            if (r < 0.5f) return rr_mob_id_hyper_hydra;
+            return rr_mob_id_celestial_whale;
+        }
+        else {
+            if (r < 0.5f) return rr_mob_id_abyssal_leviathan;
+            return rr_mob_id_thalassa_core;
+        }
     }
     if (biome == rr_biome_id_plains) {
         float diff = zone ? zone->difficulty : 1.0f; double r = rr_frand();

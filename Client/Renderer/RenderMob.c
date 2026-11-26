@@ -24,6 +24,7 @@
 #include <Shared/StaticData.h>
 
 #include <Client/Assets/RenderFunctions.h>
+#include "RenderOceanMobs.h"
 
 void rr_component_mob_render(EntityIdx entity, struct rr_game *game,
                              struct rr_simulation *simulation)
@@ -32,6 +33,9 @@ void rr_component_mob_render(EntityIdx entity, struct rr_game *game,
     struct rr_component_physical *physical =
         rr_simulation_get_physical(simulation, entity);
     struct rr_component_mob *mob = rr_simulation_get_mob(simulation, entity);
+    if (mob && physical && mob->id >= rr_mob_id_bubble && mob->id <= rr_mob_id_thalassa_core) {
+        return;
+    }
         struct rr_component_physical *j_phys = physical;
     struct rr_component_arena *j_arena = j_phys ? rr_simulation_get_arena(simulation, game->player_info ? game->player_info->arena : RR_NULL_ENTITY) : NULL;
     if (j_arena && j_arena->biome == rr_biome_id_garden && j_phys) {
@@ -81,6 +85,7 @@ void rr_component_mob_render(EntityIdx entity, struct rr_game *game,
         rr_renderer_context_state_free(renderer, &jst);
         return;
     }
+
 
 
     uint8_t is_friendly =
