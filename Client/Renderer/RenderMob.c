@@ -34,6 +34,43 @@ void rr_component_mob_render(EntityIdx entity, struct rr_game *game,
         rr_simulation_get_physical(simulation, entity);
     struct rr_component_mob *mob = rr_simulation_get_mob(simulation, entity);
     if (mob && physical && mob->id >= rr_mob_id_bubble && mob->id <= rr_mob_id_thalassa_core) {
+        float r = physical->radius > 8.0f ? physical->radius : 24.0f;
+        struct rr_renderer_context_state ost;
+        rr_renderer_context_state_init(renderer, &ost);
+        rr_renderer_translate(renderer, physical->x, physical->y);
+        rr_renderer_rotate(renderer, physical->angle);
+        if (mob->id == rr_mob_id_bubble) {
+            rr_renderer_set_fill(renderer, 0x66f8e5b5u); rr_renderer_set_stroke(renderer, 0xdde8c882u); rr_renderer_set_line_width(renderer, 3.5f);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, r); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+            rr_renderer_set_fill(renderer, 0xccffffffu); rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, -r*0.33f, -r*0.33f, r*0.24f); rr_renderer_fill(renderer);
+        } else if (mob->id == rr_mob_id_crab || mob->id == rr_mob_id_hermit_crab || mob->id == rr_mob_id_king_crab || mob->id == rr_mob_id_trident_guardian) {
+            rr_renderer_set_stroke(renderer, 0xff1b2b85u); rr_renderer_set_line_width(renderer, 4.5f);
+            for (int k = -1; k <= 1; k++) { rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, k*r*0.32f, -r*1.12f); rr_renderer_line_to(renderer, k*r*0.32f, r*1.12f); rr_renderer_stroke(renderer); }
+            rr_renderer_set_fill(renderer, 0xff445effu); rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, r*0.82f, -r*0.58f, r*0.34f); rr_renderer_arc(renderer, r*0.82f, r*0.58f, r*0.34f); rr_renderer_fill(renderer);
+            rr_renderer_set_fill(renderer, 0xff2b44c9u); rr_renderer_set_stroke(renderer, 0xff1b2b85u); rr_renderer_set_line_width(renderer, 4.5f);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, r*0.78f); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+            rr_renderer_set_fill(renderer, 0xff111111u); rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, r*0.54f, -r*0.24f, r*0.12f); rr_renderer_arc(renderer, r*0.54f, r*0.24f, r*0.12f); rr_renderer_fill(renderer);
+        } else if (mob->id == rr_mob_id_jellyfish || mob->id == rr_mob_id_octopus || mob->id == rr_mob_id_kraken_spawn || mob->id == rr_mob_id_storm_kraken) {
+            rr_renderer_set_stroke(renderer, 0xaae6a8f5u); rr_renderer_set_line_width(renderer, 3.5f);
+            for (int k = -2; k <= 2; k++) { float yy = k*r*0.25f; rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, -r*0.2f, yy); rr_renderer_line_to(renderer, -r*1.3f, yy); rr_renderer_stroke(renderer); }
+            rr_renderer_set_fill(renderer, (mob->id == rr_mob_id_octopus) ? 0xffea3393u : 0xbbd98ae8u); rr_renderer_set_stroke(renderer, 0xff6b21a8u); rr_renderer_set_line_width(renderer, 4.0f);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, r*0.12f, 0, r*0.82f); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+        } else if (mob->id == rr_mob_id_starfish) {
+            rr_renderer_set_fill(renderer, 0xff5a68e0u); rr_renderer_set_stroke(renderer, 0xff3b47adu); rr_renderer_set_line_width(renderer, 4.0f);
+            rr_renderer_begin_path(renderer);
+            for (int k = 0; k < 10; k++) { float a = k*0.628318f, rd = (k%2==0) ? r*1.05f : r*0.42f; if (k==0) rr_renderer_move_to(renderer, rd*cosf(a), rd*sinf(a)); else rr_renderer_line_to(renderer, rd*cosf(a), rd*sinf(a)); }
+            rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+        } else if (mob->id == rr_mob_id_shell || mob->id == rr_mob_id_nautilus || mob->id == rr_mob_id_coral_golem || mob->id == rr_mob_id_sea_turtle) {
+            rr_renderer_set_fill(renderer, (mob->id == rr_mob_id_sea_turtle) ? 0xff346516u : 0xff9ec2dbu); rr_renderer_set_stroke(renderer, 0xff5c4033u); rr_renderer_set_line_width(renderer, 4.5f);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, 0, 0, r*0.88f); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+        } else {
+            rr_renderer_set_fill(renderer, 0xffffffffu); rr_renderer_begin_path(renderer); rr_renderer_move_to(renderer, -r*0.65f, 0); rr_renderer_line_to(renderer, -r*1.35f, -r*0.55f); rr_renderer_line_to(renderer, -r*1.35f, r*0.55f); rr_renderer_fill(renderer);
+            rr_renderer_set_fill(renderer, (mob->id == rr_mob_id_clownfish) ? 0xff1673f9u : ((mob->id == rr_mob_id_pufferfish || mob->id == rr_mob_id_seahorse) ? 0xff15ccfau : 0xff3b82f6u));
+            rr_renderer_set_stroke(renderer, 0xff1e293bu); rr_renderer_set_line_width(renderer, 4.0f);
+            rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, r*0.1f, 0, r*0.82f); rr_renderer_fill(renderer); rr_renderer_stroke(renderer);
+            rr_renderer_set_fill(renderer, 0xffffffffu); rr_renderer_begin_path(renderer); rr_renderer_arc(renderer, r*0.48f, -r*0.28f, r*0.14f); rr_renderer_arc(renderer, r*0.48f, r*0.28f, r*0.14f); rr_renderer_fill(renderer);
+        }
+        rr_renderer_context_state_free(renderer, &ost);
         return;
     }
         struct rr_component_physical *j_phys = physical;
